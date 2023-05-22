@@ -45,7 +45,7 @@ public class RegisterPage {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("¬F¬O­¹­Ô");
+		JLabel lblNewLabel = new JLabel("ï¿½Fï¿½Oï¿½ï¿½ï¿½ï¿½");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(0, 0, 438, 34);
 		frame.getContentPane().add(lblNewLabel);
@@ -55,11 +55,11 @@ public class RegisterPage {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("±b¸¹¡G");
+		JLabel lblNewLabel_1 = new JLabel("ï¿½bï¿½ï¿½ï¿½G");
 		lblNewLabel_1.setBounds(61, 21, 40, 14);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("±K½X¡G");
+		JLabel lblNewLabel_2 = new JLabel("ï¿½Kï¿½Xï¿½G");
 		lblNewLabel_2.setBounds(61, 58, 40, 14);
 		panel.add(lblNewLabel_2);
 		
@@ -72,4 +72,8 @@ public class RegisterPage {
 		passwordField.setBounds(111, 55, 96, 20);
 		panel.add(passwordField);
 	}
+	
+	public JFrame getFrame() {
+        return frame;
+    }
 }
