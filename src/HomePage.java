@@ -1,12 +1,11 @@
 import java.awt.EventQueue;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Color;
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import java.awt.Color;
-import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
@@ -46,19 +45,31 @@ public class HomePage {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("¬F¬O­¹­Ô");
+		JLabel lblNewLabel = new JLabel("æ”¿æ˜¯é£Ÿå€™");
 		lblNewLabel.setBackground(new Color(240, 240, 240));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(0, 0, 438, 34);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JButton btnNewButton_1 = new JButton("µù¥U");
-		btnNewButton_1.setBounds(301, 11, 62, 23);
-		frame.getContentPane().add(btnNewButton_1);
+		JButton registerButton = new JButton("è¨»å†Š");
+		registerButton.setBounds(301, 11, 62, 23);
+		frame.getContentPane().add(registerButton);
+		registerButton.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        	RegisterPage registerPage = new RegisterPage();
+	        	registerPage.getFrame().setVisible(true);
+	        }
+	    });
 		
-		JButton btnNewButton = new JButton("µn¤J");
-		btnNewButton.setBounds(366, 11, 62, 23);
-		frame.getContentPane().add(btnNewButton);
+		JButton loginButton = new JButton("ç™»å…¥");
+		loginButton.setBounds(366, 11, 62, 23);
+		frame.getContentPane().add(loginButton);
+		loginButton.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        	LoginPage loginPage = new LoginPage();
+	        	loginPage.getFrame().setVisible(true);
+	        }
+	    });
 		
 		JScrollBar scrollBar = new JScrollBar();
 		scrollBar.setBounds(411, 45, 17, 220);
@@ -67,9 +78,5 @@ public class HomePage {
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 45, 391, 220);
 		frame.getContentPane().add(panel);
-		
-	
-		
-	
 	}
 }
