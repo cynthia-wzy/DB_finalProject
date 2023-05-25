@@ -48,7 +48,7 @@ public class LoginPage {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("政是食候");
+		JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
 		lblNewLabel.setBackground(new Color(240, 240, 240));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(0, 0, 438, 34);
@@ -59,39 +59,39 @@ public class LoginPage {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("實名");
-		rdbtnNewRadioButton.setBounds(36, 7, 109, 23);
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("unamed");
+		rdbtnNewRadioButton.setBounds(36, 63, 109, 23);
 		panel.add(rdbtnNewRadioButton);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("匿名");
-		rdbtnNewRadioButton_1.setBounds(36, 33, 109, 23);
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("named");
+		rdbtnNewRadioButton_1.setBounds(36, 85, 109, 23);
 		panel.add(rdbtnNewRadioButton_1);
 		
 		textField = new JTextField();
-		textField.setBounds(95, 60, 96, 20);
+		textField.setBounds(100, 113, 96, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("姓名：");
-		lblNewLabel_1.setBounds(56, 63, 48, 14);
+		JLabel lblNewLabel_1 = new JLabel("name:");
+		lblNewLabel_1.setBounds(56, 113, 48, 14);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("帳號：");
-		lblNewLabel_2.setBounds(36, 88, 48, 14);
+		JLabel lblNewLabel_2 = new JLabel("password:");
+		lblNewLabel_2.setBounds(36, 33, 80, 14);
 		panel.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("密碼：");
-		lblNewLabel_3.setBounds(36, 113, 48, 14);
+		JLabel lblNewLabel_3 = new JLabel("account:");
+		lblNewLabel_3.setBounds(36, 7, 80, 14);
 		panel.add(lblNewLabel_3);
 		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(100, 33, 96, 20);
+		panel.add(passwordField);
+		
 		textField_2 = new JTextField();
-		textField_2.setBounds(77, 113, 96, 20);
+		textField_2.setBounds(100, 7, 96, 20);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(77, 85, 96, 20);
-		panel.add(passwordField);
 	}
 	
 	public JFrame getFrame() {

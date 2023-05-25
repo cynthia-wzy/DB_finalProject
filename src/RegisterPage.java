@@ -45,7 +45,7 @@ public class RegisterPage {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("�F�O����");
+		JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(0, 0, 438, 34);
 		frame.getContentPane().add(lblNewLabel);
@@ -55,21 +55,21 @@ public class RegisterPage {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("�b���G");
-		lblNewLabel_1.setBounds(61, 21, 40, 14);
+		JLabel lblNewLabel_1 = new JLabel("account:");
+		lblNewLabel_1.setBounds(61, 21, 60, 14);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("�K�X�G");
-		lblNewLabel_2.setBounds(61, 58, 40, 14);
+		JLabel lblNewLabel_2 = new JLabel("password:");
+		lblNewLabel_2.setBounds(61, 58, 60, 14);
 		panel.add(lblNewLabel_2);
 		
 		textField = new JTextField();
-		textField.setBounds(111, 18, 96, 20);
+		textField.setBounds(125, 18, 96, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(111, 55, 96, 20);
+		passwordField.setBounds(125, 55, 96, 20);
 		panel.add(passwordField);
 	}
 	
