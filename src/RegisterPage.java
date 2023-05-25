@@ -55,11 +55,11 @@ public class RegisterPage {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("account:");
+		JLabel lblNewLabel_1 = new JLabel("Account:");
 		lblNewLabel_1.setBounds(61, 21, 60, 14);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("password:");
+		JLabel lblNewLabel_2 = new JLabel("Password:");
 		lblNewLabel_2.setBounds(61, 58, 60, 14);
 		panel.add(lblNewLabel_2);
 		

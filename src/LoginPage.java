@@ -59,11 +59,11 @@ public class LoginPage {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("unamed");
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Unamed");
 		rdbtnNewRadioButton.setBounds(36, 63, 109, 23);
 		panel.add(rdbtnNewRadioButton);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("named");
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Named");
 		rdbtnNewRadioButton_1.setBounds(36, 85, 109, 23);
 		panel.add(rdbtnNewRadioButton_1);
 		
@@ -72,15 +72,15 @@ public class LoginPage {
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("name:");
+		JLabel lblNewLabel_1 = new JLabel("Name:");
 		lblNewLabel_1.setBounds(56, 113, 48, 14);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("password:");
+		JLabel lblNewLabel_2 = new JLabel("Password:");
 		lblNewLabel_2.setBounds(36, 33, 80, 14);
 		panel.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("account:");
+		JLabel lblNewLabel_3 = new JLabel("Account:");
 		lblNewLabel_3.setBounds(36, 7, 80, 14);
 		panel.add(lblNewLabel_3);
 		

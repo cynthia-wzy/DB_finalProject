@@ -53,7 +53,7 @@ public class SignoutPage {
         lblNewLabel.setBounds(0, 0, screenSize.width, 34);
         frame.getContentPane().add(lblNewLabel);
 
-        JButton registerButton = new JButton("post");
+        JButton registerButton = new JButton("Post");
         registerButton.setBounds(screenSize.width - 165, 11, 75, 23);
         frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
@@ -63,7 +63,7 @@ public class SignoutPage {
             }
         });
 
-        JButton loginButton = new JButton("sign out");
+        JButton loginButton = new JButton("Sign out");
         loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
         frame.getContentPane().add(loginButton);
         loginButton.addActionListener(new ActionListener() {

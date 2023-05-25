@@ -53,15 +53,15 @@ public class PayPage {
         lblNewLabel.setBounds(0, 0, 438, 34);
         frame.getContentPane().add(lblNewLabel);
 
-        JLabel lblNewLabel_1 = new JLabel("transfer information");
+        JLabel lblNewLabel_1 = new JLabel("Transfer information");
         lblNewLabel_1.setBounds(27, 72, 150, 14);
         frame.getContentPane().add(lblNewLabel_1);
 
-        JLabel lblNewLabel_2 = new JLabel("transaction record");
+        JLabel lblNewLabel_2 = new JLabel("Transaction record");
         lblNewLabel_2.setBounds(27, 150, 150, 14);
         frame.getContentPane().add(lblNewLabel_2);
 
-        JButton btnNewButton = new JButton("up load");
+        JButton btnNewButton = new JButton("Up load");
         btnNewButton.setBounds(184, 200, 89, 23);
         frame.getContentPane().add(btnNewButton);
 
