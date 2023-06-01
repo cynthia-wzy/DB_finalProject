@@ -1,7 +1,11 @@
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -10,8 +14,10 @@ import javax.swing.JPasswordField;
 public class RegisterPage {
 
 	private JFrame frame;
-	private JTextField textField;
+	private JTextField text_account;
 	private JPasswordField passwordField;
+	
+	private SQLQuery sqlQuery = new SQLQuery();
 
 	/**
 	 * Launch the application.
@@ -45,28 +51,28 @@ public class RegisterPage {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(0, 0, 438, 34);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel nccuHungerSaverLabel = new JLabel("NCCU HUNGER SAVER");
+		nccuHungerSaverLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		nccuHungerSaverLabel.setBounds(0, 0, 438, 34);
+		frame.getContentPane().add(nccuHungerSaverLabel);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(87, 32, 268, 140);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Account:");
-		lblNewLabel_1.setBounds(61, 21, 60, 14);
-		panel.add(lblNewLabel_1);
+		JLabel accountLabel = new JLabel("Account:");
+		accountLabel.setBounds(61, 21, 60, 14);
+		panel.add(accountLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Password:");
-		lblNewLabel_2.setBounds(61, 58, 60, 14);
-		panel.add(lblNewLabel_2);
+		JLabel passwordLabel = new JLabel("Password:");
+		passwordLabel.setBounds(61, 58, 60, 14);
+		panel.add(passwordLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(125, 18, 96, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		text_account = new JTextField();
+		text_account.setBounds(125, 18, 96, 20);
+		panel.add(text_account);
+		text_account.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(125, 55, 96, 20);
@@ -75,13 +81,26 @@ public class RegisterPage {
 		JButton registerButton = new JButton("Register");
 		registerButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        JOptionPane.showMessageDialog(null, "Congrats! Welcome to NCCU Food Hunter", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
-		        
-		        // 連結到 HomePage
-		        HomePage homePage = new HomePage();
-		        homePage.setVisible(true);
-		        
-		        frame.dispose();
+		    	
+		    	String account = text_account.getText();//先假設帳號是String
+		    	char[] password = passwordField.getPassword();
+		        String passwordString = new String(password);
+		    	
+				ProcessData registration = new ProcessData(account,passwordString);
+				sqlQuery.registration(registration);
+				
+				//check whether registered successfully
+                boolean success = ((SQLQuery) sqlQuery).registration(registration);
+                if (!success) {
+                	JOptionPane.showMessageDialog(null, "Please complete the text.", "Registration Failed", JOptionPane.ERROR_MESSAGE);
+                }else {
+                	//After uploading successfully, closing the JOptionPane and return to the home page
+    		        JOptionPane.showMessageDialog(null, "Congrats! Welcome to NCCU Hunger Saver", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
+                	frame.dispose();
+    		        // connect to HomePage
+    		        HomePage homePage = new HomePage();
+    		        homePage.setVisible(true);
+                }
 		    }
 		});
 		registerButton.setBounds(95, 100, 89, 23);
