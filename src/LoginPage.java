@@ -55,7 +55,7 @@ public class LoginPage {
 		frame.getContentPane().add(lblNewLabel);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(87, 32, 268, 144);
+		panel.setBounds(87, 32, 268, 168);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -92,6 +92,33 @@ public class LoginPage {
 		textField_2.setBounds(100, 7, 96, 20);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
+		
+		JButton loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String username = textField.getText();
+				String password = new String(passwordField.getPassword());
+				
+				boolean loginSuccessful = false;
+
+				if (!loginSuccessful) {
+                	JOptionPane.showMessageDialog(null, "Please enter the correct username and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+				    textField.setText("");
+				    textField_2.setText("");
+				    passwordField.setText("");
+				    return;
+				}else {
+			        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+					HomePage homePage = new HomePage();
+					homePage.setVisible(true);
+					
+					frame.dispose();
+					
+				}
+			}
+		});
+		loginButton.setBounds(95, 140, 89, 23);
+		panel.add(loginButton);
 	}
 	
 	public JFrame getFrame() {
