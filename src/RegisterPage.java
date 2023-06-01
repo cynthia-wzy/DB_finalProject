@@ -51,7 +51,7 @@ public class RegisterPage {
 		frame.getContentPane().add(lblNewLabel);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(87, 32, 268, 95);
+		panel.setBounds(87, 32, 268, 140);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -71,6 +71,22 @@ public class RegisterPage {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(125, 55, 96, 20);
 		panel.add(passwordField);
+		
+		JButton registerButton = new JButton("Register");
+		registerButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        JOptionPane.showMessageDialog(null, "Congrats! Welcome to NCCU Food Hunter", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
+		        
+		        // 連結到 HomePage
+		        HomePage homePage = new HomePage();
+		        homePage.setVisible(true);
+		        
+		        frame.dispose();
+		    }
+		});
+		registerButton.setBounds(95, 100, 89, 23);
+		panel.add(registerButton);
+		
 	}
 	
 	public JFrame getFrame() {
