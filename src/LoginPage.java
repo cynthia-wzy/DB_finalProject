@@ -45,6 +45,7 @@ public class LoginPage {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
+		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -56,15 +57,18 @@ public class LoginPage {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(87, 32, 268, 168);
+        panel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Unamed");
 		rdbtnNewRadioButton.setBounds(36, 63, 109, 23);
+		rdbtnNewRadioButton.setBackground(Color.decode("#FFD300")); 
 		panel.add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Named");
 		rdbtnNewRadioButton_1.setBounds(36, 85, 109, 23);
+		rdbtnNewRadioButton_1.setBackground(Color.decode("#FFD300")); 
 		panel.add(rdbtnNewRadioButton_1);
 		
 		textField = new JTextField();

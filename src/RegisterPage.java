@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,6 +49,7 @@ public class RegisterPage {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
+		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -58,6 +60,7 @@ public class RegisterPage {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(87, 32, 268, 140);
+        panel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -79,10 +82,11 @@ public class RegisterPage {
 		panel.add(passwordField);
 		
 		JButton registerButton = new JButton("Register");
+        registerButton.setBackground(Color.decode("#FFD300")); 
 		registerButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	
-		    	String account = text_account.getText();//先假設帳號是String
+		    	String account = text_account.getText();//���身撣唾�String
 		    	char[] password = passwordField.getPassword();
 		        String passwordString = new String(password);
 		    	
@@ -104,6 +108,7 @@ public class RegisterPage {
 		    }
 		});
 		registerButton.setBounds(95, 100, 89, 23);
+        registerButton.setBackground(Color.decode("#FFD300")); 
 		panel.add(registerButton);
 		
 	}

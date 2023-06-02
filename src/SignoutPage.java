@@ -37,6 +37,7 @@ public class SignoutPage {
 
     private void initialize() {
         frame = new JFrame();
+		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Get screen size
@@ -49,12 +50,14 @@ public class SignoutPage {
 
         JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
         lblNewLabel.setBackground(new Color(240, 240, 240));
+
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setBounds(0, 0, screenSize.width, 34);
         frame.getContentPane().add(lblNewLabel);
 
         JButton registerButton = new JButton("Post");
         registerButton.setBounds(screenSize.width - 165, 11, 75, 23);
+        registerButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -65,6 +68,7 @@ public class SignoutPage {
 
         JButton loginButton = new JButton("Sign out");
         loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
+        loginButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(loginButton);
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -75,6 +79,7 @@ public class SignoutPage {
 
         JPanel panel = new JPanel();
         panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
+        panel.setBackground(Color.decode("#FFFFE0")); 
         frame.getContentPane().add(panel);
 
         // Set preferred size of panel to fit within scroll pane
@@ -89,6 +94,9 @@ public class SignoutPage {
 
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
+scrollPane.getVerticalScrollBar().setBackground(Color.decode("#FFFFE0"));
+        scrollPane.getHorizontalScrollBar().setBackground(Color.decode("#FFFFE0"));
+
         frame.getContentPane().add(scrollPane);
 
         frame.setVisible(true);
@@ -97,7 +105,7 @@ public class SignoutPage {
     private void addItem(JPanel panel, String imagePath, String name, String location, String remaining, String quantity) {
         JPanel itemPanel = new JPanel();
         itemPanel.setPreferredSize(new Dimension(800, 200));
-        itemPanel.setBackground(Color.white);
+        itemPanel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
         itemPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
 
         //
@@ -108,12 +116,19 @@ public class SignoutPage {
         JLabel imageLabel = new JLabel(scaledIcon);
         itemPanel.add(imageLabel);
 
+// ...
+
         // Create and set the labels for item details
         JLabel nameLabel = new JLabel("Name: " + name);
+        nameLabel.setForeground(new Color(0, 0, 102)); // Set text color to dark blue
         JLabel locationLabel = new JLabel("Location: " + location);
+        locationLabel.setForeground(new Color(0, 102, 0)); // Set text color to dark green
         JLabel remainingLabel = new JLabel("Remaining: " + remaining);
+        remainingLabel.setForeground(new Color(153, 0, 0)); // Set text color to dark red
         JLabel quantityLabel = new JLabel("Quantity: " + quantity);
+        quantityLabel.setForeground(new Color(102, 0, 102)); // Set text color to dark purple
 
+        // ...
         // Add the labels to the item panel
         itemPanel.add(nameLabel);
         itemPanel.add(locationLabel);

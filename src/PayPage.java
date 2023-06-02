@@ -44,6 +44,7 @@ public class PayPage {
     private void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
+		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
@@ -63,14 +64,17 @@ public class PayPage {
 
         JButton btnNewButton = new JButton("Up load");
         btnNewButton.setBounds(184, 200, 89, 23);
+        btnNewButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(btnNewButton);
 
         JLabel lblNewLabel_3 = new JLabel("New label");
         lblNewLabel_3.setBounds(170, 47, 180, 64);
+        lblNewLabel_3.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(lblNewLabel_3);
 
         JButton browseButton = new JButton("Browse");
         browseButton.setBounds(170, 150, 180, 23);
+        browseButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(browseButton);
 
         browseButton.addActionListener(new ActionListener() {
