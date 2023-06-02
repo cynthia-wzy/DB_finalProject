@@ -1,5 +1,8 @@
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,6 +51,15 @@ public class LoginPage {
 		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		 // Center the frame on the screen
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    int screenWidth = screenSize.width;
+	    int screenHeight = screenSize.height;
+	    int frameWidth = frame.getWidth();
+	    int frameHeight = frame.getHeight();
+	    int x = (screenWidth - frameWidth) / 2;
+	    int y = (screenHeight - frameHeight) / 2;
+	    frame.setLocation(x, y);
 		
 		JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
 		lblNewLabel.setBackground(new Color(240, 240, 240));

@@ -1,5 +1,7 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -51,6 +53,15 @@ public class RegisterPage {
 		frame.setBounds(100, 100, 450, 300);
 		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 // Center the frame on the screen
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    int screenWidth = screenSize.width;
+	    int screenHeight = screenSize.height;
+	    int frameWidth = frame.getWidth();
+	    int frameHeight = frame.getHeight();
+	    int x = (screenWidth - frameWidth) / 2;
+	    int y = (screenHeight - frameHeight) / 2;
+	    frame.setLocation(x, y);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel nccuHungerSaverLabel = new JLabel("NCCU HUNGER SAVER");
