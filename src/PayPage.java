@@ -66,11 +66,11 @@ public class PayPage {
         frame.getContentPane().add(lblNewLabel);
 
         JLabel lblNewLabel_1 = new JLabel("Transfer information");
-        lblNewLabel_1.setBounds(27, 72, 150, 14);
+        lblNewLabel_1.setBounds(57, 72, 150, 14);
         frame.getContentPane().add(lblNewLabel_1);
 
         JLabel lblNewLabel_2 = new JLabel("Transaction record");
-        lblNewLabel_2.setBounds(27, 150, 150, 14);
+        lblNewLabel_2.setBounds(57, 150, 150, 14);
         frame.getContentPane().add(lblNewLabel_2);
 
         JButton btnNewButton = new JButton("Up load");
@@ -79,12 +79,12 @@ public class PayPage {
         frame.getContentPane().add(btnNewButton);
 
         JLabel lblNewLabel_3 = new JLabel("New label");
-        lblNewLabel_3.setBounds(170, 47, 180, 64);
+        lblNewLabel_3.setBounds(200, 47, 180, 64);
         lblNewLabel_3.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(lblNewLabel_3);
 
         JButton browseButton = new JButton("Browse");
-        browseButton.setBounds(170, 150, 180, 23);
+        browseButton.setBounds(200, 150, 89, 23);
         browseButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(browseButton);
 
