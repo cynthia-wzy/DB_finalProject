@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.io.File;
 
@@ -64,6 +65,8 @@ public class PayPage {
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setBounds(0, 0, 438, 34);
         frame.getContentPane().add(lblNewLabel);
+        Font font = new Font("Arial", Font.BOLD, 20); 
+        lblNewLabel.setFont(font);
 
         JLabel lblNewLabel_1 = new JLabel("Transfer information");
         lblNewLabel_1.setBounds(57, 72, 150, 14);

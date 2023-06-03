@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -54,9 +55,11 @@ public class SignoutPage {
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setBounds(0, 0, screenSize.width, 34);
         frame.getContentPane().add(lblNewLabel);
+        Font font = new Font("Arial", Font.BOLD, 32); 
+        lblNewLabel.setFont(font);
 
         JButton registerButton = new JButton("Post");
-        registerButton.setBounds(screenSize.width - 165, 11, 75, 23);
+        registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
         registerButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
@@ -124,7 +127,7 @@ scrollPane.getVerticalScrollBar().setBackground(Color.decode("#FFFFE0"));
         JLabel locationLabel = new JLabel("Location: " + location);
         locationLabel.setForeground(new Color(0, 102, 0)); // Set text color to dark green
         JLabel remainingLabel = new JLabel("Remaining: " + remaining);
-        remainingLabel.setForeground(new Color(153, 0, 0)); // Set text color to dark red
+        remainingLabel.setForeground(Color.decode("#652A01")); // Set text color to brown
         JLabel quantityLabel = new JLabel("Quantity: " + quantity);
         quantityLabel.setForeground(new Color(102, 0, 102)); // Set text color to dark purple
 

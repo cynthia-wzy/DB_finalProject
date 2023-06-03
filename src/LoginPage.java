@@ -1,4 +1,5 @@
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -66,7 +67,8 @@ public class LoginPage {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(0, 0, 438, 34);
 		frame.getContentPane().add(lblNewLabel);
-		
+		Font font = new Font("Arial", Font.BOLD, 20); 
+		lblNewLabel.setFont(font);
 		JPanel panel = new JPanel();
 		panel.setBounds(87, 32, 268, 168);
         panel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish

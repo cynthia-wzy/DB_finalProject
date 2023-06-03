@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -68,6 +69,9 @@ public class RegisterPage {
 		nccuHungerSaverLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nccuHungerSaverLabel.setBounds(0, 0, 438, 34);
 		frame.getContentPane().add(nccuHungerSaverLabel);
+		Font font = new Font("Arial", Font.BOLD, 20); 
+		nccuHungerSaverLabel.setFont(font);
+
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(87, 32, 268, 140);
