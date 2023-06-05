@@ -165,32 +165,48 @@ public class WindowDemo extends JFrame{
 	    postButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String name = text_name.getText();
-				String postContent = postTextArea.getText();
-				byte[] image = imageBytes;
-				String location = text_location.getText();
-				String type = (String)typeComboBox.getSelectedItem();
-				int amount = Integer.parseInt(text_amount.getText());
-				String startTime = text_startTime.getText();
-				String endTime = text_endTime.getText();
-				int price = Integer.parseInt(text_price.getText());
-				
-				ProcessData uploadProduct = new ProcessData(name,postContent,image,location,type,amount,startTime,endTime,price);
-				sqlQuery.uploadProduct(uploadProduct);
-				
-				//檢查上架是否成功
-                boolean success = ((SQLQuery) sqlQuery).uploadProduct(uploadProduct);
-                if (!success) {
-                	JOptionPane.showMessageDialog(null, "Please complete the text.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
-                }else {
-                	//上架成功後關閉視窗 即可回到首頁
-                	JOptionPane.showMessageDialog(null, "Uploaded Successfully！", "Success", JOptionPane.INFORMATION_MESSAGE);
-                	WindowDemo.this.dispose();
-    		        // 連結到 HomePage
-    		        HomePage homePage = new HomePage();
-    		        homePage.setVisible(true);
-                }
-			
+				if (text_name.getText().isEmpty()
+		                || postTextArea.getText().isEmpty()
+		                || text_location.getText().isEmpty()
+		                || text_amount.getText().isEmpty()
+		                || text_startTime.getText().isEmpty()
+		                || text_endTime.getText().isEmpty()
+		                || text_price.getText().isEmpty()) {
+					text_name.setText("");
+					postTextArea.setText("");
+					text_location.setText("");
+					text_amount.setText("");
+					text_startTime.setText("");
+					text_endTime.setText("");
+					text_price.setText("");
+		            JOptionPane.showMessageDialog(null, "Please complete the text.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
+		        }else {
+		        	String name = text_name.getText();
+					String postContent = postTextArea.getText();
+					byte[] image = imageBytes;
+					String location = text_location.getText();
+					String type = (String)typeComboBox.getSelectedItem();
+					int amount = Integer.parseInt(text_amount.getText());
+					String startTime = text_startTime.getText();
+					String endTime = text_endTime.getText();
+					int price = Integer.parseInt(text_price.getText());
+
+					ProcessData uploadProduct = new ProcessData(name,postContent,image,location,type,amount,startTime,endTime,price);
+					/*sqlQuery.uploadProduct(uploadProduct);*/
+					
+					//檢查上架是否成功
+	                boolean success = ((SQLQuery) sqlQuery).uploadProduct(uploadProduct);
+	                if (!success) {
+	                	JOptionPane.showMessageDialog(null, "Please complete the text.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
+	                }else {
+	                	//上架成功後關閉視窗 即可回到首頁
+	                	JOptionPane.showMessageDialog(null, "Uploaded Successfully！", "Success", JOptionPane.INFORMATION_MESSAGE);
+	                	WindowDemo.this.dispose();
+	    		        // 連結到 HomePage
+	    		        HomePage homePage = new HomePage();
+	    		        homePage.setVisible(true);
+	                }
+		        }
 			}
 		});
 	    postButton.setBounds(29, 546, 670, 40);
