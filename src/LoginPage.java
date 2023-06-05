@@ -28,7 +28,7 @@ public class LoginPage {
 	private SQLQuery sqlQuery = new SQLQuery();
 	
 	private User user;
-	private boolean named; //蝣箄���������
+	private boolean named; //unnamed or not
 
 	/**
 	 * Launch the application.
@@ -92,7 +92,7 @@ public class LoginPage {
 				named = false;
 			}	
 		});
-		unamedRbtn.setBackground(new Color(255, 255, 204)); 
+		unamedRbtn.setBackground(Color.decode("#FFD300")); 
 		panel.add(unamedRbtn);
 		
 		JRadioButton namedRbtn = new JRadioButton("Named");
@@ -102,7 +102,7 @@ public class LoginPage {
 				named = true;
 			}	
 		});
-		namedRbtn.setBackground(new Color(255, 255, 204)); 
+		namedRbtn.setBackground(Color.decode("#FFD300")); 
 		panel.add(namedRbtn);
 		
 		ButtonGroup buttonGroup = new ButtonGroup();
@@ -145,7 +145,7 @@ public class LoginPage {
 				if(username.equals("")||userID.equals("")||password.equals("")) {
                 	JOptionPane.showMessageDialog(null, "Please fill ALL empty field", "Login Failed", JOptionPane.ERROR_MESSAGE);
 				}else {
-					//撱箇�隞塚�撓�ID頝�Ⅳ嚗���甇�蝣� 憒�迤蝣箇�店撠望���鞈��
+					
 					String checkLogin = sqlQuery.checkUserWithUserID(userID, password, username);
 
 					if (checkLogin.equals("Wrong Password")) {
@@ -157,7 +157,7 @@ public class LoginPage {
 					}else if(checkLogin.equals("Login Successfully")){
 				        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
 				        
-				        user = new User(userID, password, username, named);//������店撠勗遣蝡蝙��隞�//���閬�獐�鈭恍��蝙�����
+				        user = new User(userID, password, username, named);//how to share user info?
 						HomePage homePage = new HomePage();
 						homePage.setVisible(true);
 						frame.dispose();
