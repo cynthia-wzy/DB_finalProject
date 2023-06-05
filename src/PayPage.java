@@ -76,7 +76,7 @@ public class PayPage {
         lblNewLabel_2.setBounds(57, 150, 150, 14);
         frame.getContentPane().add(lblNewLabel_2);
 
-        JButton btnNewButton = new JButton("Up load");
+        JButton btnNewButton = new JButton("Upload");
         btnNewButton.setBounds(184, 200, 89, 23);
         btnNewButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(btnNewButton);
