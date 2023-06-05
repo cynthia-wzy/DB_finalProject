@@ -1,11 +1,16 @@
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
@@ -16,9 +21,14 @@ import javax.swing.JPasswordField;
 public class LoginPage {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_2;
+	private JTextField text_name;
+	private JTextField text_account;
 	private JPasswordField passwordField;
+	
+	private SQLQuery sqlQuery = new SQLQuery();
+	
+	private User user;
+	private boolean named; //確認登入時是否匿名
 
 	/**
 	 * Launch the application.
@@ -62,77 +72,102 @@ public class LoginPage {
 	    int y = (screenHeight - frameHeight) / 2;
 	    frame.setLocation(x, y);
 		
-		JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
-		lblNewLabel.setBackground(new Color(240, 240, 240));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(0, 0, 438, 34);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel systemNameLabel = new JLabel("NCCU HUNGER SAVER");
+		systemNameLabel.setBackground(new Color(240, 240, 240));
+		systemNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		systemNameLabel.setBounds(0, 0, 438, 34);
+		frame.getContentPane().add(systemNameLabel);
 		Font font = new Font("Arial", Font.BOLD, 20); 
-		lblNewLabel.setFont(font);
+		systemNameLabel.setFont(font);
 		JPanel panel = new JPanel();
 		panel.setBounds(87, 32, 268, 168);
         panel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Unamed");
-		rdbtnNewRadioButton.setBounds(36, 63, 109, 23);
-		rdbtnNewRadioButton.setBackground(Color.decode("#FFD300")); 
-		panel.add(rdbtnNewRadioButton);
+		JRadioButton unamedRbtn = new JRadioButton("Unamed");
+		unamedRbtn.setBounds(36, 63, 109, 23);
+		unamedRbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				named = false;
+			}	
+		});
+		unamedRbtn.setBackground(Color.decode("#FFD300")); 
+		panel.add(unamedRbtn);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Named");
-		rdbtnNewRadioButton_1.setBounds(36, 85, 109, 23);
-		rdbtnNewRadioButton_1.setBackground(Color.decode("#FFD300")); 
-		panel.add(rdbtnNewRadioButton_1);
+		JRadioButton namedRbtn = new JRadioButton("Named");
+		namedRbtn.setBounds(36, 85, 109, 23);
+		unamedRbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				named = true;
+			}	
+		});
+		namedRbtn.setBackground(Color.decode("#FFD300")); 
+		panel.add(namedRbtn);
 		
-		textField = new JTextField();
-		textField.setBounds(100, 113, 96, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup.add(unamedRbtn);
+		buttonGroup.add(namedRbtn);
 		
-		JLabel lblNewLabel_1 = new JLabel("Name:");
-		lblNewLabel_1.setBounds(56, 113, 48, 14);
-		panel.add(lblNewLabel_1);
+		text_name = new JTextField();
+		text_name.setBounds(100, 113, 96, 20);
+		panel.add(text_name);
+		text_name.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Password:");
-		lblNewLabel_2.setBounds(36, 33, 80, 14);
-		panel.add(lblNewLabel_2);
+		JLabel nameLabel = new JLabel("Name:");
+		nameLabel.setBounds(56, 113, 48, 14);
+		panel.add(nameLabel);
 		
-		JLabel lblNewLabel_3 = new JLabel("Account:");
-		lblNewLabel_3.setBounds(36, 7, 80, 14);
-		panel.add(lblNewLabel_3);
+		JLabel passwordLabel = new JLabel("Password:");
+		passwordLabel.setBounds(36, 33, 80, 14);
+		panel.add(passwordLabel);
+		
+		JLabel accountLabel = new JLabel("Account:");
+		accountLabel.setBounds(36, 7, 80, 14);
+		panel.add(accountLabel);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(100, 33, 96, 20);
 		panel.add(passwordField);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(100, 7, 96, 20);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		text_account = new JTextField();
+		text_account.setBounds(100, 7, 96, 20);
+		panel.add(text_account);
+		text_account.setColumns(10);
 		
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username = textField.getText();
+				String username = text_name.getText();
+				String userID = text_account.getText();
 				String password = new String(passwordField.getPassword());
 				
-				boolean loginSuccessful = false;
-
-				if (!loginSuccessful) {
-                	JOptionPane.showMessageDialog(null, "Please enter the correct username and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-				    textField.setText("");
-				    textField_2.setText("");
-				    passwordField.setText("");
-				    return;
+				if(username.equals("")||userID.equals("")||password.equals("")) {
+                	JOptionPane.showMessageDialog(null, "Please fill ALL empty field", "Login Failed", JOptionPane.ERROR_MESSAGE);
 				}else {
-			        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
-					HomePage homePage = new HomePage();
-					homePage.setVisible(true);
-					
-					frame.dispose();
-					
-				}
+					//建立物件，輸入ID跟密碼，查看是否正確 如果正確的話就更新用戶資料
+					String checkLogin = sqlQuery.checkUserWithUserID(userID, password, username);
+
+					if (checkLogin.equals("Wrong Password")) {
+	                	JOptionPane.showMessageDialog(null, "Please enter the correct user ID and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+					    text_name.setText("");
+					    text_account.setText("");
+					    passwordField.setText("");
+					    return;
+					}else if(checkLogin.equals("Login Successfully")){
+				        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+				        
+				        user = new User(userID, password, username, named);//登入成功的話就建立使用者物件//重點是要怎麼共享這個使用者資訊
+						HomePage homePage = new HomePage();
+						homePage.setVisible(true);
+						frame.dispose();
+					}else {
+				        JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
+				        text_name.setText("");
+					    text_account.setText("");
+					    passwordField.setText("");
+					}
+				}	
 			}
 		});
 		loginButton.setBounds(95, 140, 89, 23);
