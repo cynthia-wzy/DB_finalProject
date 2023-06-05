@@ -12,7 +12,7 @@ public class transcation_success extends JFrame {
 	JButton button;
     
     public transcation_success(){
-	    button = new JButton("返回");
+	    button = new JButton("Back");
 	    button.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
 	    button.setBounds(256,157,100,40);
 	    getContentPane().add(button);
@@ -24,7 +24,7 @@ public class transcation_success extends JFrame {
 	    getContentPane().setSize(800,400);
 	    getContentPane().setLayout(null);
 	    
-	    JLabel lblNewLabel = new JLabel("交易成功！");
+	    JLabel lblNewLabel = new JLabel("Transaction Completed!");
 	    lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	    lblNewLabel.setFont(new Font("微軟正黑體", Font.BOLD, 14));
 	    lblNewLabel.setBounds(10, 103, 605, 61);
