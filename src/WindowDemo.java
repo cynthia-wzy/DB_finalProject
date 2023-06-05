@@ -194,15 +194,15 @@ public class WindowDemo extends JFrame{
 					ProcessData uploadProduct = new ProcessData(name,postContent,image,location,type,amount,startTime,endTime,price);
 					/*sqlQuery.uploadProduct(uploadProduct);*/
 					
-					//檢查上架是否成功
+					
 	                boolean success = ((SQLQuery) sqlQuery).uploadProduct(uploadProduct);
 	                if (!success) {
 	                	JOptionPane.showMessageDialog(null, "Please complete the text.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
 	                }else {
-	                	//上架成功後關閉視窗 即可回到首頁
+	                	
 	                	JOptionPane.showMessageDialog(null, "Uploaded Successfully！", "Success", JOptionPane.INFORMATION_MESSAGE);
 	                	WindowDemo.this.dispose();
-	    		        // 連結到 HomePage
+	    		        
 	    		        HomePage homePage = new HomePage();
 	    		        homePage.setVisible(true);
 	                }
