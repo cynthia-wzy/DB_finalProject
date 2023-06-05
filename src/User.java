@@ -4,7 +4,7 @@ public class User {
 	private String userName;
 	private String password;
 	
-	private boolean named;//確認使用者是否匿名
+	private boolean named;//unnamed or not
 	
 	public User(String userID, String userName, String password, boolean named) {
 		
@@ -45,9 +45,9 @@ public class User {
 		
 	}
 	
-	public boolean checkLogin(String userID) { //確認使用者是否已經登入
+	public boolean checkLogin(String userID) { //login or not
 		
-		if(this.userID.equals(userID)) { //如果使用者輸入的ID已經被建立 就代表已登入
+		if(this.userID.equals(userID)) { //user has logined
 			
 			return true;
 			
