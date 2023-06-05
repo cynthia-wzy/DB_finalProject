@@ -101,24 +101,24 @@ public class RegisterPage {
 		registerButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	
-		    	String account = text_account.getText();//���身撣唾�String
+		    	String account = text_account.getText();
 		    	char[] password = passwordField.getPassword();
 		        String passwordString = new String(password);
 		    	
 				ProcessData registration = new ProcessData(account,passwordString);
-				sqlQuery.registration(registration);
+				/*sqlQuery.registration(registration);*/
 				
 				//check whether registered successfully
                 boolean success = ((SQLQuery) sqlQuery).registration(registration);
                 if (!success) {
                 	JOptionPane.showMessageDialog(null, "Please complete the text.", "Registration Failed", JOptionPane.ERROR_MESSAGE);
-                }else {
+                }else if(success){
                 	//After uploading successfully, closing the JOptionPane and return to the home page
-    		        JOptionPane.showMessageDialog(null, "Congrats! Welcome to NCCU Hunger Saver", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
+    		        JOptionPane.showMessageDialog(null, "Congrats! You have registered successfully. Please login and start using NCCU Food Hunter", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
                 	frame.dispose();
     		        // connect to HomePage
-    		        HomePage homePage = new HomePage();
-    		        homePage.setVisible(true);
+                	LoginPage loginPage = new LoginPage();
+                	loginPage.getFrame().setVisible(true);
                 }
 		    }
 		});
