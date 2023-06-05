@@ -1,4 +1,3 @@
-//專門用來寫query
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ public class SQLQuery {
 					.prepareStatement("INSERT INTO Post (UserID,Memo,Image,FoodName,FoodType,FoodLocation,FoodAmount,PickupTime,PickupDDL,MinPrice) VALUES (?,?, ?, ?, ?, ?,?,?,?,?)");
 			
 			//資料庫還沒有建Account//已建立UserID
-			pre.setString(1,"108305091"); //User待修正
+			pre.setString(1,"aaa123"); //User要等整合
 			pre.setString(2,uploadProduct.getPostContent());
 			pre.setBytes(3,uploadProduct.getGraph());
 			//GUI沒有食物名稱//GUI新增食物名稱
@@ -44,26 +43,141 @@ public class SQLQuery {
 			pre.setString(2,registration.getPassword());
 			return pre.executeUpdate() > 0;
 		} catch (SQLException e) {
+			e.printStackTrace(); 
 			return false;
 		}
 	}
 	
 	//LoginPage
-	public List<ProcessData> findUserWithUserID(){
+	public String checkUserWithUserID(String userID, String password, String userName){//修改中
+		String result = "";
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
-					.prepareStatement("SELECT * FROM NCCUUser WHERE UserID = '108305091'"); //UserID還要再改
+					.prepareStatement("SELECT * FROM NCCUUser WHERE UserID = ?"); 
+			pre.setString(1, userID);
+			ResultSet rs = pre.executeQuery();
+			while(rs.next()) {//有找到這個使用者
+				String DBPassword = rs.getString("Password");
+				if(DBPassword.equals(password)) {//使用者輸入的密碼與資料庫裡的相同
+					updateUserWithUserID(userID,userName);
+					result = "Login Successfully";
+				}else {//使用者輸入的密碼與資料庫裡的不同
+					result = "Wrong Password";
+				}
+			}
+		} catch (SQLException e) {//沒有找到這個使用者
+			result = "No such user";
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	//LoginPage
+	public void updateUserWithUserID(String userID, String userName){//確定有這個使用者才會用這個方法
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("UPDATE NCCUUser SET UserName = ? WHERE UserID = ?"); 
+			pre.setString(1, userName);
+			pre.setString(2, userID);
+			pre.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//PostView
+	public List<ProcessData> findPost(int postID){//修改中
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT * FROM Post WHERE PostID = ?");  //預設用PostID來找
+			pre.setInt(1, postID);
 			ResultSet rs = pre.executeQuery();
 			while(rs.next()) {
 				ProcessData data = new ProcessData();
 				data.setAccount(rs.getString("UserID"));
-				data.setPassword(rs.getString("Password"));
+				data.setPostID(rs.getInt("PostID"));
+				data.setGraph(rs.getBytes("Image"));
+				data.setName(rs.getString("FoodName"));
+				data.setType(rs.getString("FoodType"));
+				data.setLocation(rs.getString("FoodLocation"));
+				data.setPostContent(rs.getString("Memo"));
+				data.setAmount(rs.getInt("FoodAmount"));
+				data.setPeopleWaiting(rs.getInt("PeopleWaiting"));
+				data.setStartTime(rs.getString("PickupTime"));
+				data.setEndTime(rs.getString("PickupDDL"));
+				data.setPrice(rs.getInt("MinPrice"));
 				this.data.add(data);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return this.data;
+		return this.data;	
+		
+	}
+	
+	//PostView //卡位
+	public boolean placeHolder(String userID, int postID, int amount){//要怎麼拿到UserID咧:)
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("INSERT INTO Placeholder (UserID,PostID,Amount) VALUES (?,?,?)");
+			pre.setString(1,userID);
+			pre.setInt(2,postID);
+			pre.setInt(3,amount);
+			return pre.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
+	}
+	
+	//PostView //延後
+	public void delayPickup(String userID, int postID){//要怎麼拿到UserID咧:)
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("UPDATE Placeholder SET Delay = ? WHERE UserID = ? AND PostID = ?"); 
+			pre.setInt(1, 1);
+			pre.setString(2, userID);
+			pre.setInt(3, postID);
+			pre.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//PostView //計算等待人數
+	public int countPeopleWaiting(int postID){
+		int count = 0;
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT COUNT(*) FROM Placeholder WHERE PostID = ?");
+			pre.setInt(1, postID);
+			ResultSet rs = pre.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1); // 獲取結果集中的第一列的值，即 SUM
+		    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	//PostView //計算商品剩餘數量
+	public int countTotalFoodAmount(int postID){
+		int sum = 0;
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT SUM(Amount) FROM Placeholder WHERE PostID = ?");
+			pre.setInt(1, postID);
+			ResultSet rs = pre.executeQuery();
+			
+			if (rs.next()) {
+				sum = rs.getInt(1); // 獲取結果集中的第一列的值，即 SUM
+		    }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sum;
 	}
 
 }
