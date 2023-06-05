@@ -77,7 +77,7 @@ public class PayPage {
         frame.getContentPane().add(lblNewLabel_2);
 
         JButton btnNewButton = new JButton("Upload");
-        btnNewButton.setBounds(184, 200, 89, 23);
+        btnNewButton.setBounds(171, 219, 89, 23);
         btnNewButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(btnNewButton);
 
@@ -90,14 +90,19 @@ public class PayPage {
         browseButton.setBounds(200, 150, 89, 23);
         browseButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(browseButton);
-
+        
+        JLabel fileName = new JLabel("");
+        fileName.setBounds(200, 183, 209, 15);
+        frame.getContentPane().add(fileName);
+        
         browseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
+                JFileChooser fileChooser = new JFileChooser();             
                 int result = fileChooser.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
-                    // Do something with the selected file
+                    String file = selectedFile.getName(); 
+                    fileName.setText("File name: " + file);
                 }
             }
         });
