@@ -1,4 +1,3 @@
-//專門用來處理資料庫裡的資料
 public class ProcessData {
 	
 	private String name;
@@ -12,6 +11,8 @@ public class ProcessData {
 	private int price;
 	private String account;
 	private String password;
+	private int postID;
+	private int peopleWaiting;
 	
 	//WindowDemo模板用
 	public ProcessData(String name,String postContent, byte[] graph, String location, String type, int amount, String startTime, String endTime, int price ) {
@@ -100,6 +101,18 @@ public class ProcessData {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public int getPostID() {
+		return postID;
+	}
+	public void setPostID(int postID) {
+		this.postID = postID;
+	}
+	public int getPeopleWaiting() {
+		return peopleWaiting;
+	}
+	public void setPeopleWaiting(int peopleWaiting) {
+		this.peopleWaiting = peopleWaiting;
 	}
 	
 }
