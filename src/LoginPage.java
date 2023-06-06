@@ -92,7 +92,7 @@ public class LoginPage {
 				named = false;
 			}	
 		});
-		unamedRbtn.setBackground(Color.decode("#FFD300")); 
+		unamedRbtn.setBackground(new Color(255, 255, 204)); 
 		panel.add(unamedRbtn);
 		
 		JRadioButton namedRbtn = new JRadioButton("Named");
@@ -102,7 +102,7 @@ public class LoginPage {
 				named = true;
 			}	
 		});
-		namedRbtn.setBackground(Color.decode("#FFD300")); 
+		namedRbtn.setBackground(new Color(255, 255, 204)); 
 		panel.add(namedRbtn);
 		
 		ButtonGroup buttonGroup = new ButtonGroup();
