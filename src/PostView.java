@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,128 +24,172 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import java.awt.GridLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-
-import 期末報告_11102Programming_v2.SalesData;
 
 import java.awt.BorderLayout;
 import javax.swing.SpringLayout;
 import javax.swing.JTextPane;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.border.EtchedBorder;
 
 public class PostView extends JFrame{
 	private JLabel imageLabel;
     private JTextField num;
+    private JLabel lblNewLabel_2;
     
-    //Query
+    //資料庫用
     private List<ProcessData> infoDataList;
     private SQLQuery sqlQuery = new SQLQuery();
     
-    private int postID; //每篇貼文都有自己的postID constructor應該也要有
+    private int postID; 
     private int remaining;
     private int peopleWaiting;
     private int totalAmount;
     
+    //紀錄是否已完成取貨
     private boolean finishPick = false;
     
     public PostView(int postID){
     	
     	this.postID = postID;
-    	
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    getContentPane().setBackground(Color.decode("#FFFF9F"));
 	    getContentPane().setLayout(null);
+	    
+	    JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
+        lblNewLabel.setBackground(new Color(240, 240, 240));
+        
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBounds(0, 0, screenSize.width, 34);
+        getContentPane().add(lblNewLabel);
+        Font font = new Font("Arial", Font.BOLD, 32); 
+        lblNewLabel.setFont(font);
+        
+        JButton registerButton = new JButton("Log in");
+        registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
+        registerButton.setBackground(Color.decode("#FFD300")); 
+        getContentPane().add(registerButton);
+        registerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RegisterPage registerPage = new RegisterPage();
+                registerPage.getFrame().setVisible(true);
+            }
+        });
+
+        JButton loginButton = new JButton("Sign up");
+        loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
+        loginButton.setBackground(Color.decode("#FFD300")); 
+        getContentPane().add(loginButton);
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                LoginPage loginPage = new LoginPage();
+                loginPage.getFrame().setVisible(true);
+            }
+        });
+        
+        JPanel panel = new JPanel();
+        panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
+        panel.setBackground(Color.decode("#FFFFE0")); 
+        getContentPane().add(panel);
+
+        // Set preferred size of panel to fit within scroll pane
+        panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
+	    panel.setLayout(null);
 	    
 	    imageLabel = new JLabel();
 	    imageLabel.setBounds(425, 57, 270, 191);
 	    imageLabel.setIcon(null);
-	    getContentPane().add(imageLabel);
-	    getContentPane().setSize(800,400);
+	    panel.add(imageLabel);
 	    
 	    JLabel username = new JLabel("username");
 	    username.setBounds(32, 26, 91, 15);
-	    username.setFont(new Font("微軟正黑體", Font.PLAIN, 14));
-	    getContentPane().add(username);
+	    panel.add(username);
 	    
-	    JPanel panel = new JPanel();
-	    panel.setBounds(32, 57, 700, 434);
-	    panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-	    getContentPane().add(panel);
-	    panel.setLayout(null);
+	    JPanel panel1 = new JPanel();
+	    panel1.setBounds(32, 57, 1075, 434);
+	    panel1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+	    panel.add(panel1);
 	    
-	    JLabel foodNameLabel = new JLabel("貼文內容");
+	    JLabel foodNameLabel = new JLabel("post content");
 	    foodNameLabel.setBounds(0, 0, 371, 20);
-	    foodNameLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 14));
-	    panel.add(foodNameLabel);
+	    panel1.add(foodNameLabel);
 	    
 	    JLabel text_3 = new JLabel();
 	    text_3.setBounds(5, 399, 371, 34);
-	    text_3.setFont(new Font("微軟正黑體", Font.PLAIN, 14));
-	    panel.add(text_3);
+	    panel1.add(text_3);
 	    
 	    JLabel text_2 = new JLabel();
-	    text_2.setFont(new Font("微軟正黑體", Font.PLAIN, 14));
 	    text_2.setBounds(5, 367, 371, 34);
-	    panel.add(text_2);
+	    panel1.add(text_2);
 	    
 	    JLabel text_1 = new JLabel();
-	    text_1.setFont(new Font("微軟正黑體", Font.PLAIN, 14));
 	    text_1.setBounds(5, 331, 371, 34);
-	    panel.add(text_1);
+	    panel1.add(text_1);
 	    
 	    JLabel postContentLabel = new JLabel();
-	    postContentLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 14));
 	    postContentLabel.setBounds(0, 34, 371, 20);
-	    panel.add(postContentLabel);
+	    panel1.add(postContentLabel);
 	    
-	    JLabel remainingLabel = new JLabel("剩餘數量："); //SQL count
+	    JLabel remainingLabel = new JLabel("remaining amount"); //要用SQL count
 	    remainingLabel.setBounds(209, 548, 169, 32);
 	    remainingLabel.setForeground(new Color(128, 0, 0));
-	    remainingLabel.setFont(new Font("微軟正黑體", Font.BOLD, 14));
-	    getContentPane().add(remainingLabel);
+	    panel.add(remainingLabel);
 	    
-	    JButton postpone_yn = new JButton("延後");
-	    postpone_yn.setFont(new Font("微軟正黑體", Font.BOLD, 16));
-	    postpone_yn.setBounds(506, 526, 85, 23);
-	    getContentPane().add(postpone_yn);
+	    JButton postpone_yn = new JButton("postpone");
+	    postpone_yn.setBounds(621, 526, 98, 23);
+	    panel.add(postpone_yn);
 	    postpone_yn.setEnabled(false);
 	    
-	    JButton waitBtn = new JButton("卡位");
-	    waitBtn.setFont(new Font("微軟正黑體", Font.BOLD, 16));
-	    waitBtn.setBounds(399, 565, 85, 23);
-	    getContentPane().add(waitBtn);
+	    JButton waitBtn = new JButton("wait");
+	    waitBtn.setBounds(399, 565, 127, 23);
+	    panel.add(waitBtn);
 	    
-	    JButton finish_pick = new JButton("完成取貨");
-	    finish_pick.setFont(new Font("微軟正黑體", Font.BOLD, 16));
-	    finish_pick.setBounds(615, 526, 117, 23);
-	    getContentPane().add(finish_pick);
+	    JButton finish_pick = new JButton("finish pickup");
+	    finish_pick.setBounds(772, 526, 117, 23);
+	    panel.add(finish_pick);
 	    finish_pick.setEnabled(false);
 	    
-	    JLabel postponeReminderLabel = new JLabel("尚未延後");
-	    postponeReminderLabel.setBounds(519, 557, 59, 15);
+	    JLabel postponeReminderLabel = new JLabel("not postponed");
+	    postponeReminderLabel.setBounds(631, 557, 117, 15);
 	    postponeReminderLabel.setForeground(new Color(128, 0, 0));
-	    postponeReminderLabel.setFont(new Font("微軟正黑體", Font.BOLD, 14));
-	    getContentPane().add(postponeReminderLabel);
+	    panel.add(postponeReminderLabel);
 
-	    JLabel reminderLabel = new JLabel("請輸入欲領取數量");
-	    reminderLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 14));
-	    reminderLabel.setBounds(381, 501, 132, 15);
-	    getContentPane().add(reminderLabel);
+	    JLabel reminderLabel = new JLabel("Please enter pickup amount:");
+	    reminderLabel.setBounds(381, 501, 178, 15);
+	    panel.add(reminderLabel);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLocationRelativeTo(null);
-	    setSize(800,800);
+	    setSize(screenSize);
 	    setVisible(true);
 
-	    JLabel peopleWaitingLabel = new JLabel("目前卡位人數："); //SQL count
+	    JLabel peopleWaitingLabel = new JLabel("current waiting people"); //SQL count
 	    peopleWaitingLabel.setForeground(new Color(128, 0, 0));
-	    peopleWaitingLabel.setFont(new Font("微軟正黑體", Font.BOLD, 14));
 	    peopleWaitingLabel.setBounds(209, 527, 169, 23);
-	    getContentPane().add(peopleWaitingLabel);
+	    panel.add(peopleWaitingLabel);
+	    
+	    JLabel lblNewLabel_2 = new JLabel("Please enter pickup amount");
+	    lblNewLabel_2.setBounds(381, 501, 132, 15);
+	    panel.add(lblNewLabel_2);
+	    
+	    JTextField num = new JTextField();
+	    num.setText("amount");
+	    num.setBounds(400, 528, 126, 27);
+	    panel.add(num);
+	    
+	    JLabel timeNowLabel = new JLabel("current time:");
+	    timeNowLabel.setForeground(new Color(128, 0, 0));
+	    Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        timeNowLabel.setText("current time:"+ hour + ":" + minute+ ":" + second);
+	    timeNowLabel.setBounds(1098, 26, 132, 15);
+	    panel.add(timeNowLabel);
 	    
 	    infoDataList = sqlQuery.findPost(this.postID);
 	    for(ProcessData data : infoDataList) {
-	    	//userName unrivised
+	    	//userName
 	    	
 	    	//resize imageIcon with the same size of a Jlabel
 	    	ImageIcon MyImage = new ImageIcon(data.getGraph());
@@ -155,49 +200,58 @@ public class PostView extends JFrame{
 	    	imageLabel.setIcon(image);
 	    	foodNameLabel.setText(data.getName());
 	    	postContentLabel.setText(data.getPostContent());
-	    	text_3.setText("領取地點："+data.getLocation());
-	    	text_2.setText("開始發放時間：" + data.getStartTime());
-	    	text_1.setText("數量：" + data.getAmount());
+	    	text_3.setText("location:"+data.getLocation());
+	    	text_2.setText("pickup start time:" + data.getStartTime());
+	    	text_1.setText("amount:" + data.getAmount());
 	    	remaining = data.getAmount();
 	    	
         }
-	    peopleWaiting = sqlQuery.countPeopleWaiting(this.postID);
-	    peopleWaitingLabel.setText("目前卡位人數：" + peopleWaiting); 
+	    //peopleWaiting = sqlQuery.upadatePeopleWaiting(this.postID);
+	    peopleWaitingLabel.setText("current waiting people:" + peopleWaiting); 
 	    
 	    totalAmount = sqlQuery.countTotalFoodAmount(this.postID);
-	    remainingLabel.setText("剩餘數量：" + totalAmount); 
+	    remainingLabel.setText("left amount" + totalAmount); 
 	    
-	    //延後動作
+	    
 	    postpone_yn.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		sqlQuery.delayPickup("aaa111", postID);//random user
-	    		postponeReminderLabel.setText("已延後");
+	    		sqlQuery.delayPickup("aaa111", postID);
+	    		postponeReminderLabel.setText("postponed");
 	    		postpone_yn.setEnabled(false);
             	JOptionPane.showMessageDialog(null, "Your product has been reserved for 10 minutes, please come and pick it up, otherwise you will be disqualified", "Postponed Successfully", JOptionPane.INFORMATION_MESSAGE);
 	    	}
 	    });
 	    
-	    //卡位動作
+	    
 	    waitBtn.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		if(num.getText().isEmpty()) {
-                	JOptionPane.showMessageDialog(null, "Please enter the quantity you want", "Waiting Failed", JOptionPane.ERROR_MESSAGE);
-	    		}else {
-	    			sqlQuery.placeHolder("aaa111", postID, Integer.parseInt(num.getText()));//random user
-	            	JOptionPane.showMessageDialog(null, "Please be sure to pick up the food!", "Waiting Successfully", JOptionPane.INFORMATION_MESSAGE);
-	            	num.setText("");
-	            	num.setEditable(false);
-	            	reminderLabel.setText("");
-	            	remainingLabel.setText("剩餘數量：" + (remaining-Integer.parseInt(num.getText())));
-	            	peopleWaitingLabel.setText("目前卡位人數：" + peopleWaiting); 
-	            	postpone_yn.setEnabled(true);
-	            	waitBtn.setEnabled(false);
-	            	finish_pick.setEnabled(true);
-	    		}
-	    	}
+	        public void actionPerformed(ActionEvent e) {
+	            if (num.getText().isEmpty()) {
+	                JOptionPane.showMessageDialog(null, "Please enter the quantity you want", "Waiting Failed", JOptionPane.ERROR_MESSAGE);
+	            } else {
+	                try {
+	                    int quantity = Integer.parseInt(num.getText());
+	                    sqlQuery.placeHolder("aaa111", postID, quantity); 
+	                    JOptionPane.showMessageDialog(null, "Please be sure to pick up the food!", "Waiting Successfully", JOptionPane.INFORMATION_MESSAGE);
+	                    num.setText("");
+	                    num.setEditable(false);
+	                    reminderLabel.setText("");
+	                    totalAmount = sqlQuery.countTotalFoodAmount(postID);
+	                    //peopleWaiting = sqlQuery.upadatePeopleWaiting(postID);
+	                    remaining -= totalAmount;
+	                 
+	                    remainingLabel.setText("remaining amount" + remaining);
+	                    peopleWaitingLabel.setText("current waiting people" + peopleWaiting);
+	                    postpone_yn.setEnabled(true);
+	                    waitBtn.setEnabled(false);
+	                    finish_pick.setEnabled(true);
+	                } catch (NumberFormatException ex) {
+	                    JOptionPane.showMessageDialog(null, "Please enter a valid quantity", "Waiting Failed", JOptionPane.ERROR_MESSAGE);
+	                }
+	            }
+	        }
 	    });
 	   
-	    //完成取貨動作
+	    
 	    finish_pick.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		finish_pick.setEnabled(false);
@@ -205,33 +259,16 @@ public class PostView extends JFrame{
 	    		waitBtn.setEnabled(false);
 	    		postpone_yn.setEnabled(false);
 	    		finishPick = true;
-	    		finish_pick.setText("已完成取貨");
-            	JOptionPane.showMessageDialog(null, "This transction has been finished", "Transaction Finished", JOptionPane.INFORMATION_MESSAGE);
-            	//dispose this frame and enter homepage after pickup
-            	HomePage homePage = new HomePage();
-				homePage.setVisible(true);
-				dispose();
+	    		finish_pick.setText("finish pickup!");
+            	JOptionPane.showMessageDialog(null, "This transction has been finished, please upload the payment detail", "Transaction Finished", JOptionPane.INFORMATION_MESSAGE);
+            	
+            	PayPage payPage = new PayPage();
 	    	}
 	    });
 	    
-	    JLabel timeNowLabel = new JLabel("現在時間：");
-	    timeNowLabel.setForeground(new Color(128, 0, 0));
-	    timeNowLabel.setFont(new Font("微軟正黑體", Font.BOLD, 12));
-	    Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
-        timeNowLabel.setText("現在時間："+ hour + "：" + minute+ "：" + second);
-	    timeNowLabel.setBounds(600, 32, 132, 15);
-	    getContentPane().add(timeNowLabel);
-	    
-	    num = new JTextField();
-	    num.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    num.setText("數量");
-	    num.setBounds(400, 528, 85, 27);
-	    getContentPane().add(num);
-	    num.setColumns(10);
-	    
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setLocationRelativeTo(null);
+	    setVisible(true);
 	    }
      
 	     // Method to resize imageIcon with the same size of a Jlabel
@@ -245,6 +282,6 @@ public class PostView extends JFrame{
 	    }*/
 	    
 	    public static void main(String[] args){
-	        new PostView(1); //Take postID 1 for example
+	        new PostView(1); 
 	    }
 }

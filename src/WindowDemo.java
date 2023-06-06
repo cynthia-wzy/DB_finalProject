@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,7 +9,9 @@ import java.nio.file.Files;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,11 +20,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
 public class WindowDemo extends JFrame{
 	
 	private JButton browseButton;
+	private JFrame frame;
     private JLabel label;
     private JTextArea postTextArea;
     private JComboBox typeComboBox;
@@ -37,11 +45,72 @@ public class WindowDemo extends JFrame{
 	private SQLQuery sqlQuery = new SQLQuery();
     
     public WindowDemo(){
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    getContentPane().setBackground(Color.decode("#FFFF9F"));
+	    getContentPane().setLayout(null);
+	    
+	    JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
+        lblNewLabel.setBackground(new Color(240, 240, 240));
+        
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBounds(0, 0, screenSize.width, 34);
+        getContentPane().add(lblNewLabel);
+        Font font = new Font("Arial", Font.BOLD, 32); 
+        lblNewLabel.setFont(font);
+        
+        JButton registerButton = new JButton("Log in");
+        registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
+        registerButton.setBackground(Color.decode("#FFD300")); 
+        getContentPane().add(registerButton);
+        registerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RegisterPage registerPage = new RegisterPage();
+                registerPage.getFrame().setVisible(true);
+            }
+        });
+
+        JButton loginButton = new JButton("Sign up");
+        loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
+        loginButton.setBackground(Color.decode("#FFD300")); 
+        getContentPane().add(loginButton);
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                LoginPage loginPage = new LoginPage();
+                loginPage.getFrame().setVisible(true);
+            }
+        });
+        
+        JPanel panel = new JPanel();
+        panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
+        panel.setBackground(Color.decode("#FFFFE0")); 
+        getContentPane().add(panel);
+
+        // Set preferred size of panel to fit within scroll pane
+        panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
+	    panel.setLayout(null);
+	    
+	    postTextArea = new JTextArea();
+	    postTextArea.setText("post content");
+	    postTextArea.setBounds(28, 100, 1053, 118);
+	    panel.add(postTextArea);
+	    
+	    JLabel NameLabel = new JLabel("food name");
+	    NameLabel.setBounds(36, 72, 96, 18);
+	    panel.add(NameLabel);
+	    
+	    text_name = new JTextField();
+	    text_name.setColumns(10);
+	    text_name.setBounds(148, 69, 96, 21);
+	    panel.add(text_name);
+	    
+	    JLabel imageLabel = new JLabel("upload image");
+	    imageLabel.setBounds(28, 241, 106, 15);
+	    panel.add(imageLabel);
+	    
 	    browseButton = new JButton("Browse");
 	    browseButton.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    browseButton.setBounds(180,241,100,40);
-	    getContentPane().setLayout(null);
-	    getContentPane().add(browseButton);
+	    browseButton.setBounds(148,228,100,40);
+	    panel.add(browseButton);
 	    
 	    browseButton.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
@@ -73,95 +142,73 @@ public class WindowDemo extends JFrame{
 				}
 			}	
 	    });
-
-	    postTextArea = new JTextArea();
-	    postTextArea.setFont(new Font("微軟正黑體", Font.PLAIN, 13));
-	    postTextArea.setText("請輸入貼文內容");
-	    postTextArea.setBounds(29, 97, 670, 130);
-	    getContentPane().add(postTextArea);
 	    
-	    JLabel imageLabel = new JLabel("插入貼文照片");
-	    imageLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    imageLabel.setBounds(29, 241, 108, 40);
-	    getContentPane().add(imageLabel);
-	    
-	    JLabel locationLabel = new JLabel("領取地點");
-	    locationLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    locationLabel.setBounds(29, 291, 108, 40);
-	    getContentPane().add(locationLabel);
+	    JLabel locationLabel = new JLabel("give out location");
+	    locationLabel.setBounds(28, 297, 106, 18);
+	    panel.add(locationLabel);
 	    
 	    text_location = new JTextField();
-	    text_location.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    text_location.setBounds(180, 301, 100, 21);
-	    getContentPane().add(text_location);
+	    text_location.setBounds(148, 294, 96, 21);
+	    panel.add(text_location);
 	    text_location.setColumns(10);
 	    
-	    JLabel typeLabel = new JLabel("食物類型");
-	    typeLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    typeLabel.setBounds(29, 341, 108, 40);
-	    getContentPane().add(typeLabel);
+	    JLabel typeLabel = new JLabel("food type");
+	    typeLabel.setBounds(28, 337, 106, 15);
+	    panel.add(typeLabel);
 	    
 	    typeComboBox = new JComboBox();
-	    typeComboBox.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    typeComboBox.setModel(new DefaultComboBoxModel(new String[] {"便當", "飲料", "零食", "生鮮食材"}));
-	    typeComboBox.setBounds(180, 350, 100, 23);
-	    getContentPane().add(typeComboBox);
+	    typeComboBox.setModel(new DefaultComboBoxModel(new String[] {"lunch box", "drinks", "fresh green", "others"}));
+	    typeComboBox.setBounds(148, 334, 96, 21);
+	    panel.add(typeComboBox);
 	    
-	    JLabel startTimeLabel = new JLabel("開始發放時間 (e.g 13:30)");
-	    startTimeLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    startTimeLabel.setBounds(29, 407, 141, 40);
-	    getContentPane().add(startTimeLabel);
+	    JLabel startTimeLabel = new JLabel("give-out start time");
+	    startTimeLabel.setBounds(28, 379, 106, 15);
+	    panel.add(startTimeLabel);
 	    
 	    text_startTime = new JTextField();
-	    text_startTime.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
 	    text_startTime.setColumns(10);
-	    text_startTime.setBounds(180, 419, 100, 21);
-	    getContentPane().add(text_startTime);
+	    text_startTime.setBounds(148, 379, 96, 21);
+	    panel.add(text_startTime);
 	    
-	    JLabel priceLabel = new JLabel("每份最低售價 (無可填0)");
-	    priceLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    priceLabel.setBounds(29, 484, 141, 40);
-	    getContentPane().add(priceLabel);
+	    JLabel priceLabel = new JLabel("lowest price per unit");
+	    priceLabel.setBounds(28, 453, 106, 18);
+	    panel.add(priceLabel);
 	    
 	    text_price = new JTextField();
-	    text_price.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
 	    text_price.setColumns(10);
-	    text_price.setBounds(180, 494, 100, 21);
-	    getContentPane().add(text_price);
+	    text_price.setBounds(148, 450, 96, 21);
+	    panel.add(text_price);
 	    
 	    JLabel username = new JLabel("username");
-	    username.setFont(new Font("微軟正黑體", Font.PLAIN, 14));
-	    username.setBounds(29, 0, 757, 54);
-	    getContentPane().add(username);
+	    username.setBounds(28, 35, 104, 15);
+	    panel.add(username);
 	    
-	    JLabel endTimeLabel = new JLabel("領取截止時間 (e.g. 18:00)");
-	    endTimeLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    endTimeLabel.setBounds(27, 442, 141, 40);
-	    getContentPane().add(endTimeLabel);
+	    JLabel endTimeLabel = new JLabel("give-out end time");
+	    endTimeLabel.setBounds(28, 413, 106, 18);
+	    panel.add(endTimeLabel);
 	    
 	    text_endTime = new JTextField();
-	    text_endTime.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
 	    text_endTime.setColumns(10);
-	    text_endTime.setBounds(180, 450, 100, 21);
-	    getContentPane().add(text_endTime);
+	    text_endTime.setBounds(148, 410, 96, 21);
+	    panel.add(text_endTime);
 	    
-	    JLabel amountLabel = new JLabel("發放數量");
-	    amountLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    amountLabel.setBounds(29, 372, 141, 40);
-	    getContentPane().add(amountLabel);
+	    JLabel amountLabel = new JLabel("food amount");
+	    amountLabel.setBounds(28, 494, 106, 18);
+	    panel.add(amountLabel);
 	    
 	    text_amount = new JTextField();
-	    text_amount.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
 	    text_amount.setColumns(10);
-	    text_amount.setBounds(180, 384, 100, 21);
-	    getContentPane().add(text_amount);
+	    text_amount.setBounds(148, 491, 96, 21);
+	    panel.add(text_amount);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLocationRelativeTo(null);
-	    setSize(800,800);
+	    
+	    setSize(screenSize);
 	    setVisible(true);
 	    
-	    JButton postButton = new JButton("發佈貼文");
-	    postButton.setFont(new Font("微軟正黑體", Font.BOLD, 14));
+	    JButton postButton = new JButton("post");
+	    postButton.setBackground(Color.decode("#FFD300")); 
+	    postButton.setFont(new Font("Ariel", Font.BOLD, 14));
 	    postButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -200,28 +247,17 @@ public class WindowDemo extends JFrame{
 	                	JOptionPane.showMessageDialog(null, "Please complete the text.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
 	                }else {
 	                	
-	                	JOptionPane.showMessageDialog(null, "Uploaded Successfully！", "Success", JOptionPane.INFORMATION_MESSAGE);
+	                	JOptionPane.showMessageDialog(null, "Uploaded Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 	                	WindowDemo.this.dispose();
 	    		        
 	    		        HomePage homePage = new HomePage();
-	    		        homePage.setVisible(true);
+	    		        setVisible(true);
 	                }
 		        }
 			}
 		});
 	    postButton.setBounds(29, 546, 670, 40);
-	    getContentPane().add(postButton);
-	    
-	    JLabel NameLabel = new JLabel("\u98DF\u7269\u540D\u7A31");
-	    NameLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    NameLabel.setBounds(29, 47, 108, 40);
-	    getContentPane().add(NameLabel);
-	    
-	    text_name = new JTextField();
-	    text_name.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    text_name.setColumns(10);
-	    text_name.setBounds(180, 57, 100, 21);
-	    getContentPane().add(text_name);
+	    panel.add(postButton);
 	    
 	    }
      
