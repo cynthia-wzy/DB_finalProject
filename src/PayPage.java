@@ -13,6 +13,7 @@ import javax.swing.JTextPane;
 import javax.swing.JFileChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JProgressBar;
 
 public class PayPage {
 
@@ -46,38 +47,50 @@ public class PayPage {
      */
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
-		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setBackground(Color.decode("#FFFF9F"));
         frame.getContentPane().setLayout(null);
-        // Center the frame on the screen
+        frame.setResizable(false);
+
+        // Get screen size
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
-        int frameWidth = frame.getWidth();
-        int frameHeight = frame.getHeight();
-        int x = (screenWidth - frameWidth) / 2;
-        int y = (screenHeight - frameHeight) / 2;
+
+        // Set frame size
+        frame.setSize(screenWidth, screenHeight);
+
+        // Center the frame on the screen
+        int x = (screenWidth - frame.getWidth()) / 2;
+        int y = (screenHeight - frame.getHeight()) / 2;
         frame.setLocation(x, y);
+
+        // Rest of your code...
+    
+
         
         JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
         lblNewLabel.setBackground(new Color(240, 240, 240));
+        
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(0, 0, 438, 34);
+        lblNewLabel.setBounds(0, 0, screenSize.width, 34);
         frame.getContentPane().add(lblNewLabel);
-        Font font = new Font("Arial", Font.BOLD, 20); 
+        Font font = new Font("Arial", Font.BOLD, 32); 
         lblNewLabel.setFont(font);
 
-        JLabel lblNewLabel_1 = new JLabel("Please transfer to this account (post office):");
-        lblNewLabel_1.setBounds(57, 72, 150, 14);
+        JLabel lblNewLabel_1 = new JLabel("Please transfer this account (post office):");
+        lblNewLabel_1.setBounds(508, 74, 239, 14);
         frame.getContentPane().add(lblNewLabel_1);
+        JLabel lblNewLabel_11 = new JLabel("Please transfer this account (LINE Pay QR Code):");
+        lblNewLabel_11.setBounds(508, 111, 315, 14);
+        frame.getContentPane().add(lblNewLabel_11);
 
         JLabel lblNewLabel_2 = new JLabel("Transaction record:");
-        lblNewLabel_2.setBounds(57, 150, 150, 14);
+        lblNewLabel_2.setBounds(508, 349, 150, 14);
         frame.getContentPane().add(lblNewLabel_2);
 
         JButton uploadButton = new JButton("Upload");
-        uploadButton.setBounds(171, 219, 89, 23);
+        uploadButton.setBounds(651, 426, 89, 23);
         uploadButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(uploadButton);
         uploadButton.addActionListener(new ActionListener() {
@@ -88,18 +101,27 @@ public class PayPage {
         });
 
         JLabel lblNewLabel_3 = new JLabel("(700)00011230123123");
-        lblNewLabel_3.setBounds(200, 47, 180, 64);
+        lblNewLabel_3.setBounds(768, 74, 240, 14);
         lblNewLabel_3.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(lblNewLabel_3);
-
+        
+        JLabel lblNewLabel_4 = new JLabel("");//QR Code
+        lblNewLabel_4.setBounds(833, 111, 294, 228);
+        lblNewLabel_4.setBackground(Color.decode("#FFD300")); 
+        frame.getContentPane().add(lblNewLabel_4);
+        
         JButton browseButton = new JButton("Browse");
-        browseButton.setBounds(200, 150, 89, 23);
+        browseButton.setBounds(692, 349, 89, 23);
         browseButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(browseButton);
         
         JLabel fileName = new JLabel("");
-        fileName.setBounds(200, 183, 209, 15);
+        fileName.setBounds(692, 395, 209, 15);
         frame.getContentPane().add(fileName);
+        
+        JProgressBar progressBar = new JProgressBar();
+        progressBar.setBounds(623, 460, 146, 7);
+        frame.getContentPane().add(progressBar);
         
         browseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

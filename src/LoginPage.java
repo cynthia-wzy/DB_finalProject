@@ -136,6 +136,7 @@ public class LoginPage {
 		text_account.setColumns(10);
 		
 		JButton loginButton = new JButton("Login");
+		loginButton.setBackground(Color.decode("#FFD300")); 
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = text_name.getText();
