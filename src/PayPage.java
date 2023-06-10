@@ -68,20 +68,26 @@ public class PayPage {
         Font font = new Font("Arial", Font.BOLD, 20); 
         lblNewLabel.setFont(font);
 
-        JLabel lblNewLabel_1 = new JLabel("Transfer information");
+        JLabel lblNewLabel_1 = new JLabel("Please transfer this account (post office):");
         lblNewLabel_1.setBounds(57, 72, 150, 14);
         frame.getContentPane().add(lblNewLabel_1);
 
-        JLabel lblNewLabel_2 = new JLabel("Transaction record");
+        JLabel lblNewLabel_2 = new JLabel("Transaction record:");
         lblNewLabel_2.setBounds(57, 150, 150, 14);
         frame.getContentPane().add(lblNewLabel_2);
 
-        JButton btnNewButton = new JButton("Upload");
-        btnNewButton.setBounds(171, 219, 89, 23);
-        btnNewButton.setBackground(Color.decode("#FFD300")); 
-        frame.getContentPane().add(btnNewButton);
+        JButton uploadButton = new JButton("Upload");
+        uploadButton.setBounds(171, 219, 89, 23);
+        uploadButton.setBackground(Color.decode("#FFD300")); 
+        frame.getContentPane().add(uploadButton);
+        uploadButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                transcation_success successPage = new transcation_success();
+                successPage.setVisible(true);
+            }
+        });
 
-        JLabel lblNewLabel_3 = new JLabel("New label");
+        JLabel lblNewLabel_3 = new JLabel("(700)00011230123123");
         lblNewLabel_3.setBounds(200, 47, 180, 64);
         lblNewLabel_3.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(lblNewLabel_3);
