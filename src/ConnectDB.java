@@ -5,21 +5,22 @@ import java.sql.SQLException;
 
 public class ConnectDB {
 	private static Connection con;
-	private static String server = /*"jdbc:mysql://140.119.19.73:3315/"*/; 
-	private static String database = /*"studentID"*/;
+	private static String server = "jdbc:mysql://140.119.19.73:3315/"; 
+	private static String database = "108305091";
 	private static String url = server + database + "?useSSL=false";
-	/*private static String username = "studentID";
-	private static String password = "password"; */
+	private static String username = "108305091";
+	private static String password = "o8fzq"; 
 	
 	public static Connection getCon() {
 		/*String server = "jdbc:mysql://140.119.19.73:3315/";
-		String database = "studentID";*/
+		String database = "108305091";
 		String url = server + database + "?useSSL=false";
-		/*String username = "studentID";
+		String username = "108305091";
 		String password = "password";*/
 		
 		try {
 			con = DriverManager.getConnection(url, username, password);
+			System.out.print("DB Connected");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
