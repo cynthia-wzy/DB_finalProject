@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +20,8 @@ import javax.swing.SwingConstants;
 public class HomePage {
 
     JFrame frame;
+    private SQLQuery sqlQuery = new SQLQuery();
+    
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -89,48 +92,62 @@ public class HomePage {
         // Set preferred size of panel to fit within scroll pane
         panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-
-        // Add sample items
-        addItem(panel, "image1.jpg", "Item 1", "Location 1", "10", "5");
-        addItem(panel, "image2.jpg", "Item 2", "Location 2", "8", "3");
-        addItem(panel, "image3.jpg", "Item 3", "Location 3", "12", "7");
-        addItem(panel, "image4.jpg", "Item 4", "Location 4", "6", "2");
-
+        
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
         scrollPane.getVerticalScrollBar().setBackground(Color.decode("#FFFFE0"));
         scrollPane.getHorizontalScrollBar().setBackground(Color.decode("#FFFFE0"));
         frame.getContentPane().add(scrollPane);
+        
+        // Add items
+        sqlQuery.allPostInfo();
+        List<PostInfo> postInfos = sqlQuery.allPostInfo();
+
+        for (PostInfo postInfo : postInfos) {
+            addItem(panel, postInfo.getImage(), postInfo.getFoodName(), postInfo.getFoodLocation(), Integer.toString(postInfo.getFoodAmount()), postInfo.getPickupDDL(), postInfo.getMinPrice());
+        }
+
 
         frame.setVisible(true);
     }
 
-    private void addItem(JPanel panel, String imagePath, String name, String location, String remaining, String quantity) {
+    private void addItem(JPanel panel, byte[] image, String name, String location, String remaining, String time, int price) {
         JPanel itemPanel = new JPanel();
         itemPanel.setPreferredSize(new Dimension(800, 200));
         itemPanel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
 
-        // ...
-
         // Create and set the labels for item details
         JLabel nameLabel = new JLabel("Name: " + name + "  ");
         nameLabel.setForeground(new Color(0, 0, 102)); // Set text color to dark blue
+        
         JLabel locationLabel = new JLabel("Location: " + location + "  ");
         locationLabel.setForeground(new Color(0, 102, 0)); // Set text color to dark green
+        
         JLabel remainingLabel = new JLabel("Remaining: " + remaining + "  ");
         remainingLabel.setForeground(Color.decode("#652A01")); // Set text color to brown
-        JLabel quantityLabel = new JLabel("Quantity: " + quantity + "  ");
-        quantityLabel.setForeground(new Color(102, 0, 102)); // Set text color to dark purple
-
-        // ...
+        
+        JLabel timeLabel = new JLabel("Final pickup time: " + time + "  ");
+        timeLabel.setForeground(new Color(102, 0, 102)); // Set text color to dark purple
+        
+        JLabel priceLabel = new JLabel("Minimum price: " + price+ "  ");
+        priceLabel.setForeground(new Color(102, 0, 102));
+        
+        ImageIcon icon = new ImageIcon(image);
+        Image originalImage = icon.getImage();
+        int targetWidth = 200;
+        int targetHeight = 200;
+        // scale the image
+        Image scaledImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel imageLabel = new JLabel(scaledIcon);
 
         // Add the labels to the item panel
         itemPanel.add(nameLabel);
         itemPanel.add(locationLabel);
         itemPanel.add(remainingLabel);
-        itemPanel.add(quantityLabel);
-
-        // ...
+        itemPanel.add(timeLabel);
+        itemPanel.add(priceLabel);
+        itemPanel.add(imageLabel);
 
         // Add the item panel to the main panel
         panel.add(itemPanel);
