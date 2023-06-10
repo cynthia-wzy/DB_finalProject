@@ -1,8 +1,11 @@
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class SQLQuery {
 	
@@ -178,6 +181,38 @@ public class SQLQuery {
 			e.printStackTrace();
 		}
 		return sum;
+	}
+	
+	// HomePage // get posts info
+	public List<PostInfo> allPostInfo(){
+		List<PostInfo> postInfos = new ArrayList<>();
+	    
+		try {
+	        Connection con = ConnectDB.getCon();
+	        String query = "SELECT Image, FoodName, FoodLocation, FoodAmount, PickupDDL, MinPrice"
+	                + " FROM Post";
+	        Statement stat = con.createStatement();
+	        ResultSet rs = stat.executeQuery(query);
+	        
+	        while (rs.next()) {
+	        	
+	            String foodName = rs.getString("FoodName");
+	            String foodLocation = rs.getString("FoodLocation");
+	            int foodAmount = rs.getInt("FoodAmount");
+	            String pickupDDL = rs.getTime("PickupDDL").toString();
+	            int minPrice = rs.getInt("MinPrice");
+	            byte[] imageData = rs.getBytes("Image");
+
+	            PostInfo postInfo = new PostInfo(imageData, foodName, foodLocation, foodAmount, pickupDDL, minPrice);
+	            postInfos.add(postInfo);
+	        }
+
+	        con.close(); 
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return postInfos;
 	}
 
 }
