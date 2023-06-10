@@ -68,7 +68,7 @@ public class PayPage {
         Font font = new Font("Arial", Font.BOLD, 20); 
         lblNewLabel.setFont(font);
 
-        JLabel lblNewLabel_1 = new JLabel("Please transfer this account (post office):");
+        JLabel lblNewLabel_1 = new JLabel("Please transfer to this account (post office):");
         lblNewLabel_1.setBounds(57, 72, 150, 14);
         frame.getContentPane().add(lblNewLabel_1);
 
