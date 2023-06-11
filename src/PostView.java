@@ -37,6 +37,15 @@ public class PostView extends JFrame{
 	private JLabel imageLabel;
     private JTextField num;
     private JLabel lblNewLabel_2;
+    private JLabel timeNowLabel;
+    private JButton updateTimeBtn;
+    
+    private Calendar calendar;
+    private int month;
+    private int date;
+    private int hour;
+    private int minute;
+    private int second;
     
     //資料庫用
     private List<ProcessData> infoDataList;
@@ -66,7 +75,7 @@ public class PostView extends JFrame{
         Font font = new Font("Arial", Font.BOLD, 32); 
         lblNewLabel.setFont(font);
         
-        JButton registerButton = new JButton("Log in");
+        JButton registerButton = new JButton("Sign up");
         registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
         registerButton.setBackground(Color.decode("#FFD300")); 
         getContentPane().add(registerButton);
@@ -77,7 +86,7 @@ public class PostView extends JFrame{
             }
         });
 
-        JButton loginButton = new JButton("Sign up");
+        JButton loginButton = new JButton("Log in");
         loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
         loginButton.setBackground(Color.decode("#FFD300")); 
         getContentPane().add(loginButton);
@@ -98,7 +107,7 @@ public class PostView extends JFrame{
 	    panel.setLayout(null);
 	    
 	    imageLabel = new JLabel();
-	    imageLabel.setBounds(425, 57, 270, 191);
+	    imageLabel.setBounds(1117, 57, 369, 296);
 	    imageLabel.setIcon(null);
 	    panel.add(imageLabel);
 	    
@@ -110,28 +119,29 @@ public class PostView extends JFrame{
 	    panel1.setBounds(32, 57, 1075, 434);
 	    panel1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 	    panel.add(panel1);
+	    panel1.setLayout(new GridLayout(5,1));
 	    
 	    JLabel foodNameLabel = new JLabel("post content");
 	    foodNameLabel.setBounds(0, 0, 371, 20);
 	    panel1.add(foodNameLabel);
 	    
-	    JLabel text_3 = new JLabel();
-	    text_3.setBounds(5, 399, 371, 34);
-	    panel1.add(text_3);
+	    JLabel locationLabel = new JLabel();
+	    locationLabel.setBounds(5, 399, 371, 34);
+	    panel1.add(locationLabel);
 	    
-	    JLabel text_2 = new JLabel();
-	    text_2.setBounds(5, 367, 371, 34);
-	    panel1.add(text_2);
+	    JLabel pickupStartLabel = new JLabel();
+	    pickupStartLabel.setBounds(5, 367, 371, 34);
+	    panel1.add(pickupStartLabel);
 	    
-	    JLabel text_1 = new JLabel();
-	    text_1.setBounds(5, 331, 371, 34);
-	    panel1.add(text_1);
+	    JLabel totalAmountLabel = new JLabel();
+	    totalAmountLabel.setBounds(5, 331, 371, 34);
+	    panel1.add(totalAmountLabel);
 	    
 	    JLabel postContentLabel = new JLabel();
 	    postContentLabel.setBounds(0, 34, 371, 20);
 	    panel1.add(postContentLabel);
 	    
-	    JLabel remainingLabel = new JLabel("remaining amount"); //要用SQL count
+	    JLabel remainingLabel = new JLabel(); //要用SQL count
 	    remainingLabel.setBounds(209, 548, 169, 32);
 	    remainingLabel.setForeground(new Color(128, 0, 0));
 	    panel.add(remainingLabel);
@@ -156,7 +166,7 @@ public class PostView extends JFrame{
 	    panel.add(postponeReminderLabel);
 
 	    JLabel reminderLabel = new JLabel("Please enter pickup amount:");
-	    reminderLabel.setBounds(381, 501, 178, 15);
+	    reminderLabel.setBounds(394, 501, 184, 15);
 	    panel.add(reminderLabel);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLocationRelativeTo(null);
@@ -168,24 +178,28 @@ public class PostView extends JFrame{
 	    peopleWaitingLabel.setBounds(209, 527, 169, 23);
 	    panel.add(peopleWaitingLabel);
 	    
-	    JLabel lblNewLabel_2 = new JLabel("Please enter pickup amount");
-	    lblNewLabel_2.setBounds(381, 501, 132, 15);
-	    panel.add(lblNewLabel_2);
-	    
 	    JTextField num = new JTextField();
 	    num.setText("amount");
 	    num.setBounds(400, 528, 126, 27);
 	    panel.add(num);
 	    
-	    JLabel timeNowLabel = new JLabel("current time:");
+	    timeNowLabel = new JLabel();
+	    timeNowLabel.setFont(new Font("新細明體", Font.PLAIN, 20));
 	    timeNowLabel.setForeground(new Color(128, 0, 0));
-	    Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
-        timeNowLabel.setText("current time:"+ hour + ":" + minute+ ":" + second);
-	    timeNowLabel.setBounds(1098, 26, 132, 15);
+	    calendar = Calendar.getInstance();
+	    month = calendar.get(Calendar.MONTH);
+	    date = calendar.get(Calendar.DATE);
+	    hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+        second = calendar.get(Calendar.SECOND);
+        timeNowLabel.setText("current time: "+ month + "/" +date+ " " + hour + ":" + minute+ ":" + second);
+	    timeNowLabel.setBounds(875, 26, 221, 21);
 	    panel.add(timeNowLabel);
+	    
+	    peopleWaiting = sqlQuery.upadatePeopleWaiting(this.postID);
+	    peopleWaitingLabel.setText("current waiting people:" + peopleWaiting); 
+	    
+	    totalAmount = sqlQuery.countTotalFoodAmount(this.postID);//count the total number of food sold
 	    
 	    infoDataList = sqlQuery.findPost(this.postID);
 	    for(ProcessData data : infoDataList) {
@@ -200,17 +214,32 @@ public class PostView extends JFrame{
 	    	imageLabel.setIcon(image);
 	    	foodNameLabel.setText(data.getName());
 	    	postContentLabel.setText(data.getPostContent());
-	    	text_3.setText("location:"+data.getLocation());
-	    	text_2.setText("pickup start time:" + data.getStartTime());
-	    	text_1.setText("amount:" + data.getAmount());
-	    	remaining = data.getAmount();
+	    	locationLabel.setText("location: "+data.getLocation());
+	    	pickupStartLabel.setText("pick up time: " + data.getStartTime()+" ~ "+data.getEndTime());
+	    	totalAmountLabel.setText("amount: " + data.getAmount());//directly show the amount stored in the database
+	    	remaining = data.getAmount()-totalAmount;
+	    	remainingLabel.setText("left amountl: " + remaining); 
+	    	
 	    	
         }
-	    //peopleWaiting = sqlQuery.upadatePeopleWaiting(this.postID);
-	    peopleWaitingLabel.setText("current waiting people:" + peopleWaiting); 
+
 	    
-	    totalAmount = sqlQuery.countTotalFoodAmount(this.postID);
-	    remainingLabel.setText("left amount" + totalAmount); 
+	    updateTimeBtn = new JButton("Update Time");
+	    updateTimeBtn.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		calendar = Calendar.getInstance();
+	    		month = calendar.get(Calendar.MONTH);
+	    	    date = calendar.get(Calendar.DATE);
+	    	    hour = calendar.get(Calendar.HOUR_OF_DAY);
+	            minute = calendar.get(Calendar.MINUTE);
+	            second = calendar.get(Calendar.SECOND);
+	            timeNowLabel.setText("current time: "+ month + "/" +date+ " " + hour + ":" + minute+ ":" + second);
+	            timeNowLabel.repaint();
+	    	}
+	    });
+	    updateTimeBtn.setFont(new Font("新細明體", Font.PLAIN, 18));
+	    updateTimeBtn.setBounds(724, 24, 127, 23);
+	    panel.add(updateTimeBtn);
 	    
 	    
 	    postpone_yn.addActionListener(new ActionListener() {
@@ -230,20 +259,26 @@ public class PostView extends JFrame{
 	            } else {
 	                try {
 	                    int quantity = Integer.parseInt(num.getText());
-	                    sqlQuery.placeHolder("aaa111", postID, quantity); 
-	                    JOptionPane.showMessageDialog(null, "Please be sure to pick up the food!", "Waiting Successfully", JOptionPane.INFORMATION_MESSAGE);
-	                    num.setText("");
-	                    num.setEditable(false);
-	                    reminderLabel.setText("");
-	                    totalAmount = sqlQuery.countTotalFoodAmount(postID);
-	                    //peopleWaiting = sqlQuery.upadatePeopleWaiting(postID);
-	                    remaining -= totalAmount;
-	                 
-	                    remainingLabel.setText("remaining amount" + remaining);
-	                    peopleWaitingLabel.setText("current waiting people" + peopleWaiting);
-	                    postpone_yn.setEnabled(true);
-	                    waitBtn.setEnabled(false);
-	                    finish_pick.setEnabled(true);
+	                    //make sure there has enough product
+	                    if(remaining<quantity) {
+	                    	JOptionPane.showMessageDialog(null, "Please change the quantity you want", "Insufficient Quantity", JOptionPane.ERROR_MESSAGE);
+	                    	num.setText("");//clear field
+	                    }else {
+	                    	sqlQuery.placeHolder("aaa111", postID, quantity); 
+		                    JOptionPane.showMessageDialog(null, "Please be sure to pick up the food!", "Waiting Successfully", JOptionPane.INFORMATION_MESSAGE);
+		                    num.setText("");//clear field
+		                    num.setEditable(false);//user cannot edit again
+		                    reminderLabel.setText("");
+		                    totalAmount = sqlQuery.countTotalFoodAmount(postID);
+		                    peopleWaiting = sqlQuery.upadatePeopleWaiting(postID);
+		                    remaining -= totalAmount;
+		                    sqlQuery.updateTotalFoodAmount(postID,remaining);//update the FoodAmount in the database
+		                    remainingLabel.setText("remaining amount: " + remaining);
+		                    peopleWaitingLabel.setText("current waiting people: " + peopleWaiting);
+		                    postpone_yn.setEnabled(true);//user can postpone from now on 
+		                    waitBtn.setEnabled(false); //user cannot press the wait btn from now on 
+		                    finish_pick.setEnabled(true);//user can finish the transaction from now on 
+	                    }
 	                } catch (NumberFormatException ex) {
 	                    JOptionPane.showMessageDialog(null, "Please enter a valid quantity", "Waiting Failed", JOptionPane.ERROR_MESSAGE);
 	                }
@@ -261,8 +296,8 @@ public class PostView extends JFrame{
 	    		finishPick = true;
 	    		finish_pick.setText("finish pickup!");
             	JOptionPane.showMessageDialog(null, "This transction has been finished, please upload the payment detail", "Transaction Finished", JOptionPane.INFORMATION_MESSAGE);
-            	
             	PayPage payPage = new PayPage();
+            	payPage.getFrame().setVisible(true);
 	    	}
 	    });
 	    
@@ -270,16 +305,6 @@ public class PostView extends JFrame{
 	    setLocationRelativeTo(null);
 	    setVisible(true);
 	    }
-     
-	     // Method to resize imageIcon with the same size of a Jlabel
-	    /*public ImageIcon ResizeImage(String ImagePath)
-	    {
-	        ImageIcon MyImage = new ImageIcon(ImagePath);
-	        Image img = MyImage.getImage();
-	        Image newImg = img.getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
-	        ImageIcon image = new ImageIcon(newImg);
-	        return image;
-	    }*/
 	    
 	    public static void main(String[] args){
 	        new PostView(1); 
