@@ -76,14 +76,32 @@ public class transcation_success extends JFrame {
 	    lblNewLabel1.setBounds(292, 102, 605, 61);
 	    panel.add(lblNewLabel1);
 	    
-	    JLabel lblNewLabel_1 = new JLabel("Transfered $ XX to user XX");
+	    JLabel lblNewLabel_1 = new JLabel("Transfered $ ");
 	    lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblNewLabel_1.setBounds(485, 77, 219, 15);
+	    lblNewLabel_1.setBounds(471, 77, 120, 15);
 	    panel.add(lblNewLabel_1);
+	    
+	    JLabel transferAmt_label = new JLabel("Amt");
+	    transferAmt_label.setBounds(568, 77, 47, 15);
+	    panel.add(transferAmt_label);
+	    
+	    JLabel User_label = new JLabel("ID");
+	    User_label.setForeground(new Color(0, 0, 0));
+	    User_label.setEnabled(false);
+	    User_label.setBounds(658, 77, 47, 15);
+	    panel.add(User_label);
+	    
+	    JLabel lblNewLabel_2 = new JLabel("to User");
+	    lblNewLabel_2.setBounds(601, 77, 47, 15);
+	    panel.add(lblNewLabel_2);
 	    
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLocationRelativeTo(null);
-	    setSize(screenSize);
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+
+        // Set frame size
+        setSize(screenWidth, screenHeight);
 	    setVisible(true);
 	    
 	    }
@@ -98,5 +116,4 @@ public class transcation_success extends JFrame {
     public static void main(String[] args){
 	        new transcation_success();
 	}
-
 }
