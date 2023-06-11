@@ -164,6 +164,21 @@ public class SQLQuery {
 		return count;
 	}
 	
+	//PostView //更新等待人數
+	public int upadatePeopleWaiting(int postID){
+		int peopleWaiting = countPeopleWaiting(postID);
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+						.prepareStatement("UPDATE Post SET PeopleWaiting = ? WHERE PostID = ?");
+			pre.setInt(1, peopleWaiting);
+			pre.setInt(2, postID);
+			pre.executeUpdate();//更新資料庫
+		} catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return peopleWaiting;
+	}
+	
 	//PostView //計算商品剩餘數量
 	public int countTotalFoodAmount(int postID){
 		int sum = 0;
@@ -177,6 +192,21 @@ public class SQLQuery {
 				sum = rs.getInt(1); // 獲取結果集中的第一列的值，即 SUM
 		    }
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sum;
+	}
+	
+	//PostView //更新商品剩餘數量 //更改中
+	public int updateTotalFoodAmount(int postID, int remaining){
+		int sum = 0;
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("UPDATE Post SET FoodAmount = ? WHERE PostID = ?");
+			pre.setInt(1, remaining);//待更正
+			pre.setInt(2, postID);
+			pre.executeUpdate();//更新資料庫
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
