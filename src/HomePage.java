@@ -1,8 +1,10 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -85,19 +87,15 @@ public class HomePage {
         });
 
         JPanel panel = new JPanel();
-        panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
-        panel.setBackground(Color.decode("#FFFFE0")); 
-        frame.getContentPane().add(panel);
+        panel.setBackground(Color.decode("#FFFFE0"));
+        panel.setLayout(new GridLayout(0, 1, 10, 10)); // Use GridLayout with variable rows
 
-        // Set preferred size of panel to fit within scroll pane
-        panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
         scrollPane.getVerticalScrollBar().setBackground(Color.decode("#FFFFE0"));
         scrollPane.getHorizontalScrollBar().setBackground(Color.decode("#FFFFE0"));
         frame.getContentPane().add(scrollPane);
+        
         
         // Add items
         sqlQuery.allPostInfo();
@@ -110,43 +108,69 @@ public class HomePage {
 
         frame.setVisible(true);
     }
-
     private void addItem(JPanel panel, byte[] image, String name, String location, String remaining, String time, int price) {
         JPanel itemPanel = new JPanel();
-        itemPanel.setPreferredSize(new Dimension(800, 200));
+        itemPanel.setPreferredSize(new Dimension(1200, 300));
         itemPanel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
+        itemPanel.setLayout(new FlowLayout());
+
+        JPanel detailsPanel = new JPanel();
+        detailsPanel.setLayout(new GridLayout(0, 1));
+        detailsPanel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
 
         // Create and set the labels for item details
         JLabel nameLabel = new JLabel("Name: " + name + "  ");
-        nameLabel.setForeground(new Color(0, 0, 102)); // Set text color to dark blue
-        
+        Font font = new Font("Arial", Font.BOLD, 16);
+        nameLabel.setFont(font);
         JLabel locationLabel = new JLabel("Location: " + location + "  ");
-        locationLabel.setForeground(new Color(0, 102, 0)); // Set text color to dark green
-        
+        Font font1 = new Font("Arial", Font.BOLD, 16);
+        locationLabel.setFont(font1);
+
         JLabel remainingLabel = new JLabel("Remaining: " + remaining + "  ");
-        remainingLabel.setForeground(Color.decode("#652A01")); // Set text color to brown
-        
+        Font font2 = new Font("Arial", Font.BOLD, 16);
+        remainingLabel.setFont(font2);
+
         JLabel timeLabel = new JLabel("Final pickup time: " + time + "  ");
-        timeLabel.setForeground(new Color(102, 0, 102)); // Set text color to dark purple
-        
-        JLabel priceLabel = new JLabel("Minimum price: " + price+ "  ");
-        priceLabel.setForeground(new Color(102, 0, 102));
-        
+        Font font4 = new Font("Arial", Font.BOLD, 16);
+        timeLabel.setFont(font4);
+        timeLabel.setForeground(Color.BLUE); // Set text color to blue
+
+        JLabel priceLabel = new JLabel("Minimum price: " + price + "  ");
+        Font font5 = new Font("Arial", Font.BOLD, 16);
+        priceLabel.setFont(font5);
+        priceLabel.setForeground(Color.RED); // Set text color to red
+
+        // Add the labels to the details panel
+        detailsPanel.add(nameLabel);
+        detailsPanel.add(locationLabel);
+        detailsPanel.add(remainingLabel);
+        detailsPanel.add(timeLabel);
+        detailsPanel.add(priceLabel);
+
+        JButton moreDetailsButton = new JButton("More Details");
+        moreDetailsButton.setBackground(Color.decode("#FFD300")); 
+        moreDetailsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Add the code to handle the "More Details" button click event
+            }
+        });
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
+        buttonPanel.add(moreDetailsButton);
+
+        itemPanel.add(detailsPanel);
+        itemPanel.add(buttonPanel);
+
         ImageIcon icon = new ImageIcon(image);
         Image originalImage = icon.getImage();
-        int targetWidth = 200;
-        int targetHeight = 200;
+        int targetWidth = 300;
+        int targetHeight = 300;
         // scale the image
         Image scaledImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledIcon);
 
-        // Add the labels to the item panel
-        itemPanel.add(nameLabel);
-        itemPanel.add(locationLabel);
-        itemPanel.add(remainingLabel);
-        itemPanel.add(timeLabel);
-        itemPanel.add(priceLabel);
         itemPanel.add(imageLabel);
 
         // Add the item panel to the main panel
