@@ -135,4 +135,7 @@ public class PayPage {
             }
         });
     }
+    public JFrame getFrame() {
+        return frame;
+    }
 }
