@@ -12,12 +12,6 @@ public class ConnectDB {
 	private static String password = "o8fzq"; 
 	
 	public static Connection getCon() {
-		/*String server = "jdbc:mysql://140.119.19.73:3315/";
-		String database = "108305091";
-		String url = server + database + "?useSSL=false";
-		String username = "108305091";
-		String password = "password";*/
-		
 		try {
 			con = DriverManager.getConnection(url, username, password);
 			System.out.print("DB Connected");
