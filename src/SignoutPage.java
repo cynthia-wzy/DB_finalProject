@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -10,7 +9,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,8 +20,7 @@ import javax.swing.SwingConstants;
 public class SignoutPage {
 
     JFrame frame;
-private SQLQuery sqlQuery = new SQLQuery();
-
+    private SQLQuery sqlQuery = new SQLQuery();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -44,7 +41,7 @@ private SQLQuery sqlQuery = new SQLQuery();
 
     private void initialize() {
         frame = new JFrame();
-	frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
+        frame.getContentPane().setBackground(Color.decode("#FFFF9F"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Get screen size
@@ -61,12 +58,12 @@ private SQLQuery sqlQuery = new SQLQuery();
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setBounds(0, 0, screenSize.width, 34);
         frame.getContentPane().add(lblNewLabel);
-        Font font = new Font("Arial", Font.BOLD, 32); 
+        Font font = new Font("Arial", Font.BOLD, 32);
         lblNewLabel.setFont(font);
 
         JButton registerButton = new JButton("Post");
         registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
-        registerButton.setBackground(Color.decode("#FFD300")); 
+        registerButton.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -77,7 +74,7 @@ private SQLQuery sqlQuery = new SQLQuery();
 
         JButton loginButton = new JButton("Sign out");
         loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
-        loginButton.setBackground(Color.decode("#FFD300")); 
+        loginButton.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(loginButton);
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -88,81 +85,32 @@ private SQLQuery sqlQuery = new SQLQuery();
 
         JPanel panel = new JPanel();
         panel.setBackground(Color.decode("#FFFFE0"));
-        panel.setLayout(new GridLayout(0, 1, 10, 10)); // Use GridLayout with variable rows
+        panel.setLayout(new GridLayout(0, 2, 10, 10)); // Use GridLayout with 2 columns
 
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
         scrollPane.getVerticalScrollBar().setBackground(Color.decode("#FFFFE0"));
         scrollPane.getHorizontalScrollBar().setBackground(Color.decode("#FFFFE0"));
         frame.getContentPane().add(scrollPane);
-        
 
         // Add items
         sqlQuery.allPostInfo();
         List<PostInfo> postInfos = sqlQuery.allPostInfo();
 
         for (PostInfo postInfo : postInfos) {
-            addItem(panel, postInfo.getImage(), postInfo.getFoodName(), postInfo.getFoodLocation(), Integer.toString(postInfo.getFoodAmount()), postInfo.getPickupDDL(), postInfo.getMinPrice());
+            addItem(panel, postInfo.getImage(), postInfo.getFoodName(), postInfo.getFoodLocation(),
+                    Integer.toString(postInfo.getFoodAmount()), postInfo.getPickupDDL(), postInfo.getMinPrice());
         }
-
 
         frame.setVisible(true);
     }
 
-  
-    private void addItem(JPanel panel, byte[] image, String name, String location, String remaining, String time, int price) {
+    private void addItem(JPanel panel, byte[] image, String name, String location, String remaining, String time,
+            int price) {
         JPanel itemPanel = new JPanel();
-        itemPanel.setPreferredSize(new Dimension(1200, 300));
-        itemPanel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
-        itemPanel.setLayout(new FlowLayout());
-
-        JPanel detailsPanel = new JPanel();
-        detailsPanel.setLayout(new GridLayout(0, 1));
-        detailsPanel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
-
-        // Create and set the labels for item details
-        JLabel nameLabel = new JLabel("Name: " + name + "  ");
-        Font font = new Font("Arial", Font.BOLD, 16);
-        nameLabel.setFont(font);
-        JLabel locationLabel = new JLabel("Location: " + location + "  ");
-        Font font1 = new Font("Arial", Font.BOLD, 16);
-        locationLabel.setFont(font1);
-
-        JLabel remainingLabel = new JLabel("Remaining: " + remaining + "  ");
-        Font font2 = new Font("Arial", Font.BOLD, 16);
-        remainingLabel.setFont(font2);
-
-        JLabel timeLabel = new JLabel("Final pickup time: " + time + "  ");
-        Font font4 = new Font("Arial", Font.BOLD, 16);
-        timeLabel.setFont(font4);
-        timeLabel.setForeground(Color.BLUE); // Set text color to blue
-
-        JLabel priceLabel = new JLabel("Minimum price: " + price + "  ");
-        Font font5 = new Font("Arial", Font.BOLD, 16);
-        priceLabel.setFont(font5);
-        priceLabel.setForeground(Color.RED); // Set text color to red
-
-        // Add the labels to the details panel
-        detailsPanel.add(nameLabel);
-        detailsPanel.add(locationLabel);
-        detailsPanel.add(remainingLabel);
-        detailsPanel.add(timeLabel);
-        detailsPanel.add(priceLabel);
-
-        JButton moreDetailsButton = new JButton("More Details");
-        moreDetailsButton.setBackground(Color.decode("#FFD300")); 
-        moreDetailsButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Add the code to handle the "More Details" button click event
-            }
-        });
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
-        buttonPanel.add(moreDetailsButton);
-
-        itemPanel.add(detailsPanel);
-        itemPanel.add(buttonPanel);
+        itemPanel.setPreferredSize(new Dimension(600, 300));
+        itemPanel.setBackground(new Color(255, 255, 204));
+        itemPanel.setLayout(new BorderLayout());
 
         ImageIcon icon = new ImageIcon(image);
         Image originalImage = icon.getImage();
@@ -173,9 +121,55 @@ private SQLQuery sqlQuery = new SQLQuery();
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledIcon);
 
-        itemPanel.add(imageLabel);
+        itemPanel.add(imageLabel, BorderLayout.WEST);
 
-        // Add the item panel to the main panel
+        JPanel detailsPanel = new JPanel();
+        detailsPanel.setLayout(new GridLayout(0, 1));
+        detailsPanel.setBackground(new Color(255, 255, 204));
+
+        JLabel nameLabel = new JLabel("   Name: " + name + "  ");
+        Font font = new Font("Arial", Font.BOLD, 16);
+        nameLabel.setFont(font);
+        JLabel locationLabel = new JLabel("   Location: " + location + "  ");
+        Font font1 = new Font("Arial", Font.BOLD, 16);
+        locationLabel.setFont(font1);
+
+        JLabel remainingLabel = new JLabel("   Remaining: " + remaining + "  ");
+        Font font2 = new Font("Arial", Font.BOLD, 16);
+        remainingLabel.setFont(font2);
+
+        JLabel timeLabel = new JLabel("   Final pickup time: " + time + "  ");
+        Font font4 = new Font("Arial", Font.BOLD, 16);
+        timeLabel.setFont(font4);
+        timeLabel.setForeground(Color.BLUE);
+
+        JLabel priceLabel = new JLabel("   Minimum price: " + price + "  ");
+        Font font5 = new Font("Arial", Font.BOLD, 16);
+        priceLabel.setFont(font5);
+        priceLabel.setForeground(Color.RED);
+
+        detailsPanel.add(nameLabel);
+        detailsPanel.add(locationLabel);
+        detailsPanel.add(remainingLabel);
+        detailsPanel.add(priceLabel);
+        detailsPanel.add(timeLabel);
+
+        JButton moreDetailsButton = new JButton("More Details");
+        moreDetailsButton.setBackground(Color.decode("#FFD300"));
+        moreDetailsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Add the code to handle the "More Details" button click event
+            }
+        });
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(255, 255, 204));
+        buttonPanel.add(moreDetailsButton);
+
+        detailsPanel.add(buttonPanel);
+
+        itemPanel.add(detailsPanel, BorderLayout.CENTER);
+
         panel.add(itemPanel);
     }
 }
