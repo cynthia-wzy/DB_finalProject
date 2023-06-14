@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,6 +40,7 @@ public class HomePage {
 
     public HomePage() {
         initialize();
+        addWindowListener();
     }
 
     private void initialize() {
@@ -169,6 +172,15 @@ public class HomePage {
         itemPanel.add(detailsPanel, BorderLayout.CENTER);
 
         panel.add(itemPanel);
+    }
+    
+    private void addWindowListener() {
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.setVisible(false);
+            }
+        });
     }
     
     public JFrame getFrame() {
