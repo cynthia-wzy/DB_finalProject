@@ -19,7 +19,7 @@ public class PayPage {
 
     private JFrame frame;
     private JButton uploadButton; // Declare uploadButton as a class field
-    private JProgressBar progressBar; // Declare progressBar as a class field
+    private JProgressBar progressBar; 
 
     /**
      * Launch the application.
@@ -76,18 +76,18 @@ public class PayPage {
         lblNewLabel.setFont(font);
 
         JLabel lblNewLabel_1 = new JLabel("Please transfer to this account (post office):");
-        lblNewLabel_1.setBounds(208, 74, 239, 14);
+        lblNewLabel_1.setBounds(208, 74, 315, 14);
         frame.getContentPane().add(lblNewLabel_1);
         JLabel lblNewLabel_11 = new JLabel("Please transfer to this account (LINE Pay QR Code):");
-        lblNewLabel_11.setBounds(208, 111, 315, 14);
+        lblNewLabel_11.setBounds(208, 121, 315, 14);
         frame.getContentPane().add(lblNewLabel_11);
 
         JLabel lblNewLabel_2 = new JLabel("Transaction record:");
-        lblNewLabel_2.setBounds(208, 349, 150, 14);
+        lblNewLabel_2.setBounds(208, 379, 150, 14);
         frame.getContentPane().add(lblNewLabel_2);
 
         uploadButton = new JButton("Upload");
-        uploadButton.setBounds(351, 426, 89, 23);
+        uploadButton.setBounds(351, 436, 89, 23);
         uploadButton.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(uploadButton);
         uploadButton.setEnabled(false); // Disable the button initially
@@ -106,20 +106,20 @@ public class PayPage {
         // deal with the scaled image
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JLabel qrcode = new JLabel(scaledIcon);
-        qrcode.setBounds(533, 111, 294, 228);
+        qrcode.setBounds(233, 141, 294, 228);
         frame.getContentPane().add(qrcode);
 
         JButton browseButton = new JButton("Browse");
-        browseButton.setBounds(392, 349, 89, 23);
+        browseButton.setBounds(392, 379, 89, 23);
         browseButton.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(browseButton);
 
         JLabel fileName = new JLabel("");
-        fileName.setBounds(392, 395, 209, 15);
+        fileName.setBounds(392, 405, 209, 15);
         frame.getContentPane().add(fileName);
 
         progressBar = new JProgressBar();
-        progressBar.setBounds(323, 460, 146, 7);
+        progressBar.setBounds(323, 470, 146, 7);
         frame.getContentPane().add(progressBar);
 
         browseButton.addActionListener(new ActionListener() {
@@ -141,7 +141,7 @@ public class PayPage {
             public void actionPerformed(ActionEvent e) {
                 // Disable the uploadButton
                 uploadButton.setEnabled(false);
-                // Perform upload operation
+                
 
                 // Simulating upload progress for demonstration
                 new Thread(new Runnable() {
