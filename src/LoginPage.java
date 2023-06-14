@@ -24,6 +24,7 @@ public class LoginPage {
 	private JTextField text_name;
 	private JTextField text_account;
 	private JPasswordField passwordField;
+	private RegisterPage registerPage;
 	
 	private SQLQuery sqlQuery = new SQLQuery();
 	
@@ -58,9 +59,11 @@ public class LoginPage {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Login");
 		frame.setBounds(100, 100, 450, 300);
 		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		 // Center the frame on the screen
 	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -160,7 +163,7 @@ public class LoginPage {
 				        
 				        user = new User(userID, password, username, named);//how to share user info?
 						HomePage homePage = new HomePage();
-						homePage.setVisible(true);
+						homePage.getFrame().setVisible(true);
 						frame.dispose();
 					}else {
 				        JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
@@ -171,8 +174,20 @@ public class LoginPage {
 				}	
 			}
 		});
-		loginButton.setBounds(95, 140, 89, 23);
+		loginButton.setBounds(41, 143, 89, 23);
 		panel.add(loginButton);
+		
+		JButton registerButton = new JButton("Register");
+		registerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				registerPage = new RegisterPage();
+				registerPage.getFrame().setVisible(true);
+			}
+		});
+		registerButton.setBackground(new Color(255, 211, 0));
+		registerButton.setBounds(140, 143, 89, 23);
+		panel.add(registerButton);
 	}
 	
 	public JFrame getFrame() {
