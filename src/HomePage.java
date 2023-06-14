@@ -2,16 +2,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -102,13 +99,14 @@ public class HomePage {
         List<PostInfo> postInfos = sqlQuery.allPostInfo();
 
         for (PostInfo postInfo : postInfos) {
-            addItem(panel, postInfo.getImage(), postInfo.getFoodName(), postInfo.getFoodLocation(),
+            addItem(panel, postInfo.getPostID(), postInfo.getImage(), postInfo.getFoodName(), postInfo.getFoodLocation(),
                     Integer.toString(postInfo.getFoodAmount()), postInfo.getPickupDDL(), postInfo.getMinPrice());
         }
 
         frame.setVisible(true);
     }
-    private void addItem(JPanel panel, byte[] image, String name, String location, String remaining, String time,
+    
+    private void addItem(JPanel panel, int postID, byte[] image, String name, String location, String remaining, String time,
             int price) {
         JPanel itemPanel = new JPanel();
         itemPanel.setPreferredSize(new Dimension(600, 300));
@@ -129,26 +127,22 @@ public class HomePage {
         JPanel detailsPanel = new JPanel();
         detailsPanel.setLayout(new GridLayout(0, 1));
         detailsPanel.setBackground(new Color(255, 255, 204));
-
+        
+        Font infoFont = new Font("Microsoft JhengHei UI", Font.BOLD, 16);
         JLabel nameLabel = new JLabel("   Name: " + name + "  ");
-        Font font = new Font("Arial", Font.BOLD, 16);
-        nameLabel.setFont(font);
+        nameLabel.setFont(infoFont);
         JLabel locationLabel = new JLabel("   Location: " + location + "  ");
-        Font font1 = new Font("Arial", Font.BOLD, 16);
-        locationLabel.setFont(font1);
+        locationLabel.setFont(infoFont);
 
         JLabel remainingLabel = new JLabel("   Remaining: " + remaining + "  ");
-        Font font2 = new Font("Arial", Font.BOLD, 16);
-        remainingLabel.setFont(font2);
+        remainingLabel.setFont(infoFont);
 
         JLabel timeLabel = new JLabel("   Final pickup time: " + time + "  ");
-        Font font4 = new Font("Arial", Font.BOLD, 16);
-        timeLabel.setFont(font4);
+        timeLabel.setFont(infoFont);
         timeLabel.setForeground(Color.BLUE);
 
         JLabel priceLabel = new JLabel("   Minimum price: " + price + "  ");
-        Font font5 = new Font("Arial", Font.BOLD, 16);
-        priceLabel.setFont(font5);
+        priceLabel.setFont(infoFont);
         priceLabel.setForeground(Color.RED);
 
         detailsPanel.add(nameLabel);
@@ -159,9 +153,10 @@ public class HomePage {
 
         JButton moreDetailsButton = new JButton("More Details");
         moreDetailsButton.setBackground(Color.decode("#FFD300"));
-        moreDetailsButton.addActionListener(new ActionListener() {
+        moreDetailsButton.addActionListener(new ActionListener() { // 跳出login頁面 
             public void actionPerformed(ActionEvent e) {
-                // Add the code to handle the "More Details" button click event
+            	PostView details = new PostView(postID);
+            	details.openPostView();
             }
         });
 
@@ -174,5 +169,9 @@ public class HomePage {
         itemPanel.add(detailsPanel, BorderLayout.CENTER);
 
         panel.add(itemPanel);
+    }
+    
+    public JFrame getFrame() {
+        return frame;
     }
 }
