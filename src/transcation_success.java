@@ -66,30 +66,27 @@ public class transcation_success extends JFrame {
 	    
 	    button.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
+	        	SignoutPage page = new SignoutPage();
+	        	page.getFrame();
 	        	
 	        }
 	    });
 	    getContentPane().setLayout(null);
 	    
-	    JLabel transferText = new JLabel("Transferred $ ");
-	    transferText.setHorizontalAlignment(SwingConstants.CENTER);
-	    transferText.setBounds(471, 77, 120, 15);
-	    panel.add(transferText);
-	    
-	    JLabel transferAmt_label = new JLabel(""); // amount
-	    transferAmt_label.setBounds(568, 77, 47, 15);
-	    panel.add(transferAmt_label);
-	    PostView post = new PostView();
-	    getTotalAmount();
-	    
-	    JLabel toUserText = new JLabel("to User");
-	    toUserText.setBounds(601, 77, 47, 15);
-	    panel.add(toUserText);
-	    
-	    JLabel User_label = new JLabel(""); // userID
-	    User_label.setForeground(new Color(0, 0, 0));
-	    User_label.setBounds(658, 77, 47, 15);
-	    panel.add(User_label);
+//	    JLabel transferText = new JLabel("Transferred $ ");
+//	    transferText.setHorizontalAlignment(SwingConstants.CENTER);
+//	    transferText.setBounds(471, 77, 120, 15);
+//	    panel.add(transferText);
+//	    
+//	    JLabel transferAmt_label = new JLabel(""); // amount
+//	    transferAmt_label.setBounds(568, 77, 47, 15);
+//	    panel.add(transferAmt_label);
+//	    PostView post = new PostView();
+//	    transferAmt_label.setText(post.getTotalAmount());
+//	    
+//	    JLabel toUserText = new JLabel("to the seller.");
+//	    toUserText.setBounds(592, 77, 164, 15);
+//	    panel.add(toUserText);
 	    
 	    JLabel successText = new JLabel("Transaction Completed!");
 	    successText.setHorizontalAlignment(SwingConstants.CENTER);
