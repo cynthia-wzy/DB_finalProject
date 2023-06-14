@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class transcation_success extends JFrame {
@@ -67,33 +66,35 @@ public class transcation_success extends JFrame {
 	    
 	    button.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
+	        	
 	        }
 	    });
 	    getContentPane().setLayout(null);
 	    
-	    JLabel lblNewLabel1 = new JLabel("Transaction Completed!");
-	    lblNewLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblNewLabel1.setBounds(292, 102, 605, 61);
-	    panel.add(lblNewLabel1);
+	    JLabel transferText = new JLabel("Transferred $ ");
+	    transferText.setHorizontalAlignment(SwingConstants.CENTER);
+	    transferText.setBounds(471, 77, 120, 15);
+	    panel.add(transferText);
 	    
-	    JLabel lblNewLabel_1 = new JLabel("Transfered $ ");
-	    lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblNewLabel_1.setBounds(471, 77, 120, 15);
-	    panel.add(lblNewLabel_1);
-	    
-	    JLabel transferAmt_label = new JLabel("Amt");
+	    JLabel transferAmt_label = new JLabel(""); // amount
 	    transferAmt_label.setBounds(568, 77, 47, 15);
 	    panel.add(transferAmt_label);
+	    PostView post = new PostView();
+	    getTotalAmount();
 	    
-	    JLabel User_label = new JLabel("ID");
+	    JLabel toUserText = new JLabel("to User");
+	    toUserText.setBounds(601, 77, 47, 15);
+	    panel.add(toUserText);
+	    
+	    JLabel User_label = new JLabel(""); // userID
 	    User_label.setForeground(new Color(0, 0, 0));
-	    User_label.setEnabled(false);
 	    User_label.setBounds(658, 77, 47, 15);
 	    panel.add(User_label);
 	    
-	    JLabel lblNewLabel_2 = new JLabel("to User");
-	    lblNewLabel_2.setBounds(601, 77, 47, 15);
-	    panel.add(lblNewLabel_2);
+	    JLabel successText = new JLabel("Transaction Completed!");
+	    successText.setHorizontalAlignment(SwingConstants.CENTER);
+	    successText.setBounds(292, 102, 605, 61);
+	    panel.add(successText);
 	    
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLocationRelativeTo(null);
@@ -104,14 +105,11 @@ public class transcation_success extends JFrame {
         setSize(screenWidth, screenHeight);
 	    setVisible(true);
 	    
-	    }
+	}
     
-    public JFrame getFrame() {
-    	
-    	return this;
-    	
+    public void showFrame() {
+        setVisible(true);
     }
-    
     
     public static void main(String[] args){
 	        new transcation_success();
