@@ -2,18 +2,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import javax.swing.JTextPane;
 import javax.swing.JFileChooser;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JProgressBar;
+import javax.swing.ImageIcon;
 
 public class PayPage {
 
@@ -67,8 +67,6 @@ public class PayPage {
         int y = (screenHeight - frame.getHeight()) / 2;
         frame.setLocation(x, y);
 
-        // Rest of your code...
-
         JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
         lblNewLabel.setBackground(new Color(240, 240, 240));
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -77,10 +75,10 @@ public class PayPage {
         Font font = new Font("Arial", Font.BOLD, 32);
         lblNewLabel.setFont(font);
 
-        JLabel lblNewLabel_1 = new JLabel("Please transfer this account (post office):");
+        JLabel lblNewLabel_1 = new JLabel("Please transfer to this account (post office):");
         lblNewLabel_1.setBounds(208, 74, 239, 14);
         frame.getContentPane().add(lblNewLabel_1);
-        JLabel lblNewLabel_11 = new JLabel("Please transfer this account (LINE Pay QR Code):");
+        JLabel lblNewLabel_11 = new JLabel("Please transfer to this account (LINE Pay QR Code):");
         lblNewLabel_11.setBounds(208, 111, 315, 14);
         frame.getContentPane().add(lblNewLabel_11);
 
@@ -99,10 +97,17 @@ public class PayPage {
         lblNewLabel_3.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(lblNewLabel_3);
 
-        JLabel lblNewLabel_4 = new JLabel(""); // QR Code
-        lblNewLabel_4.setBounds(533, 111, 294, 228);
-        lblNewLabel_4.setBackground(Color.decode("#FFD300"));
-        frame.getContentPane().add(lblNewLabel_4);
+        ImageIcon originalIcon = new ImageIcon(PayPage.class.getResource("/image/qrcode.png")); 
+        Image originalImage = originalIcon.getImage();
+        int labelWidth = 200; 
+        int labelHeight = 200; 
+        Image scaledImage = originalImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+
+        // deal with the scaled image
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel qrcode = new JLabel(scaledIcon);
+        qrcode.setBounds(533, 111, 294, 228);
+        frame.getContentPane().add(qrcode);
 
         JButton browseButton = new JButton("Browse");
         browseButton.setBounds(392, 349, 89, 23);
