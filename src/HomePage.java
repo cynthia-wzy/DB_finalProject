@@ -155,8 +155,8 @@ public class HomePage {
         moreDetailsButton.setBackground(Color.decode("#FFD300"));
         moreDetailsButton.addActionListener(new ActionListener() { // 跳出login頁面 
             public void actionPerformed(ActionEvent e) {
-            	PostView details = new PostView(postID);
-            	details.openPostView();
+            	RegisterPage registerPage = new RegisterPage();
+                registerPage.getFrame().setVisible(true);
             }
         });
 
