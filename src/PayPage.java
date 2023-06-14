@@ -156,7 +156,6 @@ public class PayPage {
                         }
                         transcation_success successFrame = new transcation_success();
                         successFrame.showFrame();
-                     
                     }
                 }).start();
             }
