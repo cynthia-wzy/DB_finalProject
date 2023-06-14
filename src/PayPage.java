@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 
@@ -15,8 +14,6 @@ import javax.swing.JFileChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JProgressBar;
-import javax.swing.JPanel;
-import javax.swing.ImageIcon;
 
 public class PayPage {
 
@@ -57,72 +54,67 @@ public class PayPage {
         frame.getContentPane().setLayout(null);
         frame.setResizable(false);
 
-        // Get screen size
+        // Set frame size
+        int frameWidth = 800; // Specify the desired width
+        int frameHeight = 600; // Specify the desired height
+        frame.setSize(frameWidth, frameHeight);
+
+        // Center the frame on the screen
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
-
-        // Set frame size
-        frame.setSize(screenWidth, screenHeight);
-
-        // Center the frame on the screen
         int x = (screenWidth - frame.getWidth()) / 2;
         int y = (screenHeight - frame.getHeight()) / 2;
         frame.setLocation(x, y);
 
+        // Rest of your code...
+
         JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
         lblNewLabel.setBackground(new Color(240, 240, 240));
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(0, 0, screenSize.width, 34);
+        lblNewLabel.setBounds(0, 0, frameWidth, 34);
         frame.getContentPane().add(lblNewLabel);
         Font font = new Font("Arial", Font.BOLD, 32);
         lblNewLabel.setFont(font);
 
-        JLabel lblNewLabel_1 = new JLabel("Please transfer to this account (post office):");
-        lblNewLabel_1.setBounds(508, 74, 239, 14);
+        JLabel lblNewLabel_1 = new JLabel("Please transfer this account (post office):");
+        lblNewLabel_1.setBounds(208, 74, 239, 14);
         frame.getContentPane().add(lblNewLabel_1);
-        JLabel lblNewLabel_11 = new JLabel("Please transfer to this account (LINE Pay QR Code):");
-        lblNewLabel_11.setBounds(508, 111, 315, 14);
+        JLabel lblNewLabel_11 = new JLabel("Please transfer this account (LINE Pay QR Code):");
+        lblNewLabel_11.setBounds(208, 111, 315, 14);
         frame.getContentPane().add(lblNewLabel_11);
 
-        ImageIcon originalIcon = new ImageIcon(PayPage.class.getResource("/image/qrcode.png")); 
-        Image originalImage = originalIcon.getImage();
-        int labelWidth = 200; 
-        int labelHeight = 200; 
-        Image scaledImage = originalImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
-
-        // deal with the scaled image
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        JLabel qrcode = new JLabel(scaledIcon);
-        qrcode.setBounds(501, 131, 227, 208);
-        frame.getContentPane().add(qrcode);
-        
-        JLabel recordLabel = new JLabel("Transaction record:");
-        recordLabel.setBounds(508, 349, 150, 14);
-        frame.getContentPane().add(recordLabel);
+        JLabel lblNewLabel_2 = new JLabel("Transaction record:");
+        lblNewLabel_2.setBounds(208, 349, 150, 14);
+        frame.getContentPane().add(lblNewLabel_2);
 
         uploadButton = new JButton("Upload");
-        uploadButton.setBounds(651, 426, 89, 23);
+        uploadButton.setBounds(351, 426, 89, 23);
         uploadButton.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(uploadButton);
         uploadButton.setEnabled(false); // Disable the button initially
 
         JLabel lblNewLabel_3 = new JLabel("(700)00011230123123");
-        lblNewLabel_3.setBounds(768, 74, 240, 14);
+        lblNewLabel_3.setBounds(468, 74, 240, 14);
         lblNewLabel_3.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(lblNewLabel_3);
 
+        JLabel lblNewLabel_4 = new JLabel(""); // QR Code
+        lblNewLabel_4.setBounds(533, 111, 294, 228);
+        lblNewLabel_4.setBackground(Color.decode("#FFD300"));
+        frame.getContentPane().add(lblNewLabel_4);
+
         JButton browseButton = new JButton("Browse");
-        browseButton.setBounds(692, 349, 89, 23);
+        browseButton.setBounds(392, 349, 89, 23);
         browseButton.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(browseButton);
 
         JLabel fileName = new JLabel("");
-        fileName.setBounds(692, 395, 209, 15);
+        fileName.setBounds(392, 395, 209, 15);
         frame.getContentPane().add(fileName);
 
         progressBar = new JProgressBar();
-        progressBar.setBounds(623, 460, 146, 7);
+        progressBar.setBounds(323, 460, 146, 7);
         frame.getContentPane().add(progressBar);
 
         browseButton.addActionListener(new ActionListener() {
@@ -152,24 +144,17 @@ public class PayPage {
                         for (int i = 0; i <= 100; i++) {
                             progressBar.setValue(i);
                             try {
-                                Thread.sleep(10);
+                                Thread.sleep(50);
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }
                         }
 
                         // Upload completed, enable the uploadButton
-//                        uploadButton.setEnabled(true);
-                        
-                        transcation_success successFrame = new transcation_success();
-                        successFrame.showFrame();
+                        uploadButton.setEnabled(true);
                     }
                 }).start();
             }
         });
-    }
-    
-    public JFrame getFrame() {
-        return frame;
     }
 }
