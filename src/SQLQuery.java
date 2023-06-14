@@ -219,21 +219,21 @@ public class SQLQuery {
 	    
 		try {
 	        Connection con = ConnectDB.getCon();
-	        String query = "SELECT Image, FoodName, FoodLocation, FoodAmount, PickupDDL, MinPrice"
+	        String query = "SELECT PostID, Image, FoodName, FoodLocation, FoodAmount, PickupDDL, MinPrice"
 	                + " FROM Post";
 	        Statement stat = con.createStatement();
 	        ResultSet rs = stat.executeQuery(query);
 	        
 	        while (rs.next()) {
-	        	
 	            String foodName = rs.getString("FoodName");
+	            int postID = rs.getInt("PostID");
 	            String foodLocation = rs.getString("FoodLocation");
 	            int foodAmount = rs.getInt("FoodAmount");
 	            String pickupDDL = rs.getTime("PickupDDL").toString();
 	            int minPrice = rs.getInt("MinPrice");
 	            byte[] imageData = rs.getBytes("Image");
 
-	            PostInfo postInfo = new PostInfo(imageData, foodName, foodLocation, foodAmount, pickupDDL, minPrice);
+	            PostInfo postInfo = new PostInfo(imageData, postID, foodName, foodLocation, foodAmount, pickupDDL, minPrice);
 	            postInfos.add(postInfo);
 	        }
 
