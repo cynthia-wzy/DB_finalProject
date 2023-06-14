@@ -77,7 +77,7 @@ public class RegisterPage {
 
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(87, 32, 268, 140);
+		panel.setBounds(87, 32, 268, 196);
         panel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -125,9 +125,15 @@ public class RegisterPage {
                 }
 		    }
 		});
-		registerButton.setBounds(36, 100, 89, 23);
+		registerButton.setBounds(94, 102, 89, 23);
         registerButton.setBackground(Color.decode("#FFD300")); 
 		panel.add(registerButton);
+		
+		JLabel loginLabel = new JLabel("I already have an account:");
+		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		loginLabel.setFont(new Font("Arial", Font.ITALIC, 10));
+		loginLabel.setBounds(37, 135, 195, 15);
+		panel.add(loginLabel);
 		
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
@@ -138,9 +144,9 @@ public class RegisterPage {
 			}
 		});
 		loginButton.setBackground(new Color(255, 211, 0));
-		loginButton.setBounds(145, 100, 89, 23);
+		loginButton.setBounds(94, 150, 89, 23);
 		panel.add(loginButton);
-		
+
 	}
 	
 	public JFrame getFrame() {
