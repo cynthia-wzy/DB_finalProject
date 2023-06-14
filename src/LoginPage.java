@@ -83,7 +83,7 @@ public class LoginPage {
 		Font font = new Font("Arial", Font.BOLD, 20); 
 		systemNameLabel.setFont(font);
 		JPanel panel = new JPanel();
-		panel.setBounds(87, 32, 268, 168);
+		panel.setBounds(87, 32, 268, 221);
         panel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -174,7 +174,7 @@ public class LoginPage {
 				}	
 			}
 		});
-		loginButton.setBounds(41, 143, 89, 23);
+		loginButton.setBounds(94, 143, 89, 23);
 		panel.add(loginButton);
 		
 		JButton registerButton = new JButton("Register");
@@ -186,8 +186,14 @@ public class LoginPage {
 			}
 		});
 		registerButton.setBackground(new Color(255, 211, 0));
-		registerButton.setBounds(140, 143, 89, 23);
+		registerButton.setBounds(94, 188, 89, 23);
 		panel.add(registerButton);
+		
+		JLabel lblNewLabel = new JLabel("I don't have an account yet:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Arial", Font.ITALIC, 10));
+		lblNewLabel.setBounds(36, 172, 193, 15);
+		panel.add(lblNewLabel);
 	}
 	
 	public JFrame getFrame() {
