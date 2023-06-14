@@ -1,37 +1,23 @@
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.Calendar;
 import java.util.List;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.JScrollPane;
-import java.awt.GridLayout;
-
-import java.awt.BorderLayout;
-import javax.swing.SpringLayout;
-import javax.swing.JTextPane;
-import java.awt.Color;
-import java.awt.Dimension;
-
 import javax.swing.border.EtchedBorder;
+
 
 public class PostView extends JFrame{
 	private JLabel imageLabel;
@@ -218,7 +204,7 @@ public class PostView extends JFrame{
 	    	pickupStartLabel.setText("pick up time: " + data.getStartTime()+" ~ "+data.getEndTime());
 	    	totalAmountLabel.setText("amount: " + data.getAmount());//directly show the amount stored in the database
 	    	remaining = data.getAmount()-totalAmount;
-	    	remainingLabel.setText("left amountl: " + remaining); 
+	    	remainingLabel.setText("left amount: " + remaining); 
 	    	
 	    	
         }
@@ -304,9 +290,18 @@ public class PostView extends JFrame{
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLocationRelativeTo(null);
 	    setVisible(true);
-	    }
-	    
-	    public static void main(String[] args){
-	        new PostView(1); 
-	    }
+	   }
+	
+    public void openPostView() {
+    	PostView frame = new PostView(postID);
+        frame.setVisible(true);
+    }
+
+	public int getTotalAmount() {
+		return totalAmount;
+	}
+    
+//    public static void main(String[] args){
+//        new PostView(1); 
+//    }
 }
