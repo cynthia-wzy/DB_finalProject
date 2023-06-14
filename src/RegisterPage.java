@@ -20,6 +20,7 @@ public class RegisterPage {
 	private JFrame frame;
 	private JTextField text_account;
 	private JPasswordField passwordField;
+	private LoginPage loginPage;
 	
 	private SQLQuery sqlQuery = new SQLQuery();
 
@@ -51,9 +52,11 @@ public class RegisterPage {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Register");
 		frame.setBounds(100, 100, 450, 300);
 		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		 // Center the frame on the screen
 	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    int screenWidth = screenSize.width;
@@ -122,9 +125,21 @@ public class RegisterPage {
                 }
 		    }
 		});
-		registerButton.setBounds(95, 100, 89, 23);
+		registerButton.setBounds(36, 100, 89, 23);
         registerButton.setBackground(Color.decode("#FFD300")); 
 		panel.add(registerButton);
+		
+		JButton loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				loginPage = new LoginPage();
+				loginPage.getFrame().setVisible(true);
+			}
+		});
+		loginButton.setBackground(new Color(255, 211, 0));
+		loginButton.setBounds(145, 100, 89, 23);
+		panel.add(loginButton);
 		
 	}
 	
