@@ -149,14 +149,14 @@ public class PayPage {
                         for (int i = 0; i <= 100; i++) {
                             progressBar.setValue(i);
                             try {
-                                Thread.sleep(50);
+                                Thread.sleep(10);
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }
                         }
-
-                        // Upload completed, enable the uploadButton
-                        uploadButton.setEnabled(true);
+                        transcation_success successFrame = new transcation_success();
+                        successFrame.showFrame();
+                     
                     }
                 }).start();
             }
