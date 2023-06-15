@@ -162,8 +162,8 @@ public class LoginPage {
 				        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
 				        
 				        user = new User(userID, password, username, named);//how to share user info?
-						HomePage homePage = new HomePage();
-						homePage.getFrame().setVisible(true);
+						SignoutPage signoutPage = new SignoutPage();
+						signoutPage.getFrame().setVisible(true);
 						frame.dispose();
 					}else {
 				        JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
