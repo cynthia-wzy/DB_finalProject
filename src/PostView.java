@@ -173,7 +173,7 @@ public class PostView extends JFrame{
 	    timeNowLabel.setFont(new Font("新細明體", Font.PLAIN, 20));
 	    timeNowLabel.setForeground(new Color(128, 0, 0));
 	    calendar = Calendar.getInstance();
-	    month = calendar.get(Calendar.MONTH);
+	    month = calendar.get(Calendar.MONTH)+1;
 	    date = calendar.get(Calendar.DATE);
 	    hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
@@ -214,7 +214,7 @@ public class PostView extends JFrame{
 	    updateTimeBtn.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		calendar = Calendar.getInstance();
-	    		month = calendar.get(Calendar.MONTH);
+	    		month = calendar.get(Calendar.MONTH)+1;
 	    	    date = calendar.get(Calendar.DATE);
 	    	    hour = calendar.get(Calendar.HOUR_OF_DAY);
 	            minute = calendar.get(Calendar.MINUTE);
