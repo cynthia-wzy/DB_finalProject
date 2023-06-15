@@ -25,7 +25,7 @@ public class PostView extends JFrame{
     private JLabel lblNewLabel_2;
     private JLabel timeNowLabel;
     private JButton updateTimeBtn;
-    
+    private JFrame frame;
     private Calendar calendar;
     private int month;
     private int date;
@@ -42,29 +42,37 @@ public class PostView extends JFrame{
     private int peopleWaiting;
     private int totalAmount;
     
+    
     //紀錄是否已完成取貨
     private boolean finishPick = false;
     
     public PostView(int postID){
-    	
     	this.postID = postID;
+    	frame = initialize();
+    	
     	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	    getContentPane().setBackground(Color.decode("#FFFF9F"));
-	    getContentPane().setLayout(null);
-	    
+  	   int screenWidth = screenSize.width;
+  	   int screenHeight = screenSize.height;
+  	   int frameWidth = frame.getWidth();
+  	   int frameHeight = frame.getHeight();
+  	   int x = (screenWidth - frameWidth) / 2;
+  	   int y = (screenHeight - frameHeight) / 2;
+  	   frame.setLocation(0, 0);
+	   frame.setSize(screenSize);
+
 	    JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
         lblNewLabel.setBackground(new Color(240, 240, 240));
         
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setBounds(0, 0, screenSize.width, 34);
-        getContentPane().add(lblNewLabel);
+        frame.getContentPane().add(lblNewLabel);
         Font font = new Font("Arial", Font.BOLD, 32); 
         lblNewLabel.setFont(font);
         
         JButton registerButton = new JButton("Sign up");
         registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
         registerButton.setBackground(Color.decode("#FFD300")); 
-        getContentPane().add(registerButton);
+        frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RegisterPage registerPage = new RegisterPage();
@@ -75,7 +83,7 @@ public class PostView extends JFrame{
         JButton loginButton = new JButton("Log in");
         loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
         loginButton.setBackground(Color.decode("#FFD300")); 
-        getContentPane().add(loginButton);
+        frame.getContentPane().add(loginButton);
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 LoginPage loginPage = new LoginPage();
@@ -86,14 +94,14 @@ public class PostView extends JFrame{
         JPanel panel = new JPanel();
         panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
         panel.setBackground(Color.decode("#FFFFE0")); 
-        getContentPane().add(panel);
+        frame.getContentPane().add(panel);
 
         // Set preferred size of panel to fit within scroll pane
         panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
 	    panel.setLayout(null);
 	    
 	    imageLabel = new JLabel();
-	    imageLabel.setBounds(1117, 57, 369, 296);
+	    imageLabel.setBounds(848, 58, 369, 296);
 	    imageLabel.setIcon(null);
 	    panel.add(imageLabel);
 	    
@@ -102,7 +110,7 @@ public class PostView extends JFrame{
 	    panel.add(username);
 	    
 	    JPanel panel1 = new JPanel();
-	    panel1.setBounds(32, 57, 1075, 434);
+	    panel1.setBounds(32, 57, 800, 434);
 	    panel1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 	    panel.add(panel1);
 	    panel1.setLayout(new GridLayout(5,1));
@@ -154,11 +162,8 @@ public class PostView extends JFrame{
 	    JLabel reminderLabel = new JLabel("Please enter pickup amount:");
 	    reminderLabel.setBounds(394, 501, 184, 15);
 	    panel.add(reminderLabel);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setLocationRelativeTo(null);
-	    setSize(screenSize);
-	    setVisible(true);
 
+	   
 	    JLabel peopleWaitingLabel = new JLabel("current waiting people"); //SQL count
 	    peopleWaitingLabel.setForeground(new Color(128, 0, 0));
 	    peopleWaitingLabel.setBounds(209, 527, 169, 23);
@@ -168,6 +173,8 @@ public class PostView extends JFrame{
 	    num.setText("amount");
 	    num.setBounds(400, 528, 126, 27);
 	    panel.add(num);
+	    
+	    
 	    
 	    timeNowLabel = new JLabel();
 	    timeNowLabel.setFont(new Font("新細明體", Font.PLAIN, 20));
@@ -181,7 +188,7 @@ public class PostView extends JFrame{
         timeNowLabel.setText("current time: "+ month + "/" +date+ " " + hour + ":" + minute+ ":" + second);
 	    timeNowLabel.setBounds(875, 26, 221, 21);
 	    panel.add(timeNowLabel);
-	    
+	    frame.setVisible(true);
 	    peopleWaiting = sqlQuery.upadatePeopleWaiting(this.postID);
 	    peopleWaitingLabel.setText("current waiting people:" + peopleWaiting); 
 	    
@@ -224,7 +231,7 @@ public class PostView extends JFrame{
 	    	}
 	    });
 	    updateTimeBtn.setFont(new Font("新細明體", Font.PLAIN, 18));
-	    updateTimeBtn.setBounds(724, 24, 127, 23);
+	    updateTimeBtn.setBounds(893, 0, 127, 23);
 	    panel.add(updateTimeBtn);
 	    
 	    
@@ -291,17 +298,22 @@ public class PostView extends JFrame{
 	    setLocationRelativeTo(null);
 	    setVisible(true);
 	   }
+    
+    private JFrame initialize() {
+    	frame = new JFrame();
+    	frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
+    	return frame;
+    }
 	
     public void openPostView() {
     	PostView frame = new PostView(postID);
-        frame.setVisible(true);
     }
 
 	public int getTotalAmount() {
 		return totalAmount;
 	}
     
-//    public static void main(String[] args){
-//        new PostView(1); 
-//    }
+    public static void main(String[] args){
+        new PostView(1); 
+    }
 }

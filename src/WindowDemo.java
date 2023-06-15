@@ -45,48 +45,37 @@ public class WindowDemo extends JFrame{
 	private SQLQuery sqlQuery = new SQLQuery();
     
     public WindowDemo(){
-    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	    getContentPane().setBackground(Color.decode("#FFFF9F"));
-	    getContentPane().setLayout(null);
-	    
-	    JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
-        lblNewLabel.setBackground(new Color(240, 240, 240));
-        
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(0, 0, screenSize.width, 34);
-        getContentPane().add(lblNewLabel);
-        Font font = new Font("Arial", Font.BOLD, 32); 
-        lblNewLabel.setFont(font);
-        
-        JButton registerButton = new JButton("Log in");
-        registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
-        registerButton.setBackground(Color.decode("#FFD300")); 
-        getContentPane().add(registerButton);
-        registerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                RegisterPage registerPage = new RegisterPage();
-                registerPage.getFrame().setVisible(true);
-            }
-        });
+    	initialize();
+    }
+    
+    public static void main(String[] args){
+        new WindowDemo();
+    }
+    
+   private void initialize() {
+	   frame = new JFrame();
+	   frame.setTitle("Post");
+	   frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
+	   
+	   Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	   int screenWidth = screenSize.width;
+	   int screenHeight = screenSize.height;
+	   int frameWidth = frame.getWidth();
+	   int frameHeight = frame.getHeight();
+	   int x = (screenWidth - frameWidth) / 2;
+	   int y = (screenHeight - frameHeight) / 2;
+	   frame.setLocation(x, y);
+	   frame.setSize(screenSize);
+	   frame.setVisible(true);
+       Font font = new Font("Arial", Font.BOLD, 32); 
+       
+       JPanel panel = new JPanel();
+       panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
+       panel.setBackground(Color.decode("#FFFFE0")); 
+       frame.getContentPane().add(panel);
 
-        JButton loginButton = new JButton("Sign up");
-        loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
-        loginButton.setBackground(Color.decode("#FFD300")); 
-        getContentPane().add(loginButton);
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                LoginPage loginPage = new LoginPage();
-                loginPage.getFrame().setVisible(true);
-            }
-        });
-        
-        JPanel panel = new JPanel();
-        panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
-        panel.setBackground(Color.decode("#FFFFE0")); 
-        getContentPane().add(panel);
-
-        // Set preferred size of panel to fit within scroll pane
-        panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
+       // Set preferred size of panel to fit within scroll pane
+       panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
 	    panel.setLayout(null);
 	    
 	    postTextArea = new JTextArea();
@@ -129,9 +118,9 @@ public class WindowDemo extends JFrame{
 							Image scaledImage = icon.getImage().getScaledInstance(359,280, Image.SCALE_SMOOTH);
 							label = new JLabel(new ImageIcon(scaledImage));
 							label.setBounds(323,237,359,280);
-							getContentPane().add(label);
-							getContentPane().revalidate();
-							getContentPane().repaint();
+							frame.getContentPane().add(label);
+							frame.getContentPane().revalidate();
+							frame.getContentPane().repaint();
 							
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
@@ -200,11 +189,10 @@ public class WindowDemo extends JFrame{
 	    text_amount.setColumns(10);
 	    text_amount.setBounds(148, 491, 96, 21);
 	    panel.add(text_amount);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setLocationRelativeTo(null);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setLocationRelativeTo(null);
 	    
-	    setSize(screenSize);
-	    setVisible(true);
+
 	    
 	    JButton postButton = new JButton("post");
 	    postButton.setBackground(Color.decode("#FFD300")); 
@@ -256,11 +244,41 @@ public class WindowDemo extends JFrame{
 		        }
 			}
 		});
-	    postButton.setBounds(29, 546, 670, 40);
+	    postButton.setBounds(29, 546, 1052, 40);
 	    panel.add(postButton);
 	    
+	   JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
+	   panel.add(lblNewLabel);
+	   lblNewLabel.setBackground(new Color(240, 240, 240));
+	   
+	   lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	   lblNewLabel.setBounds(-5, 10, 1261, 34);
+	   lblNewLabel.setFont(font);
+	   
+	   JButton registerButton = new JButton("Log in");
+	   panel.add(registerButton);
+	   registerButton.setBounds(1096, 10, 75, 23);
+	   registerButton.setBackground(Color.decode("#FFD300"));
+	   
+	          JButton loginButton = new JButton("Sign up");
+	          panel.add(loginButton);
+	          loginButton.setBounds(1181, 10, 85, 23);
+	          loginButton.setBackground(Color.decode("#FFD300"));
+	          loginButton.addActionListener(new ActionListener() {
+	              public void actionPerformed(ActionEvent e) {
+	                  LoginPage loginPage = new LoginPage();
+	                  loginPage.getFrame().setVisible(true);
+	              }
+	          });
+	   registerButton.addActionListener(new ActionListener() {
+	       public void actionPerformed(ActionEvent e) {
+	           RegisterPage registerPage = new RegisterPage();
+	           registerPage.getFrame().setVisible(true);
+	       }
+	   });
+	    
 	    }
-     
+    
 	     // Method to resize imageIcon with the same size of a Jlabel
 	    public ImageIcon ResizeImage(String ImagePath)
 	    {
@@ -269,9 +287,5 @@ public class WindowDemo extends JFrame{
 	        Image newImg = img.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
 	        ImageIcon image = new ImageIcon(newImg);
 	        return image;
-	    }
-	    
-	    public static void main(String[] args){
-	        new WindowDemo();
 	    }
    }

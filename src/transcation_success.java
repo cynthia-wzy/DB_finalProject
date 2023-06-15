@@ -11,57 +11,48 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class transcation_success extends JFrame {
-
-	JButton button;
+	private JFrame frame;
+	private JButton button;
     
     public transcation_success(){
-    	
-    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	    getContentPane().setBackground(Color.decode("#FFFF9F"));
-	    getContentPane().setLayout(null);
+	    initialize();
+	}
+    
+    private void initialize() {
+    	frame = new JFrame();
+		frame.setTitle("Transation Success!");
+		// Set frame size
+        frame.setSize(800, 600);
+		frame.setBounds(100, 100, 450, 300);
+		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
+		/*frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		 // Center the frame on the screen
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    int screenWidth = screenSize.width;
+	    int screenHeight = screenSize.height;
+	    int frameWidth = frame.getWidth();
+	    int frameHeight = frame.getHeight();
+	    int x = (screenWidth - frameWidth) / 2;
+	    int y = (screenHeight - frameHeight) / 2;
+	    frame.setLocation(x, y);
 	    
-	    JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
-        lblNewLabel.setBackground(new Color(240, 240, 240));
+	    JPanel panel = new JPanel();
+		panel.setBounds(87, 32, 268, 221);
+        panel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
         
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(0, 0, screenSize.width, 34);
-        getContentPane().add(lblNewLabel);
-        Font font = new Font("Arial", Font.BOLD, 32); 
-        lblNewLabel.setFont(font);
-        
-        JButton registerButton = new JButton("Log in");
-        registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
-        registerButton.setBackground(Color.decode("#FFD300")); 
-        getContentPane().add(registerButton);
-        registerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                RegisterPage registerPage = new RegisterPage();
-                registerPage.getFrame().setVisible(true);
-            }
-        });
 
-        JButton loginButton = new JButton("Sign up");
-        loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
-        loginButton.setBackground(Color.decode("#FFD300")); 
-        getContentPane().add(loginButton);
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                LoginPage loginPage = new LoginPage();
-                loginPage.getFrame().setVisible(true);
-            }
-        });
-        
-        JPanel panel = new JPanel();
-        panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
-        panel.setBackground(Color.decode("#FFFFE0")); 
-        getContentPane().add(panel);
-
-        // Set preferred size of panel to fit within scroll pane
-        panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
-	    panel.setLayout(null);
-    	
+        JLabel successText = new JLabel("Transaction Completed!");
+	    successText.setFont(new Font("·s²Ó©úÅé", Font.PLAIN, 14));
+	    successText.setHorizontalAlignment(SwingConstants.CENTER);
+	    successText.setBounds(31, 29, 200, 61);
+	    panel.add(successText);
+	    
 	    button = new JButton("Back");
-	    button.setBounds(551,161,100,40);
+	    button.setBounds(82,100,100,40);
 	    panel.add(button);
 	    
 	    button.addActionListener(new ActionListener() {
@@ -71,43 +62,14 @@ public class transcation_success extends JFrame {
 	        	
 	        }
 	    });
-	    getContentPane().setLayout(null);
 	    
-//	    JLabel transferText = new JLabel("Transferred $ ");
-//	    transferText.setHorizontalAlignment(SwingConstants.CENTER);
-//	    transferText.setBounds(471, 77, 120, 15);
-//	    panel.add(transferText);
-//	    
-//	    JLabel transferAmt_label = new JLabel(""); // amount
-//	    transferAmt_label.setBounds(568, 77, 47, 15);
-//	    panel.add(transferAmt_label);
-//	    PostView post = new PostView();
-//	    transferAmt_label.setText(post.getTotalAmount());
-//	    
-//	    JLabel toUserText = new JLabel("to the seller.");
-//	    toUserText.setBounds(592, 77, 164, 15);
-//	    panel.add(toUserText);
-	    
-	    JLabel successText = new JLabel("Transaction Completed!");
-	    successText.setHorizontalAlignment(SwingConstants.CENTER);
-	    successText.setBounds(292, 102, 605, 61);
-	    panel.add(successText);
-	    
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setLocationRelativeTo(null);
-        int screenWidth = screenSize.width;
-        int screenHeight = screenSize.height;
-
-        // Set frame size
-        setSize(screenWidth, screenHeight);
-	    setVisible(true);
-	    
-	}
-    
-    public void showFrame() {
-        setVisible(true);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setLocationRelativeTo(null);
+	    frame.setVisible(true);
+        
     }
     
+ 
     public static void main(String[] args){
 	        new transcation_success();
 	}
