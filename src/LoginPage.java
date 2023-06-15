@@ -144,34 +144,64 @@ public class LoginPage {
 			public void actionPerformed(ActionEvent e) {
 				String username = text_name.getText();
 				String userID = text_account.getText();
-				String password = new String(passwordField.getPassword());
+				char[] passwordChars = passwordField.getPassword();
+				String password = new String(passwordChars);
 				
-				if(username.equals("")||userID.equals("")||password.equals("")) {
-                	JOptionPane.showMessageDialog(null, "Please fill ALL empty field", "Login Failed", JOptionPane.ERROR_MESSAGE);
-				}else {
-					
-					String checkLogin = sqlQuery.checkUserWithUserID(userID, password, username);
-
-					if (checkLogin.equals("Wrong Password")) {
-	                	JOptionPane.showMessageDialog(null, "Please enter the correct user ID and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-					    text_name.setText("");
-					    text_account.setText("");
-					    passwordField.setText("");
-					    return;
-					}else if(checkLogin.equals("Login Successfully")){
-				        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
-				        
-				        user = new User(userID, password, username, named);//how to share user info?
-						SignoutPage signoutPage = new SignoutPage();
-						signoutPage.getFrame().setVisible(true);
-						frame.dispose();
+				if(named == false) {
+					if(userID.equals("")||password.equals("")) {
+	                	JOptionPane.showMessageDialog(null, "Please fill ALL empty field", "Login Failed", JOptionPane.ERROR_MESSAGE);
 					}else {
-				        JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
-				        text_name.setText("");
-					    text_account.setText("");
-					    passwordField.setText("");
-					}
-				}	
+						
+						String checkLogin = sqlQuery.checkUserWithUserID(userID, password, username);
+
+						if (checkLogin.equals("Wrong Password")) {
+		                	JOptionPane.showMessageDialog(null, "Please enter the correct user ID and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+						    text_name.setText("");
+						    text_account.setText("");
+						    passwordField.setText("");
+						    return;
+						}else if(checkLogin.equals("Login Successfully")){
+					        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+					        
+					        user = new User(userID, password, username, named);//how to share user info?
+							SignoutPage signoutPage = new SignoutPage();
+							signoutPage.getFrame().setVisible(true);
+							frame.dispose();
+						}else {
+					        JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
+					        text_name.setText("");
+						    text_account.setText("");
+						    passwordField.setText("");
+						}
+					}	
+				}else if(named == true) {
+					if(username.equals("")||userID.equals("")||password.equals("")) {
+	                	JOptionPane.showMessageDialog(null, "Please fill ALL empty field", "Login Failed", JOptionPane.ERROR_MESSAGE);
+					}else {
+						
+						String checkLogin = sqlQuery.checkUserWithUserID(userID, password, username);
+
+						if (checkLogin.equals("Wrong Password")) {
+		                	JOptionPane.showMessageDialog(null, "Please enter the correct user ID and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+						    text_name.setText("");
+						    text_account.setText("");
+						    passwordField.setText("");
+						    return;
+						}else if(checkLogin.equals("Login Successfully")){
+					        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+					        
+					        user = new User(userID, password, username, named);//how to share user info?
+							SignoutPage signoutPage = new SignoutPage();
+							signoutPage.getFrame().setVisible(true);
+							frame.dispose();
+						}else {
+					        JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
+					        text_name.setText("");
+						    text_account.setText("");
+						    passwordField.setText("");
+						}
+					}	
+				}
 			}
 		});
 		loginButton.setBounds(94, 143, 89, 23);
