@@ -158,8 +158,8 @@ public class HomePage {
         moreDetailsButton.setBackground(Color.decode("#FFD300"));
         moreDetailsButton.addActionListener(new ActionListener() { // 跳出login頁面 
             public void actionPerformed(ActionEvent e) {
-            	RegisterPage registerPage = new RegisterPage();
-                registerPage.getFrame().setVisible(true);
+            	LoginPage login = new LoginPage();
+            	login.getFrame().setVisible(true);
             }
         });
 
