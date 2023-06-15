@@ -75,7 +75,7 @@ public class LoginPage {
 	    int y = (screenHeight - frameHeight) / 2;
 	    frame.setLocation(x, y);
 		
-		JLabel systemNameLabel = new JLabel("NCCU HUNGER SAVER");
+		JLabel systemNameLabel = new JLabel("Log in");
 		systemNameLabel.setBackground(new Color(240, 240, 240));
 		systemNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		systemNameLabel.setBounds(0, 0, 438, 34);
@@ -138,7 +138,7 @@ public class LoginPage {
 		panel.add(text_account);
 		text_account.setColumns(10);
 		
-		JButton loginButton = new JButton("Login");
+		JButton loginButton = new JButton("Log in");
 		loginButton.setBackground(Color.decode("#FFD300")); 
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -207,7 +207,7 @@ public class LoginPage {
 		loginButton.setBounds(94, 143, 89, 23);
 		panel.add(loginButton);
 		
-		JButton registerButton = new JButton("Register");
+		JButton registerButton = new JButton("Sign up");
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();

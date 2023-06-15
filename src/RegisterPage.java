@@ -68,7 +68,7 @@ public class RegisterPage {
 	    frame.setLocation(x, y);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel nccuHungerSaverLabel = new JLabel("NCCU HUNGER SAVER");
+		JLabel nccuHungerSaverLabel = new JLabel("Sign up");
 		nccuHungerSaverLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nccuHungerSaverLabel.setBounds(0, 0, 438, 34);
 		frame.getContentPane().add(nccuHungerSaverLabel);
@@ -99,7 +99,7 @@ public class RegisterPage {
 		passwordField.setBounds(125, 55, 96, 20);
 		panel.add(passwordField);
 		
-		JButton registerButton = new JButton("Register");
+		JButton registerButton = new JButton("Sign up");
         registerButton.setBackground(Color.decode("#FFD300")); 
 		registerButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {

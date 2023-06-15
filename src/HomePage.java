@@ -66,7 +66,7 @@ public class HomePage {
         lblNewLabel.setFont(font);
         
         JButton registerButton = new JButton("Log in");
-        registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
+        registerButton.setBounds(screenSize.width - 170, 11, 75, 33);
         registerButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
@@ -77,7 +77,7 @@ public class HomePage {
         });
 
         JButton loginButton = new JButton("Sign up");
-        loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
+        loginButton.setBounds(screenSize.width - 90, 11, 85, 33);
         loginButton.setBackground(Color.decode("#FFD300")); 
         frame.getContentPane().add(loginButton);
         loginButton.addActionListener(new ActionListener() {
@@ -156,10 +156,10 @@ public class HomePage {
 
         JButton moreDetailsButton = new JButton("More Details");
         moreDetailsButton.setBackground(Color.decode("#FFD300"));
-        moreDetailsButton.addActionListener(new ActionListener() { // 跳出login頁面 
+        moreDetailsButton.addActionListener(new ActionListener() { // 頝喳login�� 
             public void actionPerformed(ActionEvent e) {
-            	LoginPage login = new LoginPage();
-            	login.getFrame().setVisible(true);
+            	RegisterPage registerPage = new RegisterPage();
+                registerPage.getFrame().setVisible(true);
             }
         });
 

@@ -62,7 +62,7 @@ public class SignoutPage {
         lblNewLabel.setFont(font);
 
         JButton registerButton = new JButton("Post");
-        registerButton.setBounds(screenSize.width - 170, 11, 75, 23);
+        registerButton.setBounds(screenSize.width - 370, 11, 275, 33);
         registerButton.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
@@ -73,7 +73,7 @@ public class SignoutPage {
         });
 
         JButton loginButton = new JButton("Sign out");
-        loginButton.setBounds(screenSize.width - 90, 11, 85, 23);
+        loginButton.setBounds(screenSize.width - 90, 11, 85, 33);
         loginButton.setBackground(Color.decode("#FFD300"));
         frame.getContentPane().add(loginButton);
         loginButton.addActionListener(new ActionListener() {
