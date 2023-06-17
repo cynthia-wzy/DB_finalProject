@@ -19,7 +19,8 @@ public class PayPage {
 
     private JFrame frame;
     private JButton uploadButton; // Declare uploadButton as a class field
-    private JProgressBar progressBar; 
+    private JProgressBar progressBar;
+    private String userID;
 
     /**
      * Launch the application.
@@ -28,7 +29,7 @@ public class PayPage {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    PayPage window = new PayPage();
+                    PayPage window = new PayPage("108305093");//test
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -40,7 +41,8 @@ public class PayPage {
     /**
      * Create the application.
      */
-    public PayPage() {
+    public PayPage(String userID) {
+    	this.userID = userID;
         initialize();
     }
 
@@ -154,7 +156,7 @@ public class PayPage {
                                 ex.printStackTrace();
                             }
                         }
-                        transcation_success successFrame = new transcation_success();
+                        transcation_success successFrame = new transcation_success(userID);
                         successFrame.showFrame();
                     }
                 }).start();
