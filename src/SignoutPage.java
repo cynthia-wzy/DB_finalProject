@@ -166,6 +166,7 @@ public class SignoutPage {
         moreDetailsButton.setBackground(Color.decode("#FFD300"));
         moreDetailsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
             	PostView details = new PostView(postID,userID);
             	/*details.openPostView();*/
             }
