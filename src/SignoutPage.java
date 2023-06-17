@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -20,13 +21,14 @@ import javax.swing.SwingConstants;
 public class SignoutPage {
 
     JFrame frame;
+    private String userID;
     private SQLQuery sqlQuery = new SQLQuery();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    SignoutPage window = new SignoutPage();
+                    SignoutPage window = new SignoutPage("108305091");//default
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -35,7 +37,8 @@ public class SignoutPage {
         });
     }
 
-    public SignoutPage() {
+    public SignoutPage(String userID) {
+    	this.userID = userID;
         initialize();
     }
 
@@ -67,8 +70,9 @@ public class SignoutPage {
         frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                RegisterPage registerPage = new RegisterPage();
-                registerPage.getFrame().setVisible(true);
+            	frame.dispose();
+            	WindowDemo windowDemo = new WindowDemo(userID);
+            	windowDemo.getFrame().setVisible(true);
             }
         });
 
@@ -78,6 +82,8 @@ public class SignoutPage {
         frame.getContentPane().add(loginButton);
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frame.dispose();
+            	JOptionPane.showMessageDialog(null, "Signout Successfully!", "Signout", JOptionPane.INFORMATION_MESSAGE);
             	HomePage homePage = new HomePage();
             	homePage.getFrame().setVisible(true);
             }
@@ -92,6 +98,12 @@ public class SignoutPage {
         scrollPane.getVerticalScrollBar().setBackground(Color.decode("#FFFFE0"));
         scrollPane.getHorizontalScrollBar().setBackground(Color.decode("#FFFFE0"));
         frame.getContentPane().add(scrollPane);
+        
+        JLabel userNameLabel = new JLabel("Hi, "+ this.userID);
+        userNameLabel.setForeground(new Color(128, 128, 128));
+        userNameLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        userNameLabel.setBounds(20, 11, 211, 23);
+        frame.getContentPane().add(userNameLabel);
 
         // Add items
         sqlQuery.allPostInfo();
@@ -154,8 +166,8 @@ public class SignoutPage {
         moreDetailsButton.setBackground(Color.decode("#FFD300"));
         moreDetailsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	PostView details = new PostView(postID);
-            	details.openPostView();
+            	PostView details = new PostView(postID,userID);
+            	/*details.openPostView();*/
             }
         });
 
