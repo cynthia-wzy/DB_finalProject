@@ -16,16 +16,12 @@ public class SQLQuery {
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
 					.prepareStatement("INSERT INTO Post (UserID,Memo,Image,FoodName,FoodType,FoodLocation,FoodAmount,PickupTime,PickupDDL,MinPrice) VALUES (?,?, ?, ?, ?, ?,?,?,?,?)");
-			
-			//資料庫還沒有建Account//已建立UserID
-			pre.setString(1,"aaa123"); //User要等整合
+			pre.setString(1,uploadProduct.getAccount()); 
 			pre.setString(2,uploadProduct.getPostContent());
 			pre.setBytes(3,uploadProduct.getGraph());
-			//GUI沒有食物名稱//GUI新增食物名稱
-			pre.setString(4,uploadProduct.getName());
+			pre.setString(4,uploadProduct.getProductName());
 			pre.setString(5,uploadProduct.getType());
 			pre.setString(6,uploadProduct.getLocation());
-			//購買時間應從資料庫刪除//已刪除
 			pre.setInt(7,uploadProduct.getAmount());
 			pre.setString(8,uploadProduct.getStartTime());
 			pre.setString(9,uploadProduct.getEndTime());
@@ -40,19 +36,40 @@ public class SQLQuery {
 	public boolean registration(ProcessData registration){
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
-					.prepareStatement("INSERT INTO NCCUUser (UserID,Password) VALUES (?,?)");
+					.prepareStatement("INSERT INTO NCCUUser (UserID,Password,UserName) VALUES (?,?,?)");
 			//資料庫還沒有建Account//已建立UserID
-			pre.setString(1,registration.getAccount());
-			pre.setString(2,registration.getPassword());
-			return pre.executeUpdate() > 0;
+			//確認帳號沒有重複
+			if(checkRepetitiveUser(registration.getAccount())==true){
+				return false;
+			}else {
+				pre.setString(1,registration.getAccount());
+				pre.setString(2,registration.getPassword());
+				pre.setString(3,registration.getUserName());
+				return pre.executeUpdate() > 0;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace(); 
 			return false;
 		}
 	}
 	
+	//RegisterPage //確認User有無重複
+	public boolean checkRepetitiveUser(String userID){
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT * FROM NCCUUser WHERE UserID = ?");
+			pre.setString(1, userID);
+			ResultSet rs = pre.executeQuery();
+			//確認帳號沒有重複
+			return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+		return false;
+	}
+	
 	//LoginPage
-	public String checkUserWithUserID(String userID, String password, String userName){//修改中
+	public String checkUserWithUserID(String userID, String password){//修改中
 		String result = "";
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
@@ -62,7 +79,6 @@ public class SQLQuery {
 			while(rs.next()) {//有找到這個使用者
 				String DBPassword = rs.getString("Password");
 				if(DBPassword.equals(password)) {//使用者輸入的密碼與資料庫裡的相同
-					updateUserWithUserID(userID,userName);
 					result = "Login Successfully";
 				}else {//使用者輸入的密碼與資料庫裡的不同
 					result = "Wrong Password";
@@ -75,21 +91,9 @@ public class SQLQuery {
 		return result;
 	}
 	
-	//LoginPage
-	public void updateUserWithUserID(String userID, String userName){//確定有這個使用者才會用這個方法
-		try {
-			PreparedStatement pre = ConnectDB.getCon()
-					.prepareStatement("UPDATE NCCUUser SET UserName = ? WHERE UserID = ?"); 
-			pre.setString(1, userName);
-			pre.setString(2, userID);
-			pre.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	//PostView
-	public List<ProcessData> findPost(int postID){//修改中
+	public List<ProcessData> findPost(int postID){
+		data.clear();
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
 					.prepareStatement("SELECT * FROM Post WHERE PostID = ?");  //預設用PostID來找
@@ -100,7 +104,7 @@ public class SQLQuery {
 				data.setAccount(rs.getString("UserID"));
 				data.setPostID(rs.getInt("PostID"));
 				data.setGraph(rs.getBytes("Image"));
-				data.setName(rs.getString("FoodName"));
+				data.setProductName(rs.getString("FoodName"));
 				data.setType(rs.getString("FoodType"));
 				data.setLocation(rs.getString("FoodLocation"));
 				data.setPostContent(rs.getString("Memo"));
@@ -118,14 +122,51 @@ public class SQLQuery {
 		
 	}
 	
+	//PostView //擷取UserName
+	public String getSalerName(int postID){
+		String salerName = "";
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT n.UserName FROM Post AS p, NCCUUser AS n WHERE p.UserID = n.UserID AND p.PostID = ?");  //預設用PostID來找
+			pre.setInt(1, postID);
+			ResultSet rs = pre.executeQuery();
+			while(rs.next()) {
+				salerName = rs.getString("UserName");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return salerName;
+	}
+	
+	//PostView //卡位 //確認同個使用者有無重複卡位
+	public boolean checkRepetitivePlaceHolder(String userID, int postID){
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT UserID FROM Placeholder WHERE PostID = ?");
+			pre.setInt(1,postID);
+			ResultSet rs = pre.executeQuery();
+			//確認帳號沒有重複
+			while(rs.next()) {
+				if(rs.getString("UserID").equals(userID)) {
+					return true;
+				}
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	//PostView //卡位
-	public boolean placeHolder(String userID, int postID, int amount){//要怎麼拿到UserID咧:)
+	public boolean placeHolder(String userID, int postID, int purchaseAmount){
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
 					.prepareStatement("INSERT INTO Placeholder (UserID,PostID,Amount) VALUES (?,?,?)");
 			pre.setString(1,userID);
 			pre.setInt(2,postID);
-			pre.setInt(3,amount);
+			pre.setInt(3,purchaseAmount);
 			return pre.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace(); 
@@ -134,7 +175,7 @@ public class SQLQuery {
 	}
 	
 	//PostView //延後
-	public void delayPickup(String userID, int postID){//要怎麼拿到UserID咧:)
+	public void delayPickup(String userID, int postID){
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
 					.prepareStatement("UPDATE Placeholder SET Delay = ? WHERE UserID = ? AND PostID = ?"); 
@@ -164,7 +205,7 @@ public class SQLQuery {
 		return count;
 	}
 	
-	//PostView //更新等待人數
+	//PostView //更新等待人數(畫面+資料庫的)
 	public int upadatePeopleWaiting(int postID){
 		int peopleWaiting = countPeopleWaiting(postID);
 		try {
@@ -198,19 +239,17 @@ public class SQLQuery {
 		return sum;
 	}
 	
-	//PostView //更新商品剩餘數量 //更改中
-	public int updateTotalFoodAmount(int postID, int remaining){
-		int sum = 0;
+	//PostView //更新商品剩餘數量
+	public void updateTotalFoodAmount(int postID, int remaining){
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
 					.prepareStatement("UPDATE Post SET FoodAmount = ? WHERE PostID = ?");
-			pre.setInt(1, remaining);//待更正
+			pre.setInt(1, remaining);
 			pre.setInt(2, postID);
 			pre.executeUpdate();//更新資料庫
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return sum;
 	}
 	
 	// HomePage // get posts info
