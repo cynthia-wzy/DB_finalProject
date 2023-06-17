@@ -21,7 +21,6 @@ public class LoginPage {
 	private JTextField text_account;
 	private JPasswordField passwordField;
 	private RegisterPage registerPage;
-	private User user;
 	
 	private SQLQuery sqlQuery = new SQLQuery();
 
@@ -141,7 +140,6 @@ public class LoginPage {
 					}else if(checkLogin.equals("Login Successfully")){
 					    JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
 					    frame.dispose();
-					    user = new User(userID, password);//how to share user info?
 					    SignoutPage signoutPage = new SignoutPage(userID);
 						signoutPage.getFrame().setVisible(true);
 					}else {
