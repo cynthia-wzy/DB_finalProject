@@ -105,7 +105,7 @@ public class PostView {
 	    panel.setLayout(null);
 	    
 	    imageLabel = new JLabel();
-	    imageLabel.setBounds(32, 121, 644, 433);
+	    imageLabel.setBounds(32, 121, 445, 424);
 	    imageLabel.setIcon(null);
 	    panel.add(imageLabel);
 	    
@@ -116,7 +116,7 @@ public class PostView {
 	    panel.add(username);
 	    
 	    infoPanel = new JPanel();
-	    infoPanel.setBounds(688, 120, 800, 434);
+	    infoPanel.setBounds(490, 120, 752, 424);
 	    infoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 	    panel.add(infoPanel);
 	    infoPanel.setLayout(new GridLayout(5,1));
@@ -148,14 +148,14 @@ public class PostView {
 	    
 	    finish_pick = new JButton("Finish Pickup");
 	    finish_pick.setFont(new Font("Arial", Font.BOLD, 20));
-	    finish_pick.setBounds(1131, 610, 209, 128);
+	    finish_pick.setBounds(1076, 564, 180, 109);
 	    panel.add(finish_pick);
 	    finish_pick.setEnabled(false);
 
 	    reminderLabel = new JLabel("Please enter pickup amount:");
 	    reminderLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	    reminderLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-	    reminderLabel.setBounds(510, 579, 278, 21);
+	    reminderLabel.setBounds(468, 543, 278, 21);
 	    panel.add(reminderLabel);
 	    
 	    remainingLabel = new JLabel(); //要用SQL count
@@ -173,7 +173,7 @@ public class PostView {
         minute = calendar.get(Calendar.MINUTE);
         second = calendar.get(Calendar.SECOND);
         timeNowLabel.setText("Current Time: 6/16 17:14:43");
-	    timeNowLabel.setBounds(1206, 84, 282, 21);
+	    timeNowLabel.setBounds(974, 84, 282, 21);
 	    panel.add(timeNowLabel);
 	    peopleWaiting = sqlQuery.upadatePeopleWaiting(this.postID);
 	    
@@ -209,7 +209,7 @@ public class PostView {
 	    	}
 	    });
 	    updateTimeBtn.setFont(new Font("Arial", Font.PLAIN, 20));
-	    updateTimeBtn.setBounds(1034, 79, 154, 31);
+	    updateTimeBtn.setBounds(814, 79, 154, 31);
 	    panel.add(updateTimeBtn);
 	    
 	    lblNewLabel = new JLabel("NCCU HUNGER SAVER");
@@ -222,12 +222,12 @@ public class PostView {
 	    postponeReminderLabel.setForeground(new Color(128, 0, 0));
 	    	    
 	    lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblNewLabel.setBounds(0, 5, 1536, 34);
+	    lblNewLabel.setBounds(0, 5, 1266, 34);
 	    lblNewLabel.setFont(font);
 	    
 	    actionPanel = new JPanel();
 	    actionPanel.setBackground(new Color(255, 255, 224));
-	    actionPanel.setBounds(183, 610, 938, 128);
+	    actionPanel.setBounds(132, 564, 938, 109);
 	    panel.add(actionPanel);
 	    actionPanel.setLayout(new GridLayout(2,3));
 	    
@@ -314,7 +314,7 @@ public class PostView {
 	    String salerName = sqlQuery.getSalerName(this.postID);
 	    JLabel salerNameLabel = new JLabel("Provider: "+salerName);
 	    salerNameLabel.setFont(new Font("Arial", Font.BOLD, 24));
-	    salerNameLabel.setBounds(688, 79, 235, 31);
+	    salerNameLabel.setBounds(490, 78, 235, 31);
 	    panel.add(salerNameLabel);
 	    
 	    returnBtn = new JButton("Return to the Homepage");
@@ -327,7 +327,7 @@ public class PostView {
 	    });
 	    returnBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
 	    returnBtn.setBackground(new Color(255, 211, 0));
-	    returnBtn.setBounds(1224, 10, 264, 40);
+	    returnBtn.setBounds(992, 7, 264, 40);
 	    panel.add(returnBtn);
 	    
 	    finish_pick.addActionListener(new ActionListener() {

@@ -54,6 +54,7 @@ public class transcation_success extends JFrame {
 	    panel.add(successText);
 	    
 	    button = new JButton("Back");
+	    button.setBackground(Color.decode("#FFD300")); 
 	    button.setBounds(82,100,100,40);
 	    panel.add(button);
 	    

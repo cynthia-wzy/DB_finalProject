@@ -87,7 +87,7 @@ public class WindowDemo extends JFrame{
        
        JPanel infoPanel = new JPanel();
        infoPanel.setBackground(new Color(255, 255, 224));
-       infoPanel.setBounds(660, 111, 790, 443);
+       infoPanel.setBounds(254, 94, 790, 443);
        /*panel.add(infoPanel);*/
        frame.getContentPane().add(infoPanel);
        infoPanel.setLayout(new GridLayout(8,2));
@@ -202,7 +202,7 @@ public class WindowDemo extends JFrame{
 	    postTextArea.setForeground(new Color(192, 192, 192));
 	    postTextArea.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 24));
 	    postTextArea.setText("post content...");
-	    postTextArea.setBounds(660, 581, 790, 118);
+	    postTextArea.setBounds(254, 547, 790, 94);
 	    frame.getContentPane().add(postTextArea);
 	    /*panel.add(postTextArea);*/
 	    
@@ -260,7 +260,7 @@ public class WindowDemo extends JFrame{
 		        }
 			}
 		});
-	    postButton.setBounds(660, 732, 790, 40);
+	    postButton.setBounds(254, 650, 790, 40);
 	    /*panel.add(postButton);*/
 	    frame.getContentPane().add(postButton);
 	    
@@ -272,7 +272,7 @@ public class WindowDemo extends JFrame{
 	   lblNewLabel.setBackground(new Color(240, 240, 240));
 	   
 	   lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	   lblNewLabel.setBounds(0, 6, 1540, 34);
+	   lblNewLabel.setBounds(0, 6, 1283, 34);
 	   /*lblNewLabel.setFont(font);*/
 	   
 	   JButton returnBtn = new JButton("Return to the Homepage");
@@ -285,7 +285,7 @@ public class WindowDemo extends JFrame{
 	   });
 	   returnBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
 	   returnBtn.setBackground(new Color(255, 211, 0));
-	   returnBtn.setBounds(1251, 10, 264, 40);
+	   returnBtn.setBounds(1009, 8, 264, 40);
 	   frame.getContentPane().add(returnBtn);
 	   /*panel.add(returnBtn);*/
 	    
