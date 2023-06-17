@@ -1,6 +1,7 @@
 public class ProcessData {
-	
-	private String name;
+
+	private String userName;
+	private String productName;
 	private String postContent;
 	private byte[] graph;
 	private String location;
@@ -14,9 +15,10 @@ public class ProcessData {
 	private int postID;
 	private int peopleWaiting;
 	
-	//WindowDemo模板用
-	public ProcessData(String name,String postContent, byte[] graph, String location, String type, int amount, String startTime, String endTime, int price ) {
-		this.name = name;
+	//WindowDemo
+	public ProcessData(String account,String productName,String postContent, byte[] graph, String location, String type, int amount, String startTime, String endTime, int price ) {
+		this.account = account;
+		this.productName = productName;
 		this.postContent = postContent;
 		this.graph = graph;
 		this.location = location;
@@ -27,20 +29,27 @@ public class ProcessData {
 		this.price = price;
 	}
 	
-	//RegisterPage用
-	public ProcessData(String account,String password) {
+	//RegisterPage
+	public ProcessData(String account,String password,String userName) {
 		this.account = account;
 		this.password = password;
+		this.userName = userName;
 	}
 	
 	public ProcessData() {
 	}
 
-	public String getName() {
-		return name;
+	public String getProductName() {
+		return productName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getPostContent() {
 		return postContent;
