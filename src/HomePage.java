@@ -21,9 +21,9 @@ import javax.swing.SwingConstants;
 
 public class HomePage {
 
-    JFrame frame;
+	private JFrame frame;
     private SQLQuery sqlQuery = new SQLQuery();
-    
+    private LoginPage loginPage;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -71,8 +71,9 @@ public class HomePage {
         frame.getContentPane().add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                RegisterPage registerPage = new RegisterPage();
-                registerPage.getFrame().setVisible(true);
+            	frame.dispose();
+            	LoginPage loginPage = new LoginPage();
+                loginPage.getFrame().setVisible(true);
             }
         });
 
@@ -82,8 +83,9 @@ public class HomePage {
         frame.getContentPane().add(loginButton);
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                LoginPage loginPage = new LoginPage();
-                loginPage.getFrame().setVisible(true);
+            	frame.dispose();
+            	RegisterPage registerPage = new RegisterPage();
+                registerPage.getFrame().setVisible(true);
             }
         });
 
@@ -156,10 +158,11 @@ public class HomePage {
 
         JButton moreDetailsButton = new JButton("More Details");
         moreDetailsButton.setBackground(Color.decode("#FFD300"));
-        moreDetailsButton.addActionListener(new ActionListener() { // 頝喳login�� 
+        moreDetailsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	RegisterPage registerPage = new RegisterPage();
-                registerPage.getFrame().setVisible(true);
+            	frame.dispose();
+				loginPage = new LoginPage();//switch to loginPage
+				loginPage.getFrame().setVisible(true);
             }
         });
 
