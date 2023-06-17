@@ -13,9 +13,11 @@ import javax.swing.SwingConstants;
 public class transcation_success extends JFrame {
 	private JFrame frame;
 	private JButton button;
+	private String userID;
     
-    public transcation_success(){
-	    initialize();
+    public transcation_success(String userID){
+	    this.userID = userID;
+    	initialize();
 	}
     
     private void initialize() {
@@ -46,7 +48,7 @@ public class transcation_success extends JFrame {
         
 
         JLabel successText = new JLabel("Transaction Completed!");
-	    successText.setFont(new Font("·s²Ó©úÅé", Font.PLAIN, 14));
+	    successText.setFont(new Font("ï¿½sï¿½Ó©ï¿½ï¿½ï¿½", Font.PLAIN, 14));
 	    successText.setHorizontalAlignment(SwingConstants.CENTER);
 	    successText.setBounds(31, 29, 200, 61);
 	    panel.add(successText);
@@ -57,7 +59,7 @@ public class transcation_success extends JFrame {
 	    
 	    button.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	        	SignoutPage page = new SignoutPage();
+	        	SignoutPage page = new SignoutPage(userID);
 	        	page.getFrame();
 	        	
 	        }
@@ -69,8 +71,10 @@ public class transcation_success extends JFrame {
         
     }
     
- 
+    public void showFrame() {
+        setVisible(true);
+    }
     public static void main(String[] args){
-	        new transcation_success();
+	        new transcation_success("108305093");//test
 	}
 }
