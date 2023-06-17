@@ -25,12 +25,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 public class WindowDemo extends JFrame{
 	
 	private JButton browseButton;
 	private JFrame frame;
-    private JLabel label;
+    private JLabel imgLabel;
     private JTextArea postTextArea;
     private JComboBox typeComboBox;
     private JTextField text_name;
@@ -41,23 +42,32 @@ public class WindowDemo extends JFrame{
     private JTextField text_amount;
     private File file_path;
 	private byte[] imageBytes;
+	
+	private String userID;
     
 	private SQLQuery sqlQuery = new SQLQuery();
+	
+	public static void main(String[] args){
+		WindowDemo windowDemo = new WindowDemo("108305091");//default
+		windowDemo.getFrame().setVisible(true);
+    }
     
-    public WindowDemo(){
+    public WindowDemo(String userID){
+    	this.userID = userID;
     	initialize();
     }
-    
-    public static void main(String[] args){
-        new WindowDemo();
-    }
-    
+
    private void initialize() {
 	   frame = new JFrame();
 	   frame.setTitle("Post");
-	   frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
+	   frame.getContentPane().setBackground(new Color(255, 255, 224));
+	   frame.setBounds(100, 100, 1920, 1080);
+	   frame.getContentPane().setLayout(null);
+	   /*frame.setExtendedState(JFrame.MAXIMIZED_BOTH);*/
 	   
-	   Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	   /*frame.setExtendedState(JFrame.MAXIMIZED_BOTH);*/
+	   
+	   /*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	   int screenWidth = screenSize.width;
 	   int screenHeight = screenSize.height;
 	   int frameWidth = frame.getWidth();
@@ -67,42 +77,40 @@ public class WindowDemo extends JFrame{
 	   frame.setLocation(x, y);
 	   frame.setSize(screenSize);
 	   frame.setVisible(true);
-       Font font = new Font("Arial", Font.BOLD, 32); 
+       Font font = new Font("Arial", Font.BOLD, 32);
        
        JPanel panel = new JPanel();
+       panel.setBorder(null);
        panel.setBounds(20, 50, screenSize.width - 40, screenSize.height - 120);
        panel.setBackground(Color.decode("#FFFFE0")); 
-       frame.getContentPane().add(panel);
-
-       // Set preferred size of panel to fit within scroll pane
-       panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
-	    panel.setLayout(null);
-	    
-	    postTextArea = new JTextArea();
-	    postTextArea.setText("post content");
-	    postTextArea.setBounds(28, 100, 1053, 118);
-	    panel.add(postTextArea);
-	    
-	    JLabel NameLabel = new JLabel("food name");
-	    NameLabel.setBounds(36, 72, 96, 18);
-	    panel.add(NameLabel);
-	    
-	    text_name = new JTextField();
-	    text_name.setColumns(10);
-	    text_name.setBounds(148, 69, 96, 21);
-	    panel.add(text_name);
-	    
-	    JLabel imageLabel = new JLabel("upload image");
-	    imageLabel.setBounds(28, 241, 106, 15);
-	    panel.add(imageLabel);
-	    
-	    browseButton = new JButton("Browse");
-	    browseButton.setFont(new Font("微軟正黑體", Font.PLAIN, 12));
-	    browseButton.setBounds(148,228,100,40);
-	    panel.add(browseButton);
-	    
-	    browseButton.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
+       frame.getContentPane().add(panel);*/
+       
+       JPanel infoPanel = new JPanel();
+       infoPanel.setBackground(new Color(255, 255, 224));
+       infoPanel.setBounds(660, 111, 790, 443);
+       /*panel.add(infoPanel);*/
+       frame.getContentPane().add(infoPanel);
+       infoPanel.setLayout(new GridLayout(8,2));
+       
+       JLabel NameLabel = new JLabel("Food Name");
+       infoPanel.add(NameLabel);
+       NameLabel.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       
+       text_name = new JTextField();
+       infoPanel.add(text_name);
+       text_name.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 24));
+       text_name.setColumns(10);
+       
+       JLabel uploadImgLabel = new JLabel("Upload Image");
+       uploadImgLabel.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       infoPanel.add(uploadImgLabel);
+       
+       browseButton = new JButton("Browse");
+       infoPanel.add(browseButton);
+       browseButton.setFont(new Font("微軟正黑體", Font.PLAIN, 24));
+       
+       browseButton.addActionListener(new ActionListener() {
+       	public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==browseButton) {
 					JFileChooser file_upload = new JFileChooser();
 					FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif");
@@ -113,14 +121,14 @@ public class WindowDemo extends JFrame{
 					if(res==JFileChooser.APPROVE_OPTION) {
 						file_path=new File(file_upload.getSelectedFile().getAbsolutePath());
 					    try {
-					    	imageBytes = Files.readAllBytes(file_path.toPath());
-							ImageIcon icon = new ImageIcon(imageBytes);
-							Image scaledImage = icon.getImage().getScaledInstance(359,280, Image.SCALE_SMOOTH);
-							label = new JLabel(new ImageIcon(scaledImage));
-							label.setBounds(323,237,359,280);
-							frame.getContentPane().add(label);
-							frame.getContentPane().revalidate();
-							frame.getContentPane().repaint();
+				    	imageBytes = Files.readAllBytes(file_path.toPath());
+						ImageIcon icon = new ImageIcon(imageBytes);
+						Image scaledImage = icon.getImage().getScaledInstance(545, 661, Image.SCALE_SMOOTH);
+						imgLabel = new JLabel(new ImageIcon(scaledImage));
+						imgLabel.setBounds(85, 111, 545, 661);
+						frame.getContentPane().add(imgLabel);
+						frame.getContentPane().revalidate();
+						frame.getContentPane().repaint();
 							
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
@@ -130,73 +138,85 @@ public class WindowDemo extends JFrame{
 					}
 				}
 			}	
-	    });
+       });
+       
+       JLabel locationLabel = new JLabel("Give out Location");
+       locationLabel.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       infoPanel.add(locationLabel);
+       
+       text_location = new JTextField();
+       text_location.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 24));
+       infoPanel.add(text_location);
+       text_location.setColumns(10);
+       
+       JLabel typeLabel = new JLabel("Food Type");
+       typeLabel.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       infoPanel.add(typeLabel);
+       
+       typeComboBox = new JComboBox();
+       typeComboBox.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       infoPanel.add(typeComboBox);
+       typeComboBox.setModel(new DefaultComboBoxModel(new String[] {"lunch box", "drinks", "fresh green", "others"}));
+       
+       JLabel startTimeLabel = new JLabel("Give-out Start Time (ex. 13:00)");
+       startTimeLabel.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       infoPanel.add(startTimeLabel);
+       
+       text_startTime = new JTextField();
+       text_startTime.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 24));
+       infoPanel.add(text_startTime);
+       text_startTime.setColumns(10);
+       
+       JLabel endTimeLabel = new JLabel("Give-out End Time (ex. 16:00)");
+       endTimeLabel.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       infoPanel.add(endTimeLabel);
+       
+       text_endTime = new JTextField();
+       text_endTime.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 24));
+       infoPanel.add(text_endTime);
+       text_endTime.setColumns(10);
+       
+       JLabel priceLabel = new JLabel("Lowest Price per Unit");
+       priceLabel.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       infoPanel.add(priceLabel);
+       
+       text_price = new JTextField();
+       text_price.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 24));
+       infoPanel.add(text_price);
+       text_price.setColumns(10);
+       
+       JLabel amountLabel = new JLabel("Food Amount");
+       amountLabel.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+       infoPanel.add(amountLabel);
+       
+       text_amount = new JTextField();
+       text_amount.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 24));
+       infoPanel.add(text_amount);
+       text_amount.setColumns(10);
+
+       // Set preferred size of panel to fit within scroll pane
+       	/*panel.setPreferredSize(new Dimension(screenSize.width - 40, screenSize.height - 120));
+	    panel.setLayout(null);*/
 	    
-	    JLabel locationLabel = new JLabel("give out location");
-	    locationLabel.setBounds(28, 297, 106, 18);
-	    panel.add(locationLabel);
+	    postTextArea = new JTextArea();
+	    postTextArea.setForeground(new Color(192, 192, 192));
+	    postTextArea.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 24));
+	    postTextArea.setText("post content...");
+	    postTextArea.setBounds(660, 581, 790, 118);
+	    frame.getContentPane().add(postTextArea);
+	    /*panel.add(postTextArea);*/
 	    
-	    text_location = new JTextField();
-	    text_location.setBounds(148, 294, 96, 21);
-	    panel.add(text_location);
-	    text_location.setColumns(10);
-	    
-	    JLabel typeLabel = new JLabel("food type");
-	    typeLabel.setBounds(28, 337, 106, 15);
-	    panel.add(typeLabel);
-	    
-	    typeComboBox = new JComboBox();
-	    typeComboBox.setModel(new DefaultComboBoxModel(new String[] {"lunch box", "drinks", "fresh green", "others"}));
-	    typeComboBox.setBounds(148, 334, 96, 21);
-	    panel.add(typeComboBox);
-	    
-	    JLabel startTimeLabel = new JLabel("give-out start time");
-	    startTimeLabel.setBounds(28, 379, 106, 15);
-	    panel.add(startTimeLabel);
-	    
-	    text_startTime = new JTextField();
-	    text_startTime.setColumns(10);
-	    text_startTime.setBounds(148, 379, 96, 21);
-	    panel.add(text_startTime);
-	    
-	    JLabel priceLabel = new JLabel("lowest price per unit");
-	    priceLabel.setBounds(28, 453, 106, 18);
-	    panel.add(priceLabel);
-	    
-	    text_price = new JTextField();
-	    text_price.setColumns(10);
-	    text_price.setBounds(148, 450, 96, 21);
-	    panel.add(text_price);
-	    
-	    JLabel username = new JLabel("username");
-	    username.setBounds(28, 35, 104, 15);
-	    panel.add(username);
-	    
-	    JLabel endTimeLabel = new JLabel("give-out end time");
-	    endTimeLabel.setBounds(28, 413, 106, 18);
-	    panel.add(endTimeLabel);
-	    
-	    text_endTime = new JTextField();
-	    text_endTime.setColumns(10);
-	    text_endTime.setBounds(148, 410, 96, 21);
-	    panel.add(text_endTime);
-	    
-	    JLabel amountLabel = new JLabel("food amount");
-	    amountLabel.setBounds(28, 494, 106, 18);
-	    panel.add(amountLabel);
-	    
-	    text_amount = new JTextField();
-	    text_amount.setColumns(10);
-	    text_amount.setBounds(148, 491, 96, 21);
-	    panel.add(text_amount);
+	    JLabel username = new JLabel("Hi, "+userID);
+	    username.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
+	    username.setBounds(85, 50, 545, 34);
+	    frame.getContentPane().add(username);
+	    /*panel.add(username);*/
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setLocationRelativeTo(null);
-	    
 
-	    
-	    JButton postButton = new JButton("post");
+	    JButton postButton = new JButton("POST");
 	    postButton.setBackground(Color.decode("#FFD300")); 
-	    postButton.setFont(new Font("Ariel", Font.BOLD, 14));
+	    postButton.setFont(new Font("Dialog", Font.BOLD, 24));
 	    postButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -216,7 +236,7 @@ public class WindowDemo extends JFrame{
 					text_price.setText("");
 		            JOptionPane.showMessageDialog(null, "Please complete the text.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
 		        }else {
-		        	String name = text_name.getText();
+		        	String productName = text_name.getText();
 					String postContent = postTextArea.getText();
 					byte[] image = imageBytes;
 					String location = text_location.getText();
@@ -226,56 +246,48 @@ public class WindowDemo extends JFrame{
 					String endTime = text_endTime.getText();
 					int price = Integer.parseInt(text_price.getText());
 
-					ProcessData uploadProduct = new ProcessData(name,postContent,image,location,type,amount,startTime,endTime,price);
-					/*sqlQuery.uploadProduct(uploadProduct);*/
-					
-					
-	                boolean success = ((SQLQuery) sqlQuery).uploadProduct(uploadProduct);
+					ProcessData uploadProduct = new ProcessData(userID,productName,postContent,image,location,type,amount,startTime,endTime,price);
+	                boolean success = sqlQuery.uploadProduct(uploadProduct);
 	                if (!success) {
 	                	JOptionPane.showMessageDialog(null, "Please complete the text.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
 	                }else {
 	                	
 	                	JOptionPane.showMessageDialog(null, "Uploaded Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-	                	WindowDemo.this.dispose();
-	    		        
-	    		        HomePage homePage = new HomePage();
-	    		        setVisible(true);
+	                	frame.dispose();
+	                	SignoutPage signoutPage = new SignoutPage(userID);
+	                	signoutPage.getFrame().setVisible(true);
 	                }
 		        }
 			}
 		});
-	    postButton.setBounds(29, 546, 1052, 40);
-	    panel.add(postButton);
+	    postButton.setBounds(660, 732, 790, 40);
+	    /*panel.add(postButton);*/
+	    frame.getContentPane().add(postButton);
+	    
 	    
 	   JLabel lblNewLabel = new JLabel("NCCU HUNGER SAVER");
-	   panel.add(lblNewLabel);
+	   lblNewLabel.setFont(new Font("Arial", Font.BOLD, 32));
+	   frame.getContentPane().add(lblNewLabel);
+	   /*panel.add(lblNewLabel);*/
 	   lblNewLabel.setBackground(new Color(240, 240, 240));
 	   
 	   lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	   lblNewLabel.setBounds(-5, 10, 1261, 34);
-	   lblNewLabel.setFont(font);
+	   lblNewLabel.setBounds(0, 6, 1540, 34);
+	   /*lblNewLabel.setFont(font);*/
 	   
-	   JButton registerButton = new JButton("Log in");
-	   panel.add(registerButton);
-	   registerButton.setBounds(1096, 10, 75, 23);
-	   registerButton.setBackground(Color.decode("#FFD300"));
-	   
-	          JButton loginButton = new JButton("Sign up");
-	          panel.add(loginButton);
-	          loginButton.setBounds(1181, 10, 85, 23);
-	          loginButton.setBackground(Color.decode("#FFD300"));
-	          loginButton.addActionListener(new ActionListener() {
-	              public void actionPerformed(ActionEvent e) {
-	                  LoginPage loginPage = new LoginPage();
-	                  loginPage.getFrame().setVisible(true);
-	              }
-	          });
-	   registerButton.addActionListener(new ActionListener() {
-	       public void actionPerformed(ActionEvent e) {
-	           RegisterPage registerPage = new RegisterPage();
-	           registerPage.getFrame().setVisible(true);
-	       }
+	   JButton returnBtn = new JButton("Return to the Homepage");
+	   returnBtn.addActionListener(new ActionListener() {
+	   	public void actionPerformed(ActionEvent e) {
+	   		frame.dispose();
+        	SignoutPage signoutPage = new SignoutPage(userID);
+        	signoutPage.getFrame().setVisible(true);
+	   	}
 	   });
+	   returnBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
+	   returnBtn.setBackground(new Color(255, 211, 0));
+	   returnBtn.setBounds(1251, 10, 264, 40);
+	   frame.getContentPane().add(returnBtn);
+	   /*panel.add(returnBtn);*/
 	    
 	    }
     
@@ -284,8 +296,12 @@ public class WindowDemo extends JFrame{
 	    {
 	        ImageIcon MyImage = new ImageIcon(ImagePath);
 	        Image img = MyImage.getImage();
-	        Image newImg = img.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+	        Image newImg = img.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
 	        ImageIcon image = new ImageIcon(newImg);
 	        return image;
+	    }
+	    
+	    public JFrame getFrame() {
+	    	return this.frame;
 	    }
    }
