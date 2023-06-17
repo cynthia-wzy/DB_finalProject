@@ -1,35 +1,29 @@
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Color;
-import java.awt.Dimension;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.JRadioButton;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-
 
 public class LoginPage {
 
 	private JFrame frame;
-	private JTextField text_name;
 	private JTextField text_account;
 	private JPasswordField passwordField;
 	private RegisterPage registerPage;
+	private User user;
 	
 	private SQLQuery sqlQuery = new SQLQuery();
-	
-	private User user;
-	private boolean named; //unnamed or not
 
 	/**
 	 * Launch the application.
@@ -64,7 +58,6 @@ public class LoginPage {
 		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
 		/*frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		 // Center the frame on the screen
 	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    int screenWidth = screenSize.width;
@@ -74,156 +67,96 @@ public class LoginPage {
 	    int x = (screenWidth - frameWidth) / 2;
 	    int y = (screenHeight - frameHeight) / 2;
 	    frame.setLocation(x, y);
+		frame.getContentPane().setLayout(null);
 		
-		JLabel systemNameLabel = new JLabel("Log in");
-		systemNameLabel.setBackground(new Color(240, 240, 240));
-		systemNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		systemNameLabel.setBounds(0, 0, 438, 34);
-		frame.getContentPane().add(systemNameLabel);
+		JLabel nccuHungerSaverLabel = new JLabel("Log in");
+		nccuHungerSaverLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		nccuHungerSaverLabel.setBounds(0, 0, 438, 34);
+		frame.getContentPane().add(nccuHungerSaverLabel);
 		Font font = new Font("Arial", Font.BOLD, 20); 
-		systemNameLabel.setFont(font);
+		nccuHungerSaverLabel.setFont(font);
+
+		
 		JPanel panel = new JPanel();
-		panel.setBounds(87, 32, 268, 221);
+		panel.setBounds(87, 32, 268, 196);
         panel.setBackground(new Color(255, 255, 204)); // Set background color to yellowish
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JRadioButton unamedRbtn = new JRadioButton("Unamed");
-		unamedRbtn.setBounds(36, 63, 109, 23);
-		unamedRbtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				named = false;
-			}	
-		});
-		unamedRbtn.setBackground(new Color(255, 255, 204)); 
-		panel.add(unamedRbtn);
-		
-		JRadioButton namedRbtn = new JRadioButton("Named");
-		namedRbtn.setBounds(36, 85, 109, 23);
-		unamedRbtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				named = true;
-			}	
-		});
-		namedRbtn.setBackground(new Color(255, 255, 204)); 
-		panel.add(namedRbtn);
-		
-		ButtonGroup buttonGroup = new ButtonGroup();
-		buttonGroup.add(unamedRbtn);
-		buttonGroup.add(namedRbtn);
-		
-		text_name = new JTextField();
-		text_name.setBounds(100, 113, 96, 20);
-		panel.add(text_name);
-		text_name.setColumns(10);
-		
-		JLabel nameLabel = new JLabel("Name:");
-		nameLabel.setBounds(56, 113, 48, 14);
-		panel.add(nameLabel);
-		
-		JLabel passwordLabel = new JLabel("Password:");
-		passwordLabel.setBounds(36, 33, 80, 14);
-		panel.add(passwordLabel);
-		
 		JLabel accountLabel = new JLabel("Account:");
-		accountLabel.setBounds(36, 7, 80, 14);
+		accountLabel.setBounds(61, 21, 60, 14);
 		panel.add(accountLabel);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(100, 33, 96, 20);
-		panel.add(passwordField);
+		JLabel passwordLabel = new JLabel("Password:");
+		passwordLabel.setBounds(61, 58, 60, 14);
+		panel.add(passwordLabel);
 		
 		text_account = new JTextField();
-		text_account.setBounds(100, 7, 96, 20);
+		text_account.setBounds(125, 18, 96, 20);
 		panel.add(text_account);
 		text_account.setColumns(10);
 		
-		JButton loginButton = new JButton("Log in");
-		loginButton.setBackground(Color.decode("#FFD300")); 
+		passwordField = new JPasswordField();
+		passwordField.setBounds(125, 55, 96, 20);
+		panel.add(passwordField);
+		
+		JButton registerButton = new JButton("Sign up");//there should change the frame
+        registerButton.setBackground(Color.decode("#FFD300")); 
+		registerButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	frame.dispose();
+				registerPage = new RegisterPage();
+				registerPage.getFrame().setVisible(true);
+		    }
+		});
+		registerButton.setBounds(92, 160, 89, 23);
+        registerButton.setBackground(Color.decode("#FFD300")); 
+		panel.add(registerButton);
+		
+		JLabel registerLabel = new JLabel("I don't have an account yet:");
+		registerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		registerLabel.setFont(new Font("Arial", Font.ITALIC, 10));
+		registerLabel.setBounds(37, 135, 195, 15);
+		panel.add(registerLabel);
+		
+		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username = text_name.getText();
 				String userID = text_account.getText();
 				char[] passwordChars = passwordField.getPassword();
 				String password = new String(passwordChars);
 				
-				if(named == false) {
-					if(userID.equals("")||password.equals("")) {
-	                	JOptionPane.showMessageDialog(null, "Please fill ALL empty field", "Login Failed", JOptionPane.ERROR_MESSAGE);
-					}else {
-						
-						String checkLogin = sqlQuery.checkUserWithUserID(userID, password, username);
+				if(text_account.getText().isEmpty()||password.isEmpty()) {
+	                JOptionPane.showMessageDialog(null, "Please fill ALL empty field", "Login Failed", JOptionPane.ERROR_MESSAGE);
+	                text_account.setText("");
+	                passwordField.setText("");
+				}else {
+					String checkLogin = sqlQuery.checkUserWithUserID(userID, password);
 
-						if (checkLogin.equals("Wrong Password")) {
-		                	JOptionPane.showMessageDialog(null, "Please enter the correct user ID and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-						    text_name.setText("");
-						    text_account.setText("");
-						    passwordField.setText("");
-						    return;
-						}else if(checkLogin.equals("Login Successfully")){
-					        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
-					        
-					        user = new User(userID, password, username, named);//how to share user info?
-							SignoutPage signoutPage = new SignoutPage();
-							signoutPage.getFrame().setVisible(true);
-							frame.dispose();
-						}else {
-					        JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
-					        text_name.setText("");
-						    text_account.setText("");
-						    passwordField.setText("");
-						}
-					}	
-				}else if(named == true) {
-					if(username.equals("")||userID.equals("")||password.equals("")) {
-	                	JOptionPane.showMessageDialog(null, "Please fill ALL empty field", "Login Failed", JOptionPane.ERROR_MESSAGE);
+					if (checkLogin.equals("Wrong Password")) {
+		                JOptionPane.showMessageDialog(null, "Please enter the correct user ID and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+						text_account.setText("");
+						passwordField.setText("");
+						return;
+					}else if(checkLogin.equals("Login Successfully")){
+					    JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+					    frame.dispose();
+					    user = new User(userID, password);//how to share user info?
+					    SignoutPage signoutPage = new SignoutPage(userID);
+						signoutPage.getFrame().setVisible(true);
 					}else {
-						
-						String checkLogin = sqlQuery.checkUserWithUserID(userID, password, username);
-
-						if (checkLogin.equals("Wrong Password")) {
-		                	JOptionPane.showMessageDialog(null, "Please enter the correct user ID and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-						    text_name.setText("");
-						    text_account.setText("");
-						    passwordField.setText("");
-						    return;
-						}else if(checkLogin.equals("Login Successfully")){
-					        JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
-					        
-					        user = new User(userID, password, username, named);//how to share user info?
-							SignoutPage signoutPage = new SignoutPage();
-							signoutPage.getFrame().setVisible(true);
-							frame.dispose();
-						}else {
-					        JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
-					        text_name.setText("");
-						    text_account.setText("");
-						    passwordField.setText("");
-						}
-					}	
-				}
+					    JOptionPane.showMessageDialog(null, "This user does not exist", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
+						text_account.setText("");
+						passwordField.setText("");
+					}
+				}	
+				
 			}
 		});
-		loginButton.setBounds(94, 143, 89, 23);
+		loginButton.setBackground(new Color(255, 211, 0));
+		loginButton.setBounds(92, 102, 89, 23);
 		panel.add(loginButton);
-		
-		JButton registerButton = new JButton("Sign up");
-		registerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				registerPage = new RegisterPage();
-				registerPage.getFrame().setVisible(true);
-			}
-		});
-		registerButton.setBackground(new Color(255, 211, 0));
-		registerButton.setBounds(94, 188, 89, 23);
-		panel.add(registerButton);
-		
-		JLabel lblNewLabel = new JLabel("I don't have an account yet:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Arial", Font.ITALIC, 10));
-		lblNewLabel.setBounds(36, 172, 193, 15);
-		panel.add(lblNewLabel);
+
 	}
 	
 	public JFrame getFrame() {
