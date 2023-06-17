@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 
-public class PostView extends JFrame{
+public class PostView {
 	private JPanel panel;
 	private JPanel actionPanel;
 	private JLabel imageLabel;
@@ -345,9 +345,9 @@ public class PostView extends JFrame{
 	    	}
 	    });
 	    
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setLocationRelativeTo(null);
-	    setVisible(true);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setLocationRelativeTo(null);
+	    frame.setVisible(true);
     }
     
     /*public void openPostView() {
