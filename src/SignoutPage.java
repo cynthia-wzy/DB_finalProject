@@ -105,7 +105,7 @@ public class SignoutPage {
         userNameLabel.setBounds(21, 11, 211, 23);
         frame.getContentPane().add(userNameLabel);
         
-        JButton historyBtn = new JButton("Your History Post");
+        JButton historyBtn = new JButton("Your History");
         historyBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		frame.dispose();
@@ -114,7 +114,7 @@ public class SignoutPage {
         	}
         });
         historyBtn.setBackground(new Color(255, 211, 0));
-        historyBtn.setBounds(242, 9, 172, 33);
+        historyBtn.setBounds(242, 9, 132, 33);
         frame.getContentPane().add(historyBtn);
 
         // Add items
