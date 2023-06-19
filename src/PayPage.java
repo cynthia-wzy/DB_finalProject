@@ -7,8 +7,12 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -18,9 +22,14 @@ import javax.swing.ImageIcon;
 public class PayPage {
 
     private JFrame frame;
+    private File file_path;
+	private byte[] imageBytes;
     private JButton uploadButton; // Declare uploadButton as a class field
     private JProgressBar progressBar;
     private String userID;
+    private int postID;
+    
+    private SQLQuery sqlQuery = new SQLQuery();
 
     /**
      * Launch the application.
@@ -29,7 +38,7 @@ public class PayPage {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    PayPage window = new PayPage("108305093");//test
+                    PayPage window = new PayPage("108305093",1);//test
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -41,8 +50,9 @@ public class PayPage {
     /**
      * Create the application.
      */
-    public PayPage(String userID) {
+    public PayPage(String userID, int postID) {
     	this.userID = userID;
+    	this.postID = postID;
         initialize();
     }
 
@@ -132,7 +142,16 @@ public class PayPage {
                     File selectedFile = fileChooser.getSelectedFile();
                     String file = selectedFile.getName();
                     fileName.setText("File name: " + file);
-
+                    
+                    //upload the payment to the database
+					file_path=new File(fileChooser.getSelectedFile().getAbsolutePath());
+					try {
+						imageBytes = Files.readAllBytes(file_path.toPath());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
                     // Enable the uploadButton
                     uploadButton.setEnabled(true);
                 }
@@ -144,9 +163,19 @@ public class PayPage {
                 // Disable the uploadButton
                 uploadButton.setEnabled(false);
                 
-
+                //upload the payment to the database
+                
+                boolean success = sqlQuery.uploadPayment(userID,postID,imageBytes);
+                if (success==false) {
+                	JOptionPane.showMessageDialog(null, "Please upload again.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
+                }else {
+                	JOptionPane.showMessageDialog(null, "Uploaded Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                	frame.dispose();
+                	transcation_success successFrame = new transcation_success(userID);
+                    successFrame.showFrame();
+                }
                 // Simulating upload progress for demonstration
-                new Thread(new Runnable() {
+                /*new Thread(new Runnable() {
                     public void run() {
                         for (int i = 0; i <= 100; i++) {
                             progressBar.setValue(i);
@@ -159,7 +188,7 @@ public class PayPage {
                         transcation_success successFrame = new transcation_success(userID);
                         successFrame.showFrame();
                     }
-                }).start();
+                }).start();*/
             }
         });
     }
