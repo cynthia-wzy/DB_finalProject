@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 
 public class SignoutPage {
 
-    JFrame frame;
+	private JFrame frame;
     private String userID;
     private SQLQuery sqlQuery = new SQLQuery();
 
@@ -28,7 +28,7 @@ public class SignoutPage {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    SignoutPage window = new SignoutPage("108305091");//default
+                    SignoutPage window = new SignoutPage("aaa123");//default
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -102,8 +102,20 @@ public class SignoutPage {
         JLabel userNameLabel = new JLabel("Hi, "+ this.userID);
         userNameLabel.setForeground(new Color(128, 128, 128));
         userNameLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        userNameLabel.setBounds(20, 11, 211, 23);
+        userNameLabel.setBounds(21, 11, 211, 23);
         frame.getContentPane().add(userNameLabel);
+        
+        JButton historyBtn = new JButton("Your History Post");
+        historyBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		frame.dispose();
+        		HistoryPost historyPost = new HistoryPost(userID);
+        		historyPost.getFrame().setVisible(true);
+        	}
+        });
+        historyBtn.setBackground(new Color(255, 211, 0));
+        historyBtn.setBounds(242, 9, 172, 33);
+        frame.getContentPane().add(historyBtn);
 
         // Add items
         sqlQuery.allPostInfo();
@@ -166,7 +178,7 @@ public class SignoutPage {
         moreDetailsButton.setBackground(Color.decode("#FFD300"));
         moreDetailsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+            	frame.dispose();
             	PostView details = new PostView(postID,userID);
             	/*details.openPostView();*/
             }
