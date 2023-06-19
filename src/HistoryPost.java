@@ -63,7 +63,7 @@ public class HistoryPost {
 		frame = new JFrame();
 		frame.setTitle("History Post");
 		frame.getContentPane().setBackground(new Color(255, 255, 224));
-		frame.setBounds(100, 100, 1920, 1080);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize the frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		createDesign();
@@ -73,13 +73,13 @@ public class HistoryPost {
 	public void createJTable() {
 		model = new DefaultTableModel() {
 			public Class<?> getColumnClass(int columnIndex) {
-				return columnIndex == 0 ? Boolean.class : String.class; // 第一列的資料類型為Boolean，其餘列為String
+				return columnIndex == 0 ? Boolean.class : String.class; // 蝚砌��������Boolean嚗擗�String
 		    }
 		    public boolean isCellEditable(int row, int column) {
-		    	return column == 0; // 僅允許編輯第一列的勾選欄
+		    	return column == 0; // ���迂蝺刻摩蝚砌�����甈�
 		    }
 		};
-		String[]columnNames = {"Check","Post ID","Name","Type","Location","Remaining","Waiting","Start Time","End Time","Min Price"};//移除圖片
+		String[]columnNames = {"Check","Post ID","Name","Type","Location","Remaining","Waiting","Start Time","End Time","Min Price"};//蝘駁����
         model.setColumnIdentifiers(columnNames);
 		
         historyPosts = sqlQuery.findHitoryPost(userID);
@@ -100,10 +100,10 @@ public class HistoryPost {
         
         
         table = new JTable(model);
-        table.setFont(new Font("微軟正黑體", Font.PLAIN, 18));
+        table.setFont(new Font("敺株�迤暺��", Font.PLAIN, 18));
         table.setForeground(new Color(0, 0, 0));
         table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setFont(new Font("微軟正黑體", Font.BOLD, 18));
+        table.getTableHeader().setFont(new Font("敺株�迤暺��", Font.BOLD, 18));
         table.setRowHeight(70);
         
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
