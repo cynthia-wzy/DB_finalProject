@@ -28,7 +28,6 @@ public class RegisterPage {
 	
 	private SQLQuery sqlQuery = new SQLQuery();
 	
-	private User user;
 	private boolean named; //unnamed or not
 
 	/**
