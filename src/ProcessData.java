@@ -8,6 +8,7 @@ public class ProcessData {
 	private String location;
 	private String type;
 	private int amount;
+	private int pickupAmount;
 	private String startTime;
 	private String endTime;
 	private int price;
@@ -87,6 +88,12 @@ public class ProcessData {
 	}
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	public int getPickupAmount() {
+		return pickupAmount;
+	}
+	public void setPickupAmount(int pickupAmount) {
+		this.pickupAmount = pickupAmount;
 	}
 	public String getStartTime() {
 		return startTime;
