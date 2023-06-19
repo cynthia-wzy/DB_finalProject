@@ -253,6 +253,23 @@ public class SQLQuery {
 		return sum;
 	}
 	
+	//
+	public int getFoodAmount(int postID){
+		int foodAmount = 0;
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT FoodAmount FROM Post WHERE PostID = ?");  //預設用PostID來找
+			pre.setInt(1, postID);
+			ResultSet rs = pre.executeQuery();
+			while(rs.next()) {
+				foodAmount = rs.getInt("FoodAmount");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return foodAmount;
+	}
+	
 	//PostView //更新商品剩餘數量
 	public void updateTotalFoodAmount(int postID, int remaining){
 		try {
@@ -300,6 +317,47 @@ public class SQLQuery {
 			PreparedStatement pre = ConnectDB.getCon()
 					.prepareStatement("DELETE FROM Post WHERE PostID = ?");  //預設用PostID來找
 			pre.setInt(1, postID);
+			return pre.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//OngoingTransaction
+	public List<ProcessData> findOngoingTransaction(String userID){
+		data.clear();
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT po.PostID, po.FoodName, po.FoodLocation, po.PickupTime, po.PickupDDL, pl.Amount "
+							+ "FROM Placeholder AS pl, Post AS po "
+							+ "WHERE pl.PostID = po.PostID AND pl.UserID = ?");  //預設用PostID來找
+			pre.setString(1, userID);
+			ResultSet rs = pre.executeQuery();
+			while(rs.next()) {
+				ProcessData data = new ProcessData();
+				data.setPostID(rs.getInt("po.PostID"));
+				data.setProductName(rs.getString("po.FoodName"));
+				data.setLocation(rs.getString("po.FoodLocation"));
+				data.setStartTime(rs.getString("po.PickupTime"));
+				data.setEndTime(rs.getString("po.PickupDDL"));
+				data.setPickupAmount(rs.getInt("pl.Amount"));
+				this.data.add(data);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return this.data;
+	}
+	
+	//OngoingTransaction //Delete //update total amount
+	public boolean deleteOngoingTransaction(int postID, String userID){
+		data.clear();
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("DELETE FROM Placeholder WHERE PostID = ? AND UserID = ?");  //預設用PostID來找
+			pre.setInt(1, postID);
+			pre.setString(2, userID);
 			return pre.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
