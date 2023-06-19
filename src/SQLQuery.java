@@ -32,6 +32,20 @@ public class SQLQuery {
 		}
 	}
 	
+	//PayPageg //upload payment
+	public boolean uploadPayment(String userID, int postID, byte[] payment){
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("UPDATE Placeholder SET Payment = ? WHERE UserID = ? AND PostID = ?");
+			pre.setBytes(1, payment);
+			pre.setString(2, userID);
+			pre.setInt(3, postID);
+			return pre.executeUpdate()>0;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+	
 	//RegisterPage
 	public boolean registration(ProcessData registration){
 		try {
@@ -249,6 +263,47 @@ public class SQLQuery {
 			pre.executeUpdate();//更新資料庫
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	//HistoryPost
+	public List<ProcessData> findHitoryPost(String userID){
+		data.clear();
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("SELECT * FROM Post WHERE UserID = ?");  //預設用PostID來找
+			pre.setString(1, userID);
+			ResultSet rs = pre.executeQuery();
+			while(rs.next()) {
+				ProcessData data = new ProcessData();
+				data.setPostID(rs.getInt("PostID"));
+				data.setProductName(rs.getString("FoodName"));
+				data.setType(rs.getString("FoodType"));
+				data.setLocation(rs.getString("FoodLocation"));
+				data.setAmount(rs.getInt("FoodAmount"));
+				data.setPeopleWaiting(rs.getInt("PeopleWaiting"));
+				data.setStartTime(rs.getString("PickupTime"));
+				data.setEndTime(rs.getString("PickupDDL"));
+				data.setPrice(rs.getInt("MinPrice"));
+				this.data.add(data);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return this.data;
+	}
+	
+	//HistoryPost //Delete
+	public boolean deleteHitoryPost(int postID){
+		data.clear();
+		try {
+			PreparedStatement pre = ConnectDB.getCon()
+					.prepareStatement("DELETE FROM Post WHERE PostID = ?");  //預設用PostID來找
+			pre.setInt(1, postID);
+			return pre.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 	
