@@ -4,6 +4,7 @@ public class ProcessData {
 	private String productName;
 	private String postContent;
 	private byte[] graph;
+	private byte[] payment;
 	private String location;
 	private String type;
 	private int amount;
@@ -62,6 +63,12 @@ public class ProcessData {
 	}
 	public void setGraph(byte[] graph) {
 		this.graph = graph;
+	}
+	public byte[] getPayment() {
+		return payment;
+	}
+	public void setPayment(byte[] payment) {
+		this.payment = payment;
 	}
 	public String getLocation() {
 		return location;
