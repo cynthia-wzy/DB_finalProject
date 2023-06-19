@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class transcation_success extends JFrame {
+public class transcation_success{
 	private JFrame frame;
 	private JButton button;
 	private String userID;
@@ -54,12 +54,12 @@ public class transcation_success extends JFrame {
 	    panel.add(successText);
 	    
 	    button = new JButton("Back");
-	    button.setBackground(Color.decode("#FFD300")); 
 	    button.setBounds(82,100,100,40);
 	    panel.add(button);
 	    
 	    button.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
+	        	frame.dispose();
 	        	SignoutPage page = new SignoutPage(userID);
 	        	page.getFrame();
 	        	
@@ -73,7 +73,7 @@ public class transcation_success extends JFrame {
     }
     
     public void showFrame() {
-        setVisible(true);
+        frame.setVisible(true);
     }
     public static void main(String[] args){
 	        new transcation_success("108305093");//test
