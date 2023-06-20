@@ -140,7 +140,7 @@ public class HistoryPost {
 		lblNewLabel.setBounds(0, 12, 1540, 34);
 		frame.getContentPane().add(lblNewLabel);
 		
-		username = new JLabel("Hi, " + userID +". You can remove the sold-out product here!");
+		username = new JLabel("Hi, " + userID +". You can remove the food you posted here!");
 		username.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
 		username.setBounds(110, 159, 779, 34);
 		frame.getContentPane().add(username);
