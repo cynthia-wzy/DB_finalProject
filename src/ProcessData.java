@@ -16,6 +16,7 @@ public class ProcessData {
 	private String password;
 	private int postID;
 	private int peopleWaiting;
+	private int delay;
 	
 	//WindowDemo
 	public ProcessData(String account,String productName,String postContent, byte[] graph, String location, String type, int amount, String startTime, String endTime, int price ) {
@@ -136,6 +137,12 @@ public class ProcessData {
 	}
 	public void setPeopleWaiting(int peopleWaiting) {
 		this.peopleWaiting = peopleWaiting;
+	}
+	public int getDelay() {
+		return delay;
+	}
+	public void setDelay(int delay) {
+		this.delay = delay;
 	}
 	
 }
