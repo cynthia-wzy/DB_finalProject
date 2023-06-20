@@ -72,10 +72,10 @@ public class OngoingTransaction {
 	public void createJTable() {
 		model = new DefaultTableModel() {
 			public Class<?> getColumnClass(int columnIndex) {
-				return columnIndex == 0 ? Boolean.class : String.class; // 第一列的資料類型為Boolean，其餘列為String
+				return columnIndex == 0 ? Boolean.class : String.class; // 蝚砌��������Boolean嚗擗�String
 		    }
 		    public boolean isCellEditable(int row, int column) {
-		    	return column == 0; // 僅允許編輯第一列的勾選欄
+		    	return column == 0; // ���迂蝺刻摩蝚砌�����甈�
 		    }
 		};
 		String[]columnNames = {"Check","Post ID","Name","Location","End Time","Amount","Delay","Finish"};
@@ -89,15 +89,15 @@ public class OngoingTransaction {
         	String finish;
         	
         	if(delay == 1) {
-        		stringDelay = "已延後";
+        		stringDelay = "delayed";
         	}else {
-        		stringDelay = "尚未延後";
+        		stringDelay = "undelayed";
         	}
         	
         	if(payment == null) {
-        		finish = "交易尚未完成";
+        		finish = "unfinished";
         	}else {
-        		finish = "交易已完成";
+        		finish = "finished";
         	}
         	
             model.addRow(new Object[]{
@@ -114,10 +114,10 @@ public class OngoingTransaction {
         
         
         table = new JTable(model);
-        table.setFont(new Font("微軟正黑體", Font.PLAIN, 18));
+        table.setFont(new Font("敺株�迤暺��", Font.PLAIN, 18));
         table.setForeground(new Color(0, 0, 0));
         table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setFont(new Font("微軟正黑體", Font.BOLD, 18));
+        table.getTableHeader().setFont(new Font("敺株�迤暺��", Font.BOLD, 18));
         table.setRowHeight(70);
         
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -217,7 +217,7 @@ public class OngoingTransaction {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int selectedRow = selectedRows[i];
                     int postID = (int) model.getValueAt(selectedRow, 1);
-                    model.setValueAt("已延後", selectedRow, 6);
+                    model.setValueAt("撌脣辣敺�", selectedRow, 6);
                     sqlQuery.delayPickup(userID, postID);
     	    		JOptionPane.showMessageDialog(null, "Your product has been reserved for 10 minutes, please come and pick it up, otherwise you will be disqualified", "Postponed Successfully", JOptionPane.INFORMATION_MESSAGE);
                 }
