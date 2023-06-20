@@ -72,10 +72,10 @@ public class OngoingTransaction {
 	public void createJTable() {
 		model = new DefaultTableModel() {
 			public Class<?> getColumnClass(int columnIndex) {
-				return columnIndex == 0 ? Boolean.class : String.class; // 蝚砌��������Boolean嚗擗�String
+				return columnIndex == 0 ? Boolean.class : String.class;
 		    }
 		    public boolean isCellEditable(int row, int column) {
-		    	return column == 0; // ���迂蝺刻摩蝚砌�����甈�
+		    	return column == 0;
 		    }
 		};
 		String[]columnNames = {"Check","Post ID","Name","Location","End Time","Amount","Delay","Finish"};
@@ -262,7 +262,7 @@ public class OngoingTransaction {
                     int selectedRow = selectedRows[i];
                     boolean success = false;
                     int postID = (int) model.getValueAt(selectedRow, 1);
-                    int transacAmount = (int) model.getValueAt(selectedRow, 6);
+                    int transacAmount = (int) model.getValueAt(selectedRow, 5);
                     int foodAmount;
                     
                     success = sqlQuery.deleteOngoingTransaction(postID,this.userID);
