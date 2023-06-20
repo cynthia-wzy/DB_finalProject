@@ -105,17 +105,29 @@ public class SignoutPage {
         userNameLabel.setBounds(21, 11, 211, 23);
         frame.getContentPane().add(userNameLabel);
         
-        JButton historyBtn = new JButton("Your History");
-        historyBtn.addActionListener(new ActionListener() {
+        JButton historyPostBtn = new JButton("History Post");
+        historyPostBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		frame.dispose();
         		HistoryPost historyPost = new HistoryPost(userID);
         		historyPost.getFrame().setVisible(true);
         	}
         });
-        historyBtn.setBackground(new Color(255, 211, 0));
-        historyBtn.setBounds(242, 9, 132, 33);
-        frame.getContentPane().add(historyBtn);
+        historyPostBtn.setBackground(new Color(255, 211, 0));
+        historyPostBtn.setBounds(209, 9, 132, 33);
+        frame.getContentPane().add(historyPostBtn);
+        
+        JButton btnFoodWaitingList = new JButton("Food Waiting List");
+        btnFoodWaitingList.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		frame.dispose();
+				OngoingTransaction ongoingTransaction = new OngoingTransaction(userID);
+				ongoingTransaction.getFrame().setVisible(true);
+        	}
+        });
+        btnFoodWaitingList.setBackground(new Color(255, 211, 0));
+        btnFoodWaitingList.setBounds(351, 9, 132, 33);
+        frame.getContentPane().add(btnFoodWaitingList);
 
         // Add items
         sqlQuery.allPostInfo();
