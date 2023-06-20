@@ -163,19 +163,8 @@ public class PayPage {
                 // Disable the uploadButton
                 uploadButton.setEnabled(false);
                 
-                //upload the payment to the database
-                
-                boolean success = sqlQuery.uploadPayment(userID,postID,imageBytes);
-                if (success==false) {
-                	JOptionPane.showMessageDialog(null, "Please upload again.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
-                }else {
-                	JOptionPane.showMessageDialog(null, "Uploaded Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                	frame.dispose();
-                	transcation_success successFrame = new transcation_success(userID);
-                    successFrame.showFrame();
-                }
                 // Simulating upload progress for demonstration
-                /*new Thread(new Runnable() {
+                new Thread(new Runnable() {
                     public void run() {
                         for (int i = 0; i <= 100; i++) {
                             progressBar.setValue(i);
@@ -185,10 +174,20 @@ public class PayPage {
                                 ex.printStackTrace();
                             }
                         }
-                        transcation_success successFrame = new transcation_success(userID);
-                        successFrame.showFrame();
+                        
+                      //upload the payment to the database
+                        boolean success = sqlQuery.uploadPayment(userID,postID,imageBytes);
+                        if (success==false) {
+                        	JOptionPane.showMessageDialog(null, "Please upload again.", "Upload Failed", JOptionPane.ERROR_MESSAGE);
+                        }else {
+                        	JOptionPane.showMessageDialog(null, "Uploaded Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        	frame.dispose();
+                        	transcation_success successFrame = new transcation_success(userID);
+                            successFrame.showFrame();
+                        }
+                        
                     }
-                }).start();*/
+                }).start();
             }
         });
     }
