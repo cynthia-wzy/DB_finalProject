@@ -61,12 +61,13 @@ public class PostView {
   
     private boolean finishPick = false;
     private JButton returnBtn;
+    private JLabel minPriceLabel;
     
     public static void main(String[] args){
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PostView postView = new PostView(1,"108305093"); //default
+					PostView postView = new PostView(4,"108305093"); //default
 			    	postView.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -119,7 +120,7 @@ public class PostView {
 	    infoPanel.setBounds(627, 120, 800, 434);
 	    infoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 	    panel.add(infoPanel);
-	    infoPanel.setLayout(new GridLayout(5,1));
+	    infoPanel.setLayout(new GridLayout(6,1));
 	    
 	    foodNameLabel = new JLabel("post content");
 	    foodNameLabel.setFont(new Font("微軟正黑體", Font.BOLD, 24));
@@ -140,6 +141,10 @@ public class PostView {
 	    totalAmountLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 24));
 	    totalAmountLabel.setBounds(5, 331, 371, 34);
 	    infoPanel.add(totalAmountLabel);
+	    
+	    minPriceLabel = new JLabel("");
+	    minPriceLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 24));
+	    infoPanel.add(minPriceLabel);
 	    
 	    postContentLabel = new JLabel();
 	    postContentLabel.setFont(new Font("微軟正黑體", Font.PLAIN, 24));
@@ -184,9 +189,17 @@ public class PostView {
 		    Image img = MyImage.getImage();
 		    Image newImg = img.getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
 		    ImageIcon image = new ImageIcon(newImg);
+		    
+		    String minPrice;
+		    if(data.getPrice()==0) {
+		    	minPrice = "Free";
+		    }else {
+		    	minPrice = data.getPrice()+"";
+		    }
 	    	
 	    	imageLabel.setIcon(image);
 	    	foodNameLabel.setText(data.getProductName());
+	    	minPriceLabel.setText("Minimun Price: "+ minPrice);
 	    	postContentLabel.setText(data.getPostContent());
 	    	locationLabel.setText("Location: "+data.getLocation());
 	    	pickupStartLabel.setText("Pick up Time: " + data.getStartTime()+" ~ "+data.getEndTime());
@@ -338,10 +351,18 @@ public class PostView {
 	    		postpone_yn.setEnabled(false);
 	    		finishPick = true;
 	    		finish_pick.setText("finish pickup!");
-            	JOptionPane.showMessageDialog(null, "This transction hasn't finished, please upload the payment detail", "Upload Payment", JOptionPane.INFORMATION_MESSAGE);
-            	frame.dispose();
-            	PayPage payPage = new PayPage(userID, postID);
-            	payPage.getFrame().setVisible(true);
+	    		
+	    		if(minPriceLabel.getText().substring(15).equals("Free")) {
+	            	JOptionPane.showMessageDialog(null, "This transction has finished", "Transaction Finished", JOptionPane.INFORMATION_MESSAGE);
+	            	frame.dispose();
+	            	SignoutPage signoutPage = new SignoutPage(userID);
+		        	signoutPage.getFrame().setVisible(true);
+	    		}else {
+	    			JOptionPane.showMessageDialog(null, "This transction hasn't finished, please upload the payment detail", "Upload Payment", JOptionPane.INFORMATION_MESSAGE);
+	            	frame.dispose();
+	            	PayPage payPage = new PayPage(userID, postID);
+	            	payPage.getFrame().setVisible(true);
+	    		}
 	    	}
 	    });
 	    
