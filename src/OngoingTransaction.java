@@ -29,7 +29,7 @@ public class OngoingTransaction {
 	private String userID;
 	private JLabel username;
 	private JButton returnBtn;
-	private JButton btnDelete;
+	private JButton btnCancel;
 
 	/**
 	 * Launch the application.
@@ -77,19 +77,37 @@ public class OngoingTransaction {
 		    	return column == 0; // 僅允許編輯第一列的勾選欄
 		    }
 		};
-		String[]columnNames = {"Check","Post ID","Name","Location","Start Time","End Time","Amount"};//移除圖片
+		String[]columnNames = {"Check","Post ID","Name","Location","End Time","Amount","Delay","Finish"};
         model.setColumnIdentifiers(columnNames);
 		
         OngoingTransactions = sqlQuery.findOngoingTransaction(userID);
         for(ProcessData data : OngoingTransactions) {
+        	int delay = data.getDelay();
+        	byte[] payment = data.getPayment();
+        	String stringDelay;
+        	String finish;
+        	
+        	if(delay == 1) {
+        		stringDelay = "已延後";
+        	}else {
+        		stringDelay = "尚未延後";
+        	}
+        	
+        	if(payment == null) {
+        		finish = "交易尚未完成";
+        	}else {
+        		finish = "交易已完成";
+        	}
+        	
             model.addRow(new Object[]{
             		false,
             		data.getPostID(),
             		data.getProductName(),
             		data.getLocation(),
-            		data.getStartTime(),
             		data.getEndTime(),
-            		data.getPickupAmount()
+            		data.getPickupAmount(),
+            		stringDelay,
+            		finish
             });
         }
         
@@ -112,19 +130,6 @@ public class OngoingTransaction {
         scrollPane.setBounds(110, 206, 1300, 536);
 		scrollPane.setViewportView(table);
 		frame.getContentPane().add(scrollPane);
-		
-		JButton btnSwitchToThe = new JButton("Switch to the History Post");
-		btnSwitchToThe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				HistoryPost historyPost = new HistoryPost(userID);
-				historyPost.getFrame().setVisible(true);
-			}
-		});
-		btnSwitchToThe.setFont(new Font("Dialog", Font.PLAIN, 20));
-		btnSwitchToThe.setBackground(new Color(255, 211, 0));
-		btnSwitchToThe.setBounds(110, 14, 309, 40);
-		frame.getContentPane().add(btnSwitchToThe);
 	}
 	
 	public void createDesign() {
@@ -135,7 +140,7 @@ public class OngoingTransaction {
 		lblNewLabel.setBounds(0, 12, 1540, 34);
 		frame.getContentPane().add(lblNewLabel);
 		
-		username = new JLabel("Hi, " + userID +". You can cancel the ongoing transaction here!");
+		username = new JLabel("Hi, " + userID +". You can edit the food you're waiting here!");
 		username.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 24));
 		username.setBounds(110, 159, 779, 34);
 		frame.getContentPane().add(username);
@@ -153,16 +158,94 @@ public class OngoingTransaction {
 		returnBtn.setBounds(1146, 14, 264, 40);
 		frame.getContentPane().add(returnBtn);
 		
-		btnDelete = new JButton("DELETE");
-		btnDelete.addActionListener(new ActionListener() {
+		JButton btnSwitchToThe = new JButton("Switch to the History Post");
+		btnSwitchToThe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				HistoryPost historyPost = new HistoryPost(userID);
+				historyPost.getFrame().setVisible(true);
+			}
+		});
+		btnSwitchToThe.setFont(new Font("Dialog", Font.PLAIN, 20));
+		btnSwitchToThe.setBackground(new Color(255, 211, 0));
+		btnSwitchToThe.setBounds(110, 14, 309, 40);
+		frame.getContentPane().add(btnSwitchToThe);
+		
+		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeSelectedData();
 			}
 		});
-		btnDelete.setFont(new Font("Dialog", Font.BOLD, 20));
-		btnDelete.setBackground(new Color(255, 211, 0));
-		btnDelete.setBounds(1287, 162, 123, 34);
-		frame.getContentPane().add(btnDelete);
+		btnCancel.setFont(new Font("Dialog", Font.BOLD, 20));
+		btnCancel.setBackground(new Color(255, 211, 0));
+		btnCancel.setBounds(1287, 159, 123, 34);
+		frame.getContentPane().add(btnCancel);
+		
+		JButton btnPostpone = new JButton("Postpone");
+		btnPostpone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				postponeSelectedData();
+			}
+		});
+		btnPostpone.setFont(new Font("Dialog", Font.BOLD, 20));
+		btnPostpone.setBackground(new Color(255, 211, 0));
+		btnPostpone.setBounds(940, 159, 136, 34);
+		frame.getContentPane().add(btnPostpone);
+		
+		JButton btnFinishPickup = new JButton("Finish Pickup");
+		btnFinishPickup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finishSelectedData();
+			}
+		});
+		btnFinishPickup.setFont(new Font("Dialog", Font.BOLD, 20));
+		btnFinishPickup.setBackground(new Color(255, 211, 0));
+		btnFinishPickup.setBounds(1086, 159, 191, 34);
+		frame.getContentPane().add(btnFinishPickup);
+	}
+	
+	public void postponeSelectedData() {
+		int[] selectedRows = table.getSelectedRows();
+
+        if (selectedRows.length > 0) {
+            int option = JOptionPane.showConfirmDialog(frame, "Are you sure to postpone this post?", "Postpone Post", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                
+                for (int i = selectedRows.length - 1; i >= 0; i--) {
+                    int selectedRow = selectedRows[i];
+                    int postID = (int) model.getValueAt(selectedRow, 1);
+                    model.setValueAt("已延後", selectedRow, 6);
+                    sqlQuery.delayPickup(userID, postID);
+    	    		JOptionPane.showMessageDialog(null, "Your product has been reserved for 10 minutes, please come and pick it up, otherwise you will be disqualified", "Postponed Successfully", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(frame, "Please select the transaction you want to postpone first.", "Postpone Failed", JOptionPane.WARNING_MESSAGE);
+        }
+	}
+	
+	public void finishSelectedData() {
+		int[] selectedRows = table.getSelectedRows();
+
+        if (selectedRows.length > 0) {
+            int option = JOptionPane.showConfirmDialog(frame, "Are you sure to finish this transaction?", "Finish Transaction", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+                for (int i = selectedRows.length - 1; i >= 0; i--) {
+                    int selectedRow = selectedRows[i];
+                    int postID = (int) model.getValueAt(selectedRow, 1);
+                    JOptionPane.showMessageDialog(null, "This transction hasn't finished, please upload the payment detail", "Upload Payment", JOptionPane.INFORMATION_MESSAGE);
+                	frame.dispose();
+                	PayPage payPage = new PayPage(userID, postID);
+                	payPage.getFrame().setVisible(true);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(frame, "Please select the transaction you want to finish first.", "Finish Failed", JOptionPane.WARNING_MESSAGE);
+        }
 	}
 	
 	public void removeSelectedData() {
