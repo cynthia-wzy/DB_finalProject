@@ -138,7 +138,7 @@ public class LoginPage {
 						passwordField.setText("");
 						return;
 					}else if(checkLogin.equals("Login Successfully")){
-					    JOptionPane.showMessageDialog(null, "Welcome to NCCU Food Hunter", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+					    JOptionPane.showMessageDialog(null, "Welcome to NCCU HUNGER SAVER", "Login Success", JOptionPane.INFORMATION_MESSAGE);
 					    frame.dispose();
 					    SignoutPage signoutPage = new SignoutPage(userID);
 						signoutPage.getFrame().setVisible(true);
