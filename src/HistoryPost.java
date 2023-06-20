@@ -118,7 +118,7 @@ public class HistoryPost {
 		scrollPane.setViewportView(table);
 		frame.getContentPane().add(scrollPane);
 		
-		JButton btnSwitchToThe = new JButton("Switch to the Ongoing Transaction");
+		JButton btnSwitchToThe = new JButton("Switch to Waiting Food List");
 		btnSwitchToThe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
