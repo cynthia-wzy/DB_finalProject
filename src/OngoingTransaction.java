@@ -61,8 +61,9 @@ public class OngoingTransaction {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 255, 224));
-		frame.setBounds(100, 100, 1920, 1080);
+		/*frame.setBounds(100, 100, 1920, 1080);*/
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.getContentPane().setLayout(null);
 		createDesign();
 		createJTable();
