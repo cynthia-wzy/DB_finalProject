@@ -329,7 +329,7 @@ public class SQLQuery {
 		data.clear();
 		try {
 			PreparedStatement pre = ConnectDB.getCon()
-					.prepareStatement("SELECT po.PostID, po.FoodName, po.FoodLocation, po.PickupTime, po.PickupDDL, pl.Amount, pl.Payment, pl.Delay "
+					.prepareStatement("SELECT po.PostID, po.FoodName, po.FoodLocation, po.PickupTime, po.PickupDDL, po.MinPrice, pl.Amount, pl.Payment, pl.Delay "
 							+ "FROM Placeholder AS pl, Post AS po "
 							+ "WHERE pl.PostID = po.PostID AND pl.UserID = ?");  //預設用PostID來找
 			pre.setString(1, userID);
@@ -340,6 +340,7 @@ public class SQLQuery {
 				data.setProductName(rs.getString("po.FoodName"));
 				data.setLocation(rs.getString("po.FoodLocation"));
 				data.setEndTime(rs.getString("po.PickupDDL"));
+				data.setPrice(rs.getInt("po.MinPrice"));
 				data.setPickupAmount(rs.getInt("pl.Amount"));
 				data.setPayment(rs.getBytes("pl.Payment"));
 				data.setDelay(rs.getInt("pl.Delay"));
