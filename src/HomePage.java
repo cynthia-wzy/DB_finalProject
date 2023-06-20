@@ -47,6 +47,7 @@ public class HomePage {
         frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#FFFF9F")); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Get screen size
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
