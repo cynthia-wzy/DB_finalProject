@@ -61,9 +61,9 @@ public class OngoingTransaction {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 255, 224));
-		/*frame.setBounds(100, 100, 1920, 1080);*/
+		frame.setBounds(100, 100, 1920, 1080);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		/*frame.setExtendedState(JFrame.MAXIMIZED_BOTH);*/
 		frame.getContentPane().setLayout(null);
 		createDesign();
 		createJTable();
@@ -72,13 +72,13 @@ public class OngoingTransaction {
 	public void createJTable() {
 		model = new DefaultTableModel() {
 			public Class<?> getColumnClass(int columnIndex) {
-				return columnIndex == 0 ? Boolean.class : String.class;
+				return columnIndex == 0 ? Boolean.class : String.class; // 第一列的資料類型為Boolean，其餘列為String
 		    }
 		    public boolean isCellEditable(int row, int column) {
-		    	return column == 0;
+		    	return column == 0; // 僅允許編輯第一列的勾選欄
 		    }
 		};
-		String[]columnNames = {"Check","Post ID","Name","Location","End Time","Amount","Delay","Finish"};
+		String[]columnNames = {"Check","Post ID","Name","Location","End Time","Price","Amount","Delay","Finish"};
         model.setColumnIdentifiers(columnNames);
 		
         OngoingTransactions = sqlQuery.findOngoingTransaction(userID);
@@ -89,15 +89,15 @@ public class OngoingTransaction {
         	String finish;
         	
         	if(delay == 1) {
-        		stringDelay = "delayed";
+        		stringDelay = "已延後";
         	}else {
-        		stringDelay = "undelayed";
+        		stringDelay = "尚未延後";
         	}
         	
         	if(payment == null) {
-        		finish = "unfinished";
+        		finish = "交易尚未完成";
         	}else {
-        		finish = "finished";
+        		finish = "交易已完成";
         	}
         	
             model.addRow(new Object[]{
@@ -106,6 +106,7 @@ public class OngoingTransaction {
             		data.getProductName(),
             		data.getLocation(),
             		data.getEndTime(),
+            		data.getPrice(),
             		data.getPickupAmount(),
             		stringDelay,
             		finish
@@ -114,10 +115,10 @@ public class OngoingTransaction {
         
         
         table = new JTable(model);
-        table.setFont(new Font("敺株�迤暺��", Font.PLAIN, 18));
+        table.setFont(new Font("微軟正黑體", Font.PLAIN, 18));
         table.setForeground(new Color(0, 0, 0));
         table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setFont(new Font("敺株�迤暺��", Font.BOLD, 18));
+        table.getTableHeader().setFont(new Font("微軟正黑體", Font.BOLD, 18));
         table.setRowHeight(70);
         
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -217,7 +218,7 @@ public class OngoingTransaction {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int selectedRow = selectedRows[i];
                     int postID = (int) model.getValueAt(selectedRow, 1);
-                    model.setValueAt("撌脣辣敺�", selectedRow, 6);
+                    model.setValueAt("已延後", selectedRow, 6);
                     sqlQuery.delayPickup(userID, postID);
     	    		JOptionPane.showMessageDialog(null, "Your product has been reserved for 10 minutes, please come and pick it up, otherwise you will be disqualified", "Postponed Successfully", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -238,10 +239,19 @@ public class OngoingTransaction {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int selectedRow = selectedRows[i];
                     int postID = (int) model.getValueAt(selectedRow, 1);
-                    JOptionPane.showMessageDialog(null, "This transction hasn't finished, please upload the payment detail", "Upload Payment", JOptionPane.INFORMATION_MESSAGE);
-                	frame.dispose();
-                	PayPage payPage = new PayPage(userID, postID);
-                	payPage.getFrame().setVisible(true);
+                    int minPrice = (int)model.getValueAt(selectedRow, 5);
+                    
+                    if(minPrice==0) {
+                    	JOptionPane.showMessageDialog(null, "This transction has finished", "Transaction Finished", JOptionPane.INFORMATION_MESSAGE);
+    	            	frame.dispose();
+    	            	SignoutPage signoutPage = new SignoutPage(userID);
+    		        	signoutPage.getFrame().setVisible(true);
+                    }else {
+                    	JOptionPane.showMessageDialog(null, "This transction hasn't finished, please upload the payment detail", "Upload Payment", JOptionPane.INFORMATION_MESSAGE);
+                    	frame.dispose();
+                    	PayPage payPage = new PayPage(userID, postID);
+                    	payPage.getFrame().setVisible(true);
+                    }
                 }
             }
         } else {
@@ -262,7 +272,7 @@ public class OngoingTransaction {
                     int selectedRow = selectedRows[i];
                     boolean success = false;
                     int postID = (int) model.getValueAt(selectedRow, 1);
-                    int transacAmount = (int) model.getValueAt(selectedRow, 5);
+                    int transacAmount = (int) model.getValueAt(selectedRow, 6);
                     int foodAmount;
                     
                     success = sqlQuery.deleteOngoingTransaction(postID,this.userID);
