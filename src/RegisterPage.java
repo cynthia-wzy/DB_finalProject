@@ -178,7 +178,7 @@ public class RegisterPage {
 		                	text_name.setText("");
 		                }else if(success!=false){
 		                	//After uploading successfully, closing the JOptionPane and return to the home page
-		    		        JOptionPane.showMessageDialog(null, "Congrats! You have registered successfully. Please login and start using NCCU Food Hunter", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
+		    		        JOptionPane.showMessageDialog(null, "Congrats! You have registered successfully. Please login and start using NCCU HUNGER SAVER", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
 		                	frame.dispose();
 		                	//User should login after completing registration
 		                	LoginPage loginPage = new LoginPage();
@@ -198,7 +198,7 @@ public class RegisterPage {
 		                	JOptionPane.showMessageDialog(null, "You have been registered! Please Login directly.", "Registration Failed", JOptionPane.ERROR_MESSAGE);
 		                }else if(success!=false){
 		                	//After uploading successfully, closing the JOptionPane and return to the home page
-		    		        JOptionPane.showMessageDialog(null, "Congrats! You have registered successfully. Please login and start using NCCU Food Hunter", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
+		    		        JOptionPane.showMessageDialog(null, "Congrats! You have registered successfully. Please login and start using NCCU HUNGER SAVER", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
 		                	frame.dispose();
 		                	//User should login after completing registration
 		                	LoginPage loginPage = new LoginPage();
