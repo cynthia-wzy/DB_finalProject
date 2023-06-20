@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.List;
@@ -12,6 +13,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -63,7 +66,8 @@ public class HistoryPost {
 		frame = new JFrame();
 		frame.setTitle("History Post");
 		frame.getContentPane().setBackground(new Color(255, 255, 224));
-		frame.setBounds(100, 100, 1920, 1080);
+		/*frame.setBounds(100, 100, 1920, 1080);*/
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		createDesign();
